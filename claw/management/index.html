@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦞 OpenClaw 管理中心</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #e94560;
+            --primary-dark: #c73e54;
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --surface-elevated: #1a1a1a;
+            --border: #262626;
+            --text: #ffffff;
+            --text-secondary: #737373;
+            --success: #00ff88;
+            --warning: #ffb800;
+            --error: #ff6b6b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .login-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .login-box h2 { margin-bottom: 30px; font-size: 28px; }
+
+        .login-box input {
+            width: 280px;
+            padding: 16px 24px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.05);
+            color: white;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .login-box input:focus { border-color: var(--primary); }
+
+        .login-box button {
+            margin-top: 24px;
+            padding: 16px 50px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .login-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(233,69,96,0.3);
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            display: none;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, #ff9a76 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p { color: var(--text-secondary); font-size: 16px; }
+
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .top-actions h2 { font-size: 24px; }
+
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover { background: var(--primary-dark); }
+
+        .btn-secondary {
+            background: var(--surface-elevated);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .stat-card-label {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card-value {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, #ff9a76 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-card-value.small {
+            font-size: 24px;
+        }
+
+        .agent-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            transition: all 0.3s;
+        }
+
+        .agent-card.running { border-color: var(--success); }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .agent-emoji { font-size: 56px; }
+
+        .agent-info h3 { font-size: 24px; margin-bottom: 6px; }
+        .agent-info p { color: var(--text-secondary); font-size: 14px; }
+
+        .agent-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .agent-status.running {
+            background: rgba(0,255,136,0.15);
+            color: var(--success);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .agent-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .info-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .info-card h4 {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .hidden { display: none !important; }
+
+        .note {
+            background: rgba(255,136,136,0.1);
+            border: 1px solid rgba(255,136,136,0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 24px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <h2>🦞 OpenClaw 管理中心</h2>
+            <input type="password" id="passwordInput" placeholder="请输入管理员密码" />
+            <button onclick="login()">登录</button>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer">
+        <div class="header">
+            <h1>🦞 OpenClaw 管理中心</h1>
+            <p>云端AI Agent实时监控</p>
+        </div>
+
+        <div class="top-actions">
+            <h2>📊 系统概览</h2>
+            <div>
+                <button class="btn btn-primary" onclick="refreshData()">🔄 刷新数据</button>
+                <button class="btn btn-secondary" onclick="logout()">退出</button>
+            </div>
+        </div>
+
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <div class="section">
+            <div class="top-actions">
+                <h2>🤖 Agent 状态</h2>
+            </div>
+            <div id="agentCard"></div>
+        </div>
+
+        <div class="section">
+            <div class="top-actions">
+                <h2>⚙️ 系统信息</h2>
+            </div>
+            <div class="info-grid" id="systemInfo"></div>
+        </div>
+
+        <div class="note">
+            <strong>💡 说明：</strong> 显示的是OpenClaw系统的真实运行数据。数据每30秒自动更新。
+        </div>
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD = 'tuoluo704540';
+        const API_URL = '/claw/api/status';
+        let isLoggedIn = false;
+        let autoRefreshTimer = null;
+
+        function login() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === CORRECT_PASSWORD) {
+                isLoggedIn = true;
+                localStorage.setItem('claw_logged', 'true');
+                showMainScreen();
+                loadData();
+                startAutoRefresh();
+            } else {
+                alert('密码错误');
+            }
+        }
+
+        function logout() {
+            isLoggedIn = false;
+            localStorage.removeItem('claw_logged');
+            stopAutoRefresh();
+            showLoginScreen();
+        }
+
+        function showLoginScreen() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('mainContainer').style.display = 'none';
+        }
+
+        function showMainScreen() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainContainer').style.display = 'block';
+        }
+
+        async function loadData() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+
+                updateStats(data.stats || {});
+                updateAgent(data.agents ? data.agents[0] : null);
+                updateSystemInfo(data.stats || {}, data.config || {});
+
+            } catch (error) {
+                console.error('加载数据失败:', error);
+            }
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num;
+        }
+
+        function updateStats(stats) {
+            const grid = document.getElementById('statsGrid');
+            const tokenUsage = stats.token_usage || {};
+            const perf = stats.performance || {};
+            const sysInfo = stats.system_info || {};
+
+            grid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-card-label">运行时长</div>
+                    <div class="stat-card-value small">${stats.uptime || '-'}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">CPU使用率</div>
+                    <div class="stat-card-value">${perf.cpu_percent || '0'}%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">内存使用</div>
+                    <div class="stat-card-value small">${perf.memory_usage || '-'}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">线程数</div>
+                    <div class="stat-card-value">${perf.thread_count || 0}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">今日Token</div>
+                    <div class="stat-card-value small">${formatNumber(tokenUsage.today_total || 0)}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">活跃会话</div>
+                    <div class="stat-card-value">${tokenUsage.active_sessions || 0}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">总会话数</div>
+                    <div class="stat-card-value">${sysInfo.total_sessions || 0}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">已安装技能</div>
+                    <div class="stat-card-value">${sysInfo.total_skills || 0}</div>
+                </div>
+            `;
+        }
+
+        function updateAgent(agent) {
+            const card = document.getElementById('agentCard');
+
+            if (!agent) {
+                card.innerHTML = '<div style="text-align: center; padding: 40px; color: #737373;">暂无Agent数据</div>';
+                return;
+            }
+
+            card.innerHTML = `
+                <div class="agent-card ${agent.status}">
+                    <div class="agent-header">
+                        <div class="agent-emoji">${agent.emoji}</div>
+                        <div class="agent-info">
+                            <h3>${agent.name}</h3>
+                            <p>${agent.role}</p>
+                        </div>
+                        <span class="agent-status ${agent.status}">
+                            <span class="status-dot"></span>
+                            ${agent.status_badge}
+                        </span>
+                    </div>
+                    <div class="agent-desc">${agent.description}</div>
+                </div>
+            `;
+        }
+
+        function updateSystemInfo(stats, config) {
+            const container = document.getElementById('systemInfo');
+            const sysInfo = stats.system_info || {};
+            const tokenUsage = stats.token_usage || {};
+
+            container.innerHTML = `
+                <div class="info-card">
+                    <h4>资源使用</h4>
+                    <div class="info-item">
+                        <span class="info-label">系统内存</span>
+                        <span class="info-value">${sysInfo.used_memory || '-'} / ${sysInfo.total_memory || '-'} (${sysInfo.memory_percent || '0'}%)</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">可用内存</span>
+                        <span class="info-value">${sysInfo.free_memory || '-'}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">工作空间</span>
+                        <span class="info-value">${sysInfo.workspace_size || '-'}</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h4>Token 统计</h4>
+                    <div class="info-item">
+                        <span class="info-label">今日Input</span>
+                        <span class="info-value">${formatNumber(tokenUsage.today_input || 0)}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">今日Output</span>
+                        <span class="info-value">${formatNumber(tokenUsage.today_output || 0)}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">今日总计</span>
+                        <span class="info-value">${formatNumber(tokenUsage.today_total || 0)}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">今日费用</span>
+                        <span class="info-value">¥${(tokenUsage.today_cost || 0).toFixed(2)}</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h4>配置信息</h4>
+                    <div class="info-item">
+                        <span class="info-label">Bot名称</span>
+                        <span class="info-value">${config.bot_name || '-'}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">当前模型</span>
+                        <span class="info-value">${config.model || '-'}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">记忆天数</span>
+                        <span class="info-value">${stats.memory_days || 0}天</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">更新时间</span>
+                        <span class="info-value">${stats.current_time || '-'}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function refreshData() {
+            loadData();
+        }
+
+        function startAutoRefresh() {
+            autoRefreshTimer = setInterval(loadData, 30000);
+        }
+
+        function stopAutoRefresh() {
+            if (autoRefreshTimer) clearInterval(autoRefreshTimer);
+        }
+
+        // 初始化
+        if (localStorage.getItem('claw_logged') === 'true') {
+            isLoggedIn = true;
+            showMainScreen();
+            loadData();
+            startAutoRefresh();
+        } else {
+            showLoginScreen();
+        }
+
+        // 回车登录
+        document.getElementById('passwordInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') login();
+        });
+
+        console.log('[INFO] OpenClaw 管理页面已加载 - 增强版');
+    </script>
+</body>
+</html>

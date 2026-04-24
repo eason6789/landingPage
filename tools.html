@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具 - 创想世界</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --surface-elevated: #141414;
+            --border: #262626;
+            --text: #ffffff;
+            --text-secondary: #737373;
+            --accent: #3b82f6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        header { padding: 32px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 14px; font-weight: 500; letter-spacing: 0.2em; color: var(--text-secondary); text-transform: uppercase; }
+        .back { color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .back:hover { color: var(--text); }
+        .hero { padding: 80px 0; }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; }
+        .hero p { color: var(--text-secondary); font-size: 1.1rem; }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; margin-bottom: 80px; }
+        .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .tool-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .tool-img { width: 100%; height: 180px; object-fit: cover; }
+        .tool-content { padding: 24px; }
+        .tool-card h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .tool-card p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; }
+        .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag { font-size: 11px; font-weight: 500; padding: 4px 10px; background: var(--surface-elevated); border-radius: 4px; color: var(--text-secondary); }
+        .tag.new { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        footer { padding: 40px 0; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 14px; text-align: center; }
+        @media(max-width:640px){ .tools-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back">← 返回</a>
+            <p class="logo">创想世界</p>
+        </header>
+        <section class="hero">
+            <h1>工具</h1>
+            <p>在线工具、实用应用</p>
+        </section>
+        <div class="tools-grid">
+            <div class="tool-card" onclick="location.href='/claw/photo/'">
+                <img class="tool-img" src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&q=80" alt="证件照生成">
+                <div class="tool-content">
+                    <h3>📸 AI证件照生成</h3>
+                    <p>上传自拍，AI自动生成各国签证标准证件照，支持多种尺寸和背景颜色</p>
+                    <div class="tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">图像处理</span>
+                        <span class="tag">实用</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tool-card" onclick="location.href='/finlearn/'">
+                <img class="tool-img" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80" alt="金融学习">
+                <div class="tool-content">
+                    <h3>📚 金融学习平台</h3>
+                    <p>系统化金融知识体系，10大模块循序渐进，由浅入深覆盖全面</p>
+                    <div class="tags">
+                        <span class="tag new">NEW</span>
+                        <span class="tag">学习</span>
+                        <span class="tag">金融</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer><p>© 2026 创想世界</p></footer>
+    </div>
+</body>
+</html>

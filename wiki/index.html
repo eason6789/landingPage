@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧠 第二大脑知识库</title>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4.12.1/themes/vue.css">
+  <style>
+    .sidebar-toggle { background: #b87333 !important; }
+    .markdown-section a { color: #b87333; }
+    .markdown-section blockquote { border-left-color: #b87333; }
+    .markdown-section pre { background: #f6f8fa; }
+    .markdown-section { display: block !important; visibility: visible !important; }
+    section.topic { display: block !important; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      el: '#app',
+      name: '🧠 第二大脑',
+      loadSidebar: true,
+      subMaxLevel: 3,
+      auto2top: true,
+      coverpage: false,
+      autoHeader: true,
+      loadNavbar: false,
+      maxLevel: 3,
+      search: {
+        paths: 'auto',
+        placeholder: '搜索...'
+      }
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4.12.1/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4.12.1/lib/plugins/search.min.js"></script>
+</body>
+</html>
