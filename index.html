@@ -27,8 +27,6 @@
   --pixel-black:   #1C1917;
   --pixel-green:   #22C55E;
   --pixel-blue:    #3B82F6;
-  --pixel-red:     #DC2626;
-  --pixel-pink:    #EC4899;
 
   --font-pixel:    'Press Start 2P', 'ZCOOL QingKe HuangYou', cursive;
   --font-terminal: 'VT323', 'ZCOOL QingKe HuangYou', monospace;
@@ -56,7 +54,6 @@ body {
   overflow: hidden;
 }
 
-/* Subtle pixel grid overlay */
 body::before {
   content: '';
   position: fixed;
@@ -73,19 +70,7 @@ body::before {
 a { color: var(--accent); text-decoration: none; }
 
 /* ============================================================
-   Pixel Utility Classes
-   ============================================================ */
-.pixel-corners {
-  clip-path: polygon(
-    0px 4px, 4px 4px, 4px 0px, calc(100% - 4px) 0px,
-    calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px),
-    calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
-    4px 100%, 4px calc(100% - 4px), 0px calc(100% - 4px)
-  );
-}
-
-/* ============================================================
-   Layout — Desktop: Sidebar (fixed) + Main (scroll-snap)
+   Layout
    ============================================================ */
 .app-layout {
   display: flex;
@@ -113,13 +98,10 @@ a { color: var(--accent); text-decoration: none; }
   border-right: 4px solid var(--pixel-black);
 }
 
-/* Sidebar pixel decoration stripe */
 .sidebar::before {
   content: '';
   position: absolute;
-  right: -10px;
-  top: 0;
-  bottom: 0;
+  right: -10px; top: 0; bottom: 0;
   width: 6px;
   background: repeating-linear-gradient(
     0deg,
@@ -130,7 +112,6 @@ a { color: var(--accent); text-decoration: none; }
   );
 }
 
-/* Sidebar header decoration */
 .sidebar-header-deco {
   font-family: var(--font-pixel);
   font-size: 9px;
@@ -140,24 +121,19 @@ a { color: var(--accent); text-decoration: none; }
   opacity: 0.6;
 }
 
-/* Avatar */
 .avatar-wrap {
   position: relative;
-  width: 140px;
-  height: 140px;
+  width: 140px; height: 140px;
   flex-shrink: 0;
 }
 .avatar {
-  width: 140px;
-  height: 140px;
+  width: 140px; height: 140px;
   border-radius: 2px;
   object-fit: cover;
   image-rendering: pixelated;
   display: block;
   border: 4px solid var(--pixel-black);
-  box-shadow:
-    -5px -5px 0 0 var(--pixel-shadow),
-    5px 5px 0 0 rgba(0,0,0,0.06);
+  box-shadow: -5px -5px 0 0 var(--pixel-shadow), 5px 5px 0 0 rgba(0,0,0,0.06);
 }
 .avatar-glitch {
   position: absolute;
@@ -168,88 +144,58 @@ a { color: var(--accent); text-decoration: none; }
   animation: glitch-border 4s steps(2) infinite;
 }
 @keyframes glitch-border {
-  0%, 80%, 100% { border-color: var(--accent); opacity: 1; }
-  40% { border-color: var(--pixel-green); opacity: 0.7; }
-  60% { border-color: var(--pixel-pink); opacity: 0.7; }
+  0%,80%,100% { border-color: var(--accent); opacity:1; }
+  40% { border-color: var(--pixel-green); opacity:0.7; }
+  60% { border-color: #EC4899; opacity:0.7; }
 }
 
-/* Name */
 .sidebar-name {
   font-family: var(--font-pixel);
-  font-size: 16px;
-  color: var(--pixel-black);
-  text-align: center;
-  line-height: 1.8;
+  font-size: 16px; color: var(--pixel-black);
+  text-align: center; line-height: 1.8;
 }
 .sidebar-name .en { font-size: 20px; display: block; }
 .sidebar-name .cn { font-size: 13px; color: var(--text-secondary); display: block; }
 
-/* Bio */
 .sidebar-bio {
   font-family: var(--font-terminal);
-  font-size: 16px;
-  color: var(--text-secondary);
-  text-align: center;
-  line-height: 1.5;
-  max-width: 220px;
+  font-size: 16px; color: var(--text-secondary);
+  text-align: center; line-height: 1.5; max-width: 220px;
 }
 
-/* Divider */
 .pixel-divider {
-  width: 70%;
-  height: 3px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--pixel-black) 0px,
-    var(--pixel-black) 10px,
-    transparent 10px,
-    transparent 20px
-  );
+  width: 70%; height: 3px;
+  background: repeating-linear-gradient(90deg,
+    var(--pixel-black) 0px, var(--pixel-black) 10px,
+    transparent 10px, transparent 20px);
   flex-shrink: 0;
 }
 
-/* Social Links */
 .social-links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start;
-  flex-shrink: 0;
+  display: flex; flex-direction: column;
+  gap: 10px; align-items: flex-start; flex-shrink: 0;
 }
 .social-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-terminal);
-  font-size: 17px;
-  color: var(--text);
-  padding: 7px 14px;
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-terminal); font-size: 17px;
+  color: var(--text); padding: 7px 14px;
   border: 2px solid transparent;
   transition: all var(--transition);
-  cursor: pointer;
-  text-decoration: none;
-  width: 100%;
+  cursor: pointer; text-decoration: none; width: 100%;
 }
 .social-link:hover {
   border-color: var(--pixel-black);
   background: var(--card);
   color: var(--accent-hover);
 }
-.social-link:hover .social-icon {
-  transform: scale(1.2);
-}
-.social-link:hover .social-icon svg {
-  filter: drop-shadow(2px 2px 0 var(--pixel-shadow));
-}
 .social-icon {
-  width: 26px;
-  height: 26px;
-  flex-shrink: 0;
+  width: 26px; height: 26px; flex-shrink: 0;
   transition: transform var(--transition);
   image-rendering: pixelated;
 }
+.social-link:hover .social-icon { transform: scale(1.2); }
 
-/* ---- Main Scroll Container ---- */
+/* ---- Main Scroll ---- */
 .main-scroll {
   flex: 1;
   overflow-y: scroll;
@@ -259,8 +205,6 @@ a { color: var(--accent); text-decoration: none; }
   height: 100dvh;
   position: relative;
 }
-
-/* Custom scrollbar */
 .main-scroll::-webkit-scrollbar { width: 12px; }
 .main-scroll::-webkit-scrollbar-track {
   background: var(--bg-deep);
@@ -285,50 +229,33 @@ a { color: var(--accent); text-decoration: none; }
   position: relative;
 }
 
-/* Section decoration — top pixel line */
-.section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--pixel-black) 0px,
-    var(--pixel-black) 12px,
-    var(--accent) 12px,
-    var(--accent) 16px,
-    transparent 16px,
-    transparent 20px
-  );
-  opacity: 0.15;
-}
-
-/* ---- Section Header ---- */
 .section-header { margin-bottom: 36px; }
 .section-tag {
   font-family: var(--font-pixel);
-  font-size: 9px;
-  color: var(--accent);
-  letter-spacing: 0.25em;
-  margin-bottom: 10px;
+  font-size: 9px; color: var(--accent);
+  letter-spacing: 0.25em; margin-bottom: 10px;
 }
 .section-title {
   font-family: var(--font-pixel);
-  font-size: 18px;
-  color: var(--pixel-black);
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  font-size: 16px; color: var(--pixel-black);
+  display: flex; align-items: center; gap: 10px;
 }
 .section-title::before {
   content: '▶';
-  font-size: 12px;
-  color: var(--accent);
+  font-size: 11px; color: var(--accent);
   animation: blink-cursor 1s steps(1) infinite;
 }
-@keyframes blink-cursor {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
+@keyframes blink-cursor { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+/* ---- Sub-section ---- */
+.subsection { margin-bottom: 28px; }
+.subsection:last-child { margin-bottom: 0; }
+.subsection-title {
+  font-family: var(--font-pixel);
+  font-size: 12px; color: var(--text-secondary);
+  margin-bottom: 14px;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent);
 }
 
 /* ---- Project Grid ---- */
@@ -339,6 +266,7 @@ a { color: var(--accent); text-decoration: none; }
   max-width: 900px;
 }
 .project-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.project-grid.single-col { grid-template-columns: 1fr; max-width: 500px; }
 
 /* ---- Project Card ---- */
 .project-card {
@@ -348,134 +276,103 @@ a { color: var(--accent); text-decoration: none; }
   padding: 18px 18px 14px;
   cursor: pointer;
   transition: all var(--transition);
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  display: flex; align-items: flex-start; gap: 14px;
   min-height: 90px;
-  box-shadow:
-    4px 4px 0 0 var(--pixel-shadow);
-  text-decoration: none;
-  color: inherit;
+  box-shadow: 4px 4px 0 0 var(--pixel-shadow);
+  text-decoration: none; color: inherit;
 }
 .project-card:hover {
   background: var(--card-hover);
-  box-shadow:
-    6px 6px 0 0 var(--pixel-black);
+  box-shadow: 6px 6px 0 0 var(--pixel-black);
   transform: translate(-2px, -2px);
   z-index: 5;
 }
 
-/* Card icon */
 .card-icon {
-  width: 52px;
-  height: 52px;
-  flex-shrink: 0;
+  width: 52px; height: 52px; flex-shrink: 0;
   background: var(--bg-deep);
   border: 3px solid var(--pixel-black);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   image-rendering: pixelated;
 }
 .card-icon svg { width: 32px; height: 32px; }
 
-/* Card info */
 .card-info { flex: 1; min-width: 0; }
 .card-name {
   font-family: var(--font-pixel);
-  font-size: 11px;
-  color: var(--pixel-black);
-  margin-bottom: 4px;
-  line-height: 1.4;
+  font-size: 11px; color: var(--pixel-black);
+  margin-bottom: 4px; line-height: 1.4;
 }
 
-/* Hover reveal — 3 bullet points */
 .card-detail {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s steps(3);
-  font-family: var(--font-terminal);
-  font-size: 15px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  opacity: 0;
+  max-height: 0; overflow: hidden;
   transition: max-height 0.2s steps(3), opacity 0.15s steps(2);
+  font-family: var(--font-terminal);
+  font-size: 15px; color: var(--text-secondary);
+  line-height: 1.5; opacity: 0;
 }
-.project-card:hover .card-detail {
-  max-height: 120px;
-  opacity: 1;
-}
+.project-card:hover .card-detail { max-height: 120px; opacity: 1; }
 .card-detail li {
-  list-style: none;
-  position: relative;
-  padding-left: 12px;
+  list-style: none; position: relative; padding-left: 12px;
 }
 .card-detail li::before {
-  content: '▸';
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-size: 12px;
+  content: '▸'; position: absolute; left: 0;
+  color: var(--accent); font-size: 12px;
 }
 
-/* Click indicator arrow */
 .card-arrow {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  font-family: var(--font-pixel);
-  font-size: 9px;
-  color: var(--text-muted);
-  opacity: 0;
+  position: absolute; top: 10px; right: 12px;
+  font-family: var(--font-pixel); font-size: 9px;
+  color: var(--text-muted); opacity: 0;
   transition: opacity var(--transition);
 }
 .project-card:hover .card-arrow { opacity: 1; }
 
-/* QR placeholder */
-.qr-placeholder {
-  width: 80px;
-  height: 80px;
-  background: var(--bg-deep);
-  border: 2px dashed var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-pixel);
-  font-size: 7px;
-  color: var(--text-muted);
-  text-align: center;
-  line-height: 1.4;
-  flex-shrink: 0;
+/* QR image */
+.qr-img {
+  width: 80px; height: 80px;
+  border: 2px solid var(--pixel-black);
   image-rendering: pixelated;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
-/* Tag */
 .tag {
   display: inline-block;
-  font-family: var(--font-pixel);
-  font-size: 7px;
+  font-family: var(--font-pixel); font-size: 7px;
   padding: 3px 7px;
   border: 2px solid var(--pixel-black);
-  color: var(--pixel-black);
-  background: var(--bg-deep);
-  margin-right: 4px;
-  margin-top: 6px;
+  color: var(--pixel-black); background: var(--bg-deep);
+  margin-right: 4px; margin-top: 6px;
 }
 
-/* ---- Scroll Nav Dots ---- */
+/* ---- Animated "..." dots ---- */
+.dots-continue {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-pixel); font-size: 20px;
+  color: var(--text-muted);
+  padding: 20px 0 0 0;
+  letter-spacing: 2px;
+}
+.dots-continue .dot {
+  animation: dot-blink 0.6s steps(1) infinite;
+}
+.dots-continue .dot:nth-child(2) { animation-delay: 0.2s; }
+.dots-continue .dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dot-blink {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* ---- Scroll Nav ---- */
 .scroll-nav {
-  position: fixed;
-  right: 20px;
-  top: 50%;
+  position: fixed; right: 20px; top: 50%;
   transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  display: flex; flex-direction: column; gap: 14px;
   z-index: 100;
 }
 .scroll-nav-dot {
-  width: 10px;
-  height: 10px;
+  width: 10px; height: 10px;
   background: var(--text-muted);
   border: 2px solid transparent;
   cursor: pointer;
@@ -488,72 +385,53 @@ a { color: var(--accent); text-decoration: none; }
   transform: scale(1.3);
 }
 
-/* ---- Scroll Hint ---- */
 .scroll-hint {
-  position: absolute;
-  bottom: 24px;
-  right: 48px;
-  font-family: var(--font-pixel);
-  font-size: 8px;
+  position: absolute; bottom: 24px; right: 48px;
+  font-family: var(--font-pixel); font-size: 8px;
   color: var(--text-muted);
   animation: float-hint 2s steps(4) infinite;
-  pointer-events: none;
-  z-index: 5;
+  pointer-events: none; z-index: 5;
 }
 @keyframes float-hint {
-  0%, 100% { transform: translateY(0); opacity: 0.5; }
-  50% { transform: translateY(-8px); opacity: 1; }
+  0%,100% { transform: translateY(0); opacity:0.5; }
+  50% { transform: translateY(-8px); opacity:1; }
 }
 
-/* ---- Mobile-only elements ---- */
 .mobile-only { display: none; }
 
 /* ============================================================
-   RESPONSIVE: Mobile
+   MOBILE
    ============================================================ */
 @media (max-width: 768px) {
   body {
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
-    height: 100vh;
-    height: 100dvh;
+    height: 100vh; height: 100dvh;
   }
-
   .app-layout { display: block; height: auto; }
   .sidebar { display: none; }
   .scroll-nav { display: none; }
-
   .mobile-only { display: block; }
 
   .main-scroll {
-    height: auto;
-    overflow: visible;
-    scroll-snap-type: none;
+    height: auto; overflow: visible; scroll-snap-type: none;
   }
 
   .section {
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 100vh; min-height: 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    padding: 40px 20px;
-    justify-content: center;
+    padding: 40px 20px; justify-content: center;
   }
 
-  /* Mobile Cover */
   .mobile-cover {
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 100vh; min-height: 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 24px;
-    gap: 24px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px; gap: 24px;
     text-align: center;
-    position: relative;
     background: var(--bg-deep);
   }
   .mobile-cover .avatar-wrap { width: 120px; height: 120px; }
@@ -563,69 +441,49 @@ a { color: var(--accent); text-decoration: none; }
   .mobile-cover .sidebar-bio { font-size: 15px; }
 
   .scroll-down-indicator {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
+    position: absolute; bottom: 30px; left: 50%;
     transform: translateX(-50%);
-    font-family: var(--font-terminal);
-    font-size: 14px;
+    font-family: var(--font-terminal); font-size: 14px;
     color: var(--text-muted);
     animation: float-hint 2s steps(4) infinite;
   }
 
-  /* Mobile sections */
   .section-header { margin-bottom: 24px; }
-  .section-title { font-size: 14px; }
+  .section-title { font-size: 13px; }
   .section-title::before { display: none; }
 
+  .subsection-title { font-size: 11px; }
+
   .project-grid,
-  .project-grid.cols-3 {
+  .project-grid.cols-3,
+  .project-grid.single-col {
     grid-template-columns: 1fr;
-    gap: 14px;
-    max-width: 100%;
+    gap: 14px; max-width: 100%;
   }
 
   .project-card {
-    padding: 16px;
-    gap: 12px;
-    min-height: auto;
-    flex-wrap: wrap;
+    padding: 16px; gap: 12px; min-height: auto; flex-wrap: wrap;
   }
-  .project-card .card-detail {
-    max-height: 120px;
-    opacity: 1;
-  }
+  .project-card .card-detail { max-height: 120px; opacity: 1; }
   .project-card .card-arrow { opacity: 1; }
 
   .card-icon { width: 44px; height: 44px; }
   .card-icon svg { width: 26px; height: 26px; }
 
-  .qr-placeholder { width: 64px; height: 64px; font-size: 7px; }
+  .qr-img { width: 64px; height: 64px; }
 
-  /* Mobile Contact */
   .mobile-contact {
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 100vh; min-height: 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 24px;
-    gap: 20px;
-    text-align: center;
-    background: var(--bg-deep);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px; gap: 20px;
+    text-align: center; background: var(--bg-deep);
   }
   .mobile-contact .social-links { align-items: center; }
-
-  /* Hide section top line on mobile */
-  .section::before { display: none; }
 }
 
-/* ============================================================
-   Reduce Motion
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -643,7 +501,6 @@ a { color: var(--accent); text-decoration: none; }
        LEFT SIDEBAR (Desktop)
        ============================================================ -->
   <aside class="sidebar">
-
     <div class="sidebar-header-deco">★ PLAYER 01 ★</div>
 
     <div class="avatar-wrap">
@@ -657,8 +514,7 @@ a { color: var(--accent); text-decoration: none; }
     </div>
 
     <div class="sidebar-bio">
-      用代码构建想象中的世界<br>
-      像素 · 游戏 · 开源
+      用代码构建想象中的世界<br>像素 · 游戏 · 开源
     </div>
 
     <div class="pixel-divider"></div>
@@ -692,10 +548,11 @@ a { color: var(--accent); text-decoration: none; }
   </aside>
 
   <!-- ============================================================
-       SCROLL NAV DOTS (Desktop)
+       SCROLL NAV DOTS
        ============================================================ -->
-  <nav class="scroll-nav" id="scrollNav" aria-label="Section navigation">
-    <div class="scroll-nav-dot active" data-target="sec-web" title="Web 项目"></div>
+  <nav class="scroll-nav" id="scrollNav">
+    <div class="scroll-nav-dot active" data-target="sec-tools" title="Web 工具"></div>
+    <div class="scroll-nav-dot" data-target="sec-demo" title="Demo"></div>
     <div class="scroll-nav-dot" data-target="sec-wechat" title="小程序 & 小游戏"></div>
     <div class="scroll-nav-dot" data-target="sec-skills" title="开源 Skills"></div>
   </nav>
@@ -705,12 +562,12 @@ a { color: var(--accent); text-decoration: none; }
        ============================================================ -->
   <main class="main-scroll" id="mainScroll">
 
-    <!-- MOBILE COVER -->
+    <!-- ========== MOBILE COVER ========== -->
     <div class="mobile-cover mobile-only">
       <div class="sidebar-header-deco" style="margin-bottom:-8px;">★ PLAYER 01 ★</div>
       <div class="avatar-wrap">
         <div class="avatar-glitch"></div>
-        <img class="avatar" src="个人照.JPG" alt="Eason LV" loading="eager">
+        <img class="avatar" src="pixel-avatar.png" alt="Eason LV" loading="eager">
       </div>
       <div class="sidebar-name">
         <span class="en">EASON LV</span>
@@ -724,42 +581,15 @@ a { color: var(--accent); text-decoration: none; }
     </div>
 
     <!-- ================================
-         SECTION 1: Web Projects
+         SECTION 01: WEB TOOLS (Web 工具)
          ================================ -->
-    <section class="section" id="sec-web">
+    <section class="section" id="sec-tools">
       <div class="section-header">
         <div class="section-tag">[ SECTION 01 ]</div>
-        <h2 class="section-title">WEB PROJECTS</h2>
+        <h2 class="section-title">WEB TOOLS (Web 工具)</h2>
       </div>
 
       <div class="project-grid cols-3">
-        <!-- 行动代号 -->
-        <a class="project-card" href="https://tuteng3.site/game.html" target="_blank" rel="noopener">
-          <div class="card-icon">
-            <svg viewBox="0 0 32 32">
-              <rect x="2" y="2" width="8" height="8" fill="#78350F"/>
-              <rect x="12" y="2" width="8" height="8" fill="#D97706"/>
-              <rect x="22" y="2" width="8" height="8" fill="#78350F"/>
-              <rect x="2" y="12" width="8" height="8" fill="#78350F"/>
-              <rect x="12" y="12" width="8" height="8" fill="#22C55E"/>
-              <rect x="22" y="12" width="8" height="8" fill="#78350F"/>
-              <rect x="2" y="22" width="8" height="8" fill="#D97706"/>
-              <rect x="12" y="22" width="8" height="8" fill="#78350F"/>
-              <rect x="22" y="22" width="8" height="8" fill="#D97706"/>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-name">行动代号 CodeNames</div>
-            <ul class="card-detail">
-              <li>红蓝双人对战猜词派对游戏</li>
-              <li>AI 智能词库生成 (MiniMax M2.7)</li>
-              <li>15+ 预设主题 · 5种配色方案</li>
-            </ul>
-            <span class="tag">HTML5</span><span class="tag">AI</span>
-          </div>
-          <span class="card-arrow">GO ▶</span>
-        </a>
-
         <!-- AI音乐生成器 -->
         <a class="project-card" href="https://tuteng3.site/music_gen/" target="_blank" rel="noopener">
           <div class="card-icon">
@@ -769,16 +599,14 @@ a { color: var(--accent); text-decoration: none; }
               <rect x="10" y="8" width="8" height="6" fill="#D97706"/>
               <circle cx="24" cy="16" r="8" fill="none" stroke="#78350F" stroke-width="3"/>
               <rect x="22" y="4" width="3" height="12" fill="#D97706"/>
-              <rect x="28" y="18" width="4" height="4" fill="#22C55E"/>
-              <rect x="28" y="24" width="4" height="4" fill="#3B82F6"/>
             </svg>
           </div>
           <div class="card-info">
             <div class="card-name">AI 音乐生成器</div>
             <ul class="card-detail">
               <li>AI 驱动的在线音乐创作工具</li>
-              <li>文本 / 旋律 → 完整音乐生成</li>
-              <li>即时播放 · 在线试听 · 下载</li>
+              <li>文本转音乐 · 翻唱 · MiniMax 2.6</li>
+              <li>即时生成 · 在线播放 · 下载</li>
             </ul>
             <span class="tag">AI</span><span class="tag">音乐</span>
           </div>
@@ -814,8 +642,6 @@ a { color: var(--accent); text-decoration: none; }
               <rect x="2" y="4" width="28" height="20" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
               <circle cx="16" cy="13" r="6" fill="none" stroke="#78350F" stroke-width="2.5"/>
               <rect x="10" y="24" width="12" height="5" rx="2" fill="#D97706"/>
-              <rect x="12" y="26" width="3" height="2" fill="#22C55E"/>
-              <rect x="21" y="26" width="3" height="2" fill="#3B82F6"/>
             </svg>
           </div>
           <div class="card-info">
@@ -823,9 +649,48 @@ a { color: var(--accent); text-decoration: none; }
             <ul class="card-detail">
               <li>自拍上传 → AI 生成标准证件照</li>
               <li>阿里百炼通义万相 AI 生图引擎</li>
-              <li>支持多国护照/签证/身份证规格</li>
+              <li>多国护照/签证/身份证规格支持</li>
             </ul>
             <span class="tag">AI</span><span class="tag">工具</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 02: DEMO (演示)
+         ================================ -->
+    <section class="section" id="sec-demo">
+      <div class="section-header">
+        <div class="section-tag">[ SECTION 02 ]</div>
+        <h2 class="section-title">DEMO (演示)</h2>
+      </div>
+
+      <div class="project-grid">
+        <!-- 行动代号 -->
+        <a class="project-card" href="https://tuteng3.site/game.html" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32">
+              <rect x="2" y="2" width="8" height="8" fill="#78350F"/>
+              <rect x="12" y="2" width="8" height="8" fill="#D97706"/>
+              <rect x="22" y="2" width="8" height="8" fill="#78350F"/>
+              <rect x="2" y="12" width="8" height="8" fill="#78350F"/>
+              <rect x="12" y="12" width="8" height="8" fill="#22C55E"/>
+              <rect x="22" y="12" width="8" height="8" fill="#78350F"/>
+              <rect x="2" y="22" width="8" height="8" fill="#D97706"/>
+              <rect x="12" y="22" width="8" height="8" fill="#78350F"/>
+              <rect x="22" y="22" width="8" height="8" fill="#D97706"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">行动代号 CodeNames</div>
+            <ul class="card-detail">
+              <li>红蓝双人对战猜词派对游戏</li>
+              <li>AI 智能词库生成 (MiniMax M2.7)</li>
+              <li>15+ 预设主题 · 5 种配色方案</li>
+            </ul>
+            <span class="tag">HTML5</span><span class="tag">AI</span>
           </div>
           <span class="card-arrow">GO ▶</span>
         </a>
@@ -845,7 +710,7 @@ a { color: var(--accent); text-decoration: none; }
             <div class="card-name">自动滚动 Feed 流</div>
             <ul class="card-detail">
               <li>全屏自动滚动的视频 Feed 演示</li>
-              <li>支持亮色/暗色主题切换</li>
+              <li>亮色/暗色主题切换</li>
               <li>类 TikTok 交互 · 点赞 · 滑动</li>
             </ul>
             <span class="tag">Demo</span><span class="tag">Feed</span>
@@ -854,91 +719,102 @@ a { color: var(--accent); text-decoration: none; }
         </a>
       </div>
 
-      <!-- Scroll hint only on first section -->
-      <div class="scroll-hint">▼ SCROLL ▼</div>
+      <!-- Animated dots -->
+      <div class="dots-continue">
+        <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+        <span style="font-size:10px;margin-left:8px;">to be continued</span>
+      </div>
     </section>
 
     <!-- ================================
-         SECTION 2: 微信小程序 & 小游戏
+         SECTION 03: MINI PROGRAMS & GAMES (小程序 & 小游戏)
          ================================ -->
     <section class="section" id="sec-wechat">
       <div class="section-header">
-        <div class="section-tag">[ SECTION 02 ]</div>
-        <h2 class="section-title">MINI PROGRAMS & GAMES</h2>
+        <div class="section-tag">[ SECTION 03 ]</div>
+        <h2 class="section-title">MINI PROGRAMS & GAMES (小程序 & 小游戏)</h2>
       </div>
 
-      <div class="project-grid">
-        <!-- 商务计划 -->
-        <div class="project-card" tabindex="0">
-          <div class="card-icon">
-            <svg viewBox="0 0 32 32">
-              <rect x="3" y="2" width="26" height="28" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
-              <rect x="8" y="9" width="16" height="10" stroke="#78350F" stroke-width="2"/>
-              <rect x="8" y="22" width="12" height="4" fill="#D97706"/>
-              <rect x="13" y="9" width="6" height="10" fill="#22C55E" opacity="0.4"/>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-name">商务计划 WishList</div>
-            <ul class="card-detail">
-              <li>商务计划书创建与管理小程序</li>
-              <li>进度追踪 · 团队协作 · 备忘提醒</li>
-              <li>微信小程序，扫码即用</li>
-            </ul>
-            <span class="tag">小程序</span><span class="tag">效率</span>
-          </div>
-          <div class="qr-placeholder">
-            小程序<br>二维码<br>[ 占位 ]
+      <!-- Sub: 小程序 -->
+      <div class="subsection">
+        <h3 class="subsection-title">▶ 小程序 (Mini Program)</h3>
+        <div class="project-grid single-col">
+          <div class="project-card" tabindex="0">
+            <div class="card-icon">
+              <svg viewBox="0 0 32 32">
+                <rect x="3" y="2" width="26" height="28" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
+                <rect x="8" y="9" width="16" height="10" stroke="#78350F" stroke-width="2"/>
+                <rect x="8" y="22" width="12" height="4" fill="#D97706"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <div class="card-name">计划事务清单 WishList</div>
+              <ul class="card-detail">
+                <li>商务计划书创建与管理小程序</li>
+                <li>进度追踪 · 团队协作 · 备忘提醒</li>
+                <li>微信扫码即用</li>
+              </ul>
+              <span class="tag">小程序</span><span class="tag">效率</span>
+            </div>
+            <img class="qr-img" src="qr-wishlist.png" alt="小程序二维码" loading="lazy">
           </div>
         </div>
+        <div class="dots-continue">
+          <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+          <span style="font-size:10px;margin-left:8px;">to be continued</span>
+        </div>
+      </div>
 
-        <!-- 极速应动挑战 -->
-        <div class="project-card" tabindex="0">
-          <div class="card-icon">
-            <svg viewBox="0 0 32 32">
-              <rect x="4" y="2" width="6" height="24" fill="#78350F"/>
-              <rect x="4" y="18" width="24" height="8" fill="none" stroke="#78350F" stroke-width="2.5"/>
-              <polygon points="28,4 28,28 2,16" fill="#D97706"/>
-              <rect x="18" y="14" width="8" height="4" fill="#22C55E"/>
-              <rect x="22" y="20" width="4" height="4" fill="#D97706"/>
-            </svg>
+      <!-- Sub: 小游戏 -->
+      <div class="subsection">
+        <h3 class="subsection-title">▶ 小游戏 (Mini Game)</h3>
+        <div class="project-grid single-col">
+          <div class="project-card" tabindex="0">
+            <div class="card-icon">
+              <svg viewBox="0 0 32 32">
+                <rect x="4" y="2" width="6" height="24" fill="#78350F"/>
+                <rect x="4" y="18" width="24" height="8" fill="none" stroke="#78350F" stroke-width="2.5"/>
+                <polygon points="28,4 28,28 2,16" fill="#D97706"/>
+                <rect x="18" y="14" width="8" height="4" fill="#22C55E"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <div class="card-name">极速命中挑战</div>
+              <ul class="card-detail">
+                <li>考验反应速度的射击小游戏</li>
+                <li>实时对战 · 速度挑战 · 排行榜</li>
+                <li>微信小游戏，即点即玩</li>
+              </ul>
+              <span class="tag">小游戏</span><span class="tag">竞技</span>
+            </div>
+            <img class="qr-img" src="qr-minigame.png" alt="小游戏二维码" loading="lazy">
           </div>
-          <div class="card-info">
-            <div class="card-name">极速应动挑战</div>
-            <ul class="card-detail">
-              <li>考验反应速度的射击小游戏</li>
-              <li>实时对战 · 速度挑战 · 排行榜</li>
-              <li>微信小游戏，即点即玩</li>
-            </ul>
-            <span class="tag">小游戏</span><span class="tag">竞技</span>
-          </div>
-          <div class="qr-placeholder">
-            小游戏<br>二维码<br>[ 占位 ]
-          </div>
+        </div>
+        <div class="dots-continue">
+          <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+          <span style="font-size:10px;margin-left:8px;">to be continued</span>
         </div>
       </div>
     </section>
 
     <!-- ================================
-         SECTION 3: 开源 Skills
+         SECTION 04: OPEN SOURCE SKILLS (开源 Skills)
          ================================ -->
     <section class="section" id="sec-skills">
       <div class="section-header">
-        <div class="section-tag">[ SECTION 03 ]</div>
-        <h2 class="section-title">OPEN SOURCE SKILLS</h2>
+        <div class="section-tag">[ SECTION 04 ]</div>
+        <h2 class="section-title">OPEN SOURCE SKILLS (开源 Skills)</h2>
       </div>
 
       <div class="project-grid">
         <!-- 新西兰签证 -->
-        <a class="project-card" href="https://github.com/search?q=user:easonlv+nz-visa" target="_blank" rel="noopener">
+        <a class="project-card" href="https://github.com/eason6789/nz-visa-4cn" target="_blank" rel="noopener">
           <div class="card-icon">
             <svg viewBox="0 0 32 32">
               <rect x="2" y="2" width="28" height="18" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
               <circle cx="11" cy="11" r="5" fill="none" stroke="#D97706" stroke-width="2.5"/>
               <rect x="18" y="20" width="10" height="10" fill="#22C55E"/>
               <rect x="2" y="20" width="12" height="10" fill="#3B82F6"/>
-              <rect x="18" y="25" width="10" height="2" fill="#78350F"/>
-              <rect x="5" y="25" width="6" height="2" fill="#78350F"/>
             </svg>
           </div>
           <div class="card-info">
@@ -954,7 +830,7 @@ a { color: var(--accent); text-decoration: none; }
         </a>
 
         <!-- 闲鱼自动发货 -->
-        <a class="project-card" href="https://github.com/search?q=user:easonlv+xianyu" target="_blank" rel="noopener">
+        <a class="project-card" href="https://github.com/eason6789/xianyu-auto-send-skills" target="_blank" rel="noopener">
           <div class="card-icon">
             <svg viewBox="0 0 32 32">
               <ellipse cx="16" cy="10" rx="10" ry="6" fill="none" stroke="#78350F" stroke-width="3"/>
@@ -962,8 +838,6 @@ a { color: var(--accent); text-decoration: none; }
               <circle cx="12" cy="8" r="2" fill="#78350F"/>
               <rect x="2" y="20" width="12" height="9" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
               <rect x="18" y="20" width="12" height="9" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
-              <rect x="4" y="23" width="3" height="3" fill="#22C55E"/>
-              <rect x="20" y="23" width="3" height="3" fill="#22C55E"/>
             </svg>
           </div>
           <div class="card-info">
@@ -978,13 +852,18 @@ a { color: var(--accent); text-decoration: none; }
           <span class="card-arrow">GO ▶</span>
         </a>
       </div>
+
+      <div class="dots-continue">
+        <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+        <span style="font-size:10px;margin-left:8px;">to be continued</span>
+      </div>
     </section>
 
-    <!-- MOBILE CONTACT -->
+    <!-- ========== MOBILE CONTACT ========== -->
     <div class="mobile-contact mobile-only">
       <div class="sidebar-header-deco" style="margin-bottom:-8px;">★ GAME OVER? ★</div>
       <div class="avatar-wrap" style="width:100px;height:100px;">
-        <img class="avatar" src="个人照.JPG" alt="Eason LV" style="width:100px;height:100px;">
+        <img class="avatar" src="pixel-avatar.png" alt="Eason LV" style="width:100px;height:100px;">
       </div>
       <div class="sidebar-name">
         <span class="en" style="font-size:16px;">EASON LV</span>
@@ -1009,28 +888,27 @@ a { color: var(--accent); text-decoration: none; }
 
 <!-- Intersection Observer for scroll nav dots -->
 <script>
-(function() {
+(function(){
   const sections = document.querySelectorAll('.section');
   const dots = document.querySelectorAll('.scroll-nav-dot');
-  if (!sections.length || !dots.length) return;
+  if(!sections.length || !dots.length) return;
 
-  const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
+      if(entry.isIntersecting) {
         dots.forEach(d => d.classList.remove('active'));
         const active = document.querySelector(`.scroll-nav-dot[data-target="${entry.target.id}"]`);
-        if (active) active.classList.add('active');
+        if(active) active.classList.add('active');
       }
     });
   }, { threshold: 0.5 });
 
   sections.forEach(s => observer.observe(s));
 
-  // Click to scroll
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
       const target = document.getElementById(dot.dataset.target);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
+      if(target) target.scrollIntoView({ behavior: 'smooth' });
     });
   });
 })();
