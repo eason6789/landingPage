@@ -1,166 +1,1040 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>创想世界</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #000000;
-            --surface: #0a0a0a;
-            --surface-elevated: #141414;
-            --border: #262626;
-            --text: #ffffff;
-            --text-secondary: #737373;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
-        .hero { position: relative; height: 70vh; min-height: 500px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .hero-bg { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1920&q=80') center/cover no-repeat; }
-        .hero-content { position: relative; text-align: center; max-width: 800px; padding: 24px; }
-        .logo { font-size: 14px; font-weight: 500; letter-spacing: 0.3em; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 32px; }
-        .hero h1 { font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 24px; }
-        .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 560px; margin: 0 auto; line-height: 1.6; }
-        .section { padding: 80px 0; border-top: 1px solid var(--border); }
-        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
-        .section-title { font-size: 14px; font-weight: 500; letter-spacing: 0.2em; color: var(--text-secondary); text-transform: uppercase; }
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .grid-item { position: relative; aspect-ratio: 16/10; border-radius: 12px; overflow: hidden; cursor: pointer; background: var(--surface); }
-        .grid-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.6s ease; }
-        .grid-item:hover .grid-bg { transform: scale(1.05); }
-        .grid-count { position: absolute; top: 16px; right: 16px; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; z-index: 2; }
-        .grid-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; opacity: 0; transition: opacity 0.3s ease; }
-        .grid-item:hover .grid-overlay { opacity: 1; }
-        .grid-content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%); z-index: 1; }
-        .grid-content h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 4px; }
-        .grid-content p { font-size: 0.875rem; color: var(--text-secondary); }
-        .grid-overlay h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 4px; }
-        .grid-overlay p { font-size: 0.875rem; color: var(--text-secondary); }
-        .works { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-        .work-item { position: relative; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; cursor: pointer; }
-        .work-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.6s ease; }
-        .work-item:hover .work-bg { transform: scale(1.05); }
-        .work-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; opacity: 1; transition: opacity 0.3s ease; }
-        .work-item:hover .work-overlay { opacity: 1; }
-        .work-overlay .label { font-size: 12px; font-weight: 500; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em; }
-        .work-overlay h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 8px; }
-        .work-overlay p { font-size: 0.875rem; color: var(--text-secondary); }
-        footer { border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--text-secondary); font-size: 14px; }
-        @media (max-width: 768px) { .grid, .works { grid-template-columns: 1fr; } .section { padding: 48px 0; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eason LV — 个人作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CSS Custom Properties
+   ============================================================ */
+:root {
+  --bg:            #FEF3C7;
+  --bg-deep:       #F5E0A8;
+  --card:          #FFFDF5;
+  --card-hover:    #FFF8E7;
+  --text:          #78350F;
+  --text-secondary:#92400E;
+  --text-muted:    #A16207;
+  --accent:        #D97706;
+  --accent-hover:  #B45309;
+  --border:        #FDE68A;
+  --border-strong: #D97706;
+  --pixel-shadow:  #B45309;
+  --pixel-black:   #1C1917;
+  --pixel-green:   #22C55E;
+  --pixel-blue:    #3B82F6;
+  --pixel-red:     #DC2626;
+  --pixel-pink:    #EC4899;
+
+  --font-pixel:    'Press Start 2P', 'ZCOOL QingKe HuangYou', cursive;
+  --font-terminal: 'VT323', 'ZCOOL QingKe HuangYou', monospace;
+
+  --sidebar-w:     300px;
+  --transition:    120ms steps(2);
+}
+
+/* ============================================================
+   Reset & Base
+   ============================================================ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-terminal);
+  font-size: 18px;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  overflow: hidden;
+}
+
+/* Subtle pixel grid overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.05;
+  background-image:
+    linear-gradient(rgba(120,53,15,0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,53,15,0.4) 1px, transparent 1px);
+  background-size: 6px 6px;
+}
+
+a { color: var(--accent); text-decoration: none; }
+
+/* ============================================================
+   Pixel Utility Classes
+   ============================================================ */
+.pixel-corners {
+  clip-path: polygon(
+    0px 4px, 4px 4px, 4px 0px, calc(100% - 4px) 0px,
+    calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px),
+    calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0px calc(100% - 4px)
+  );
+}
+
+/* ============================================================
+   Layout — Desktop: Sidebar (fixed) + Main (scroll-snap)
+   ============================================================ */
+.app-layout {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Sidebar ---- */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  gap: 24px;
+  z-index: 10;
+  background: var(--bg-deep);
+  border-right: 4px solid var(--pixel-black);
+}
+
+/* Sidebar pixel decoration stripe */
+.sidebar::before {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--pixel-shadow) 0px,
+    var(--pixel-shadow) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
+
+/* Sidebar header decoration */
+.sidebar-header-deco {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.2em;
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* Avatar */
+.avatar-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+}
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 2px;
+  object-fit: cover;
+  image-rendering: pixelated;
+  display: block;
+  border: 4px solid var(--pixel-black);
+  box-shadow:
+    -5px -5px 0 0 var(--pixel-shadow),
+    5px 5px 0 0 rgba(0,0,0,0.06);
+}
+.avatar-glitch {
+  position: absolute;
+  inset: -8px;
+  border: 2px dashed var(--accent);
+  border-radius: 4px;
+  pointer-events: none;
+  animation: glitch-border 4s steps(2) infinite;
+}
+@keyframes glitch-border {
+  0%, 80%, 100% { border-color: var(--accent); opacity: 1; }
+  40% { border-color: var(--pixel-green); opacity: 0.7; }
+  60% { border-color: var(--pixel-pink); opacity: 0.7; }
+}
+
+/* Name */
+.sidebar-name {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  color: var(--pixel-black);
+  text-align: center;
+  line-height: 1.8;
+}
+.sidebar-name .en { font-size: 20px; display: block; }
+.sidebar-name .cn { font-size: 13px; color: var(--text-secondary); display: block; }
+
+/* Bio */
+.sidebar-bio {
+  font-family: var(--font-terminal);
+  font-size: 16px;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.5;
+  max-width: 220px;
+}
+
+/* Divider */
+.pixel-divider {
+  width: 70%;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--pixel-black) 0px,
+    var(--pixel-black) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  flex-shrink: 0;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-terminal);
+  font-size: 17px;
+  color: var(--text);
+  padding: 7px 14px;
+  border: 2px solid transparent;
+  transition: all var(--transition);
+  cursor: pointer;
+  text-decoration: none;
+  width: 100%;
+}
+.social-link:hover {
+  border-color: var(--pixel-black);
+  background: var(--card);
+  color: var(--accent-hover);
+}
+.social-link:hover .social-icon {
+  transform: scale(1.2);
+}
+.social-link:hover .social-icon svg {
+  filter: drop-shadow(2px 2px 0 var(--pixel-shadow));
+}
+.social-icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  transition: transform var(--transition);
+  image-rendering: pixelated;
+}
+
+/* ---- Main Scroll Container ---- */
+.main-scroll {
+  flex: 1;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+}
+
+/* Custom scrollbar */
+.main-scroll::-webkit-scrollbar { width: 12px; }
+.main-scroll::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+  border-left: 2px solid var(--border);
+}
+.main-scroll::-webkit-scrollbar-thumb {
+  background: var(--pixel-black);
+  border: 2px solid var(--bg-deep);
+  min-height: 40px;
+}
+.main-scroll::-webkit-scrollbar-thumb:hover { background: var(--accent-hover); }
+
+/* ---- Section ---- */
+.section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 48px 48px 40px;
+  position: relative;
+}
+
+/* Section decoration — top pixel line */
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--pixel-black) 0px,
+    var(--pixel-black) 12px,
+    var(--accent) 12px,
+    var(--accent) 16px,
+    transparent 16px,
+    transparent 20px
+  );
+  opacity: 0.15;
+}
+
+/* ---- Section Header ---- */
+.section-header { margin-bottom: 36px; }
+.section-tag {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--accent);
+  letter-spacing: 0.25em;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  color: var(--pixel-black);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title::before {
+  content: '▶';
+  font-size: 12px;
+  color: var(--accent);
+  animation: blink-cursor 1s steps(1) infinite;
+}
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+/* ---- Project Grid ---- */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 900px;
+}
+.project-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+/* ---- Project Card ---- */
+.project-card {
+  position: relative;
+  background: var(--card);
+  border: 3px solid var(--pixel-black);
+  padding: 18px 18px 14px;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-height: 90px;
+  box-shadow:
+    4px 4px 0 0 var(--pixel-shadow);
+  text-decoration: none;
+  color: inherit;
+}
+.project-card:hover {
+  background: var(--card-hover);
+  box-shadow:
+    6px 6px 0 0 var(--pixel-black);
+  transform: translate(-2px, -2px);
+  z-index: 5;
+}
+
+/* Card icon */
+.card-icon {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  background: var(--bg-deep);
+  border: 3px solid var(--pixel-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  image-rendering: pixelated;
+}
+.card-icon svg { width: 32px; height: 32px; }
+
+/* Card info */
+.card-info { flex: 1; min-width: 0; }
+.card-name {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--pixel-black);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+/* Hover reveal — 3 bullet points */
+.card-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s steps(3);
+  font-family: var(--font-terminal);
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  opacity: 0;
+  transition: max-height 0.2s steps(3), opacity 0.15s steps(2);
+}
+.project-card:hover .card-detail {
+  max-height: 120px;
+  opacity: 1;
+}
+.card-detail li {
+  list-style: none;
+  position: relative;
+  padding-left: 12px;
+}
+.card-detail li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+/* Click indicator arrow */
+.card-arrow {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.project-card:hover .card-arrow { opacity: 1; }
+
+/* QR placeholder */
+.qr-placeholder {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-deep);
+  border: 2px dashed var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.4;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+}
+
+/* Tag */
+.tag {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  padding: 3px 7px;
+  border: 2px solid var(--pixel-black);
+  color: var(--pixel-black);
+  background: var(--bg-deep);
+  margin-right: 4px;
+  margin-top: 6px;
+}
+
+/* ---- Scroll Nav Dots ---- */
+.scroll-nav {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 100;
+}
+.scroll-nav-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--text-muted);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.scroll-nav-dot:hover,
+.scroll-nav-dot.active {
+  background: var(--pixel-black);
+  border-color: var(--accent);
+  transform: scale(1.3);
+}
+
+/* ---- Scroll Hint ---- */
+.scroll-hint {
+  position: absolute;
+  bottom: 24px;
+  right: 48px;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--text-muted);
+  animation: float-hint 2s steps(4) infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+@keyframes float-hint {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-8px); opacity: 1; }
+}
+
+/* ---- Mobile-only elements ---- */
+.mobile-only { display: none; }
+
+/* ============================================================
+   RESPONSIVE: Mobile
+   ============================================================ */
+@media (max-width: 768px) {
+  body {
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .app-layout { display: block; height: auto; }
+  .sidebar { display: none; }
+  .scroll-nav { display: none; }
+
+  .mobile-only { display: block; }
+
+  .main-scroll {
+    height: auto;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .section {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 40px 20px;
+    justify-content: center;
+  }
+
+  /* Mobile Cover */
+  .mobile-cover {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    gap: 24px;
+    text-align: center;
+    position: relative;
+    background: var(--bg-deep);
+  }
+  .mobile-cover .avatar-wrap { width: 120px; height: 120px; }
+  .mobile-cover .avatar { width: 120px; height: 120px; }
+  .mobile-cover .sidebar-name .en { font-size: 18px; }
+  .mobile-cover .sidebar-name .cn { font-size: 12px; }
+  .mobile-cover .sidebar-bio { font-size: 15px; }
+
+  .scroll-down-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-terminal);
+    font-size: 14px;
+    color: var(--text-muted);
+    animation: float-hint 2s steps(4) infinite;
+  }
+
+  /* Mobile sections */
+  .section-header { margin-bottom: 24px; }
+  .section-title { font-size: 14px; }
+  .section-title::before { display: none; }
+
+  .project-grid,
+  .project-grid.cols-3 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 100%;
+  }
+
+  .project-card {
+    padding: 16px;
+    gap: 12px;
+    min-height: auto;
+    flex-wrap: wrap;
+  }
+  .project-card .card-detail {
+    max-height: 120px;
+    opacity: 1;
+  }
+  .project-card .card-arrow { opacity: 1; }
+
+  .card-icon { width: 44px; height: 44px; }
+  .card-icon svg { width: 26px; height: 26px; }
+
+  .qr-placeholder { width: 64px; height: 64px; font-size: 7px; }
+
+  /* Mobile Contact */
+  .mobile-contact {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    gap: 20px;
+    text-align: center;
+    background: var(--bg-deep);
+  }
+  .mobile-contact .social-links { align-items: center; }
+
+  /* Hide section top line on mobile */
+  .section::before { display: none; }
+}
+
+/* ============================================================
+   Reduce Motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <section class="hero">
-            <div class="hero-bg"></div>
-            <div class="hero-content">
-                <p class="logo">Creative World</p>
-                <h1>创想世界</h1>
-                <p>探索创意的边界，用代码构建想象中的世界</p>
-            </div>
-        </section>
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">分类</h2>
-            </div>
-            <div class="grid">
-                <div class="grid-item" onclick="location.href='tools.html'">
-                    <div class="grid-bg" style="background-image: url('https://images.unsplash.com/photo-1516245834210-c4c142787335?w=800&q=80')"></div>
-                    <span class="grid-count" data-count="tools.html">...</span>
-                    <div class="grid-content">
-                        <h3>工具</h3>
-                        <p>在线工具、实用小应用</p>
-                    </div>
-                    <div class="grid-overlay">
-                        <h3>工具</h3>
-                        <p>在线工具、实用小应用</p>
-                    </div>
-                </div>
-                <div class="grid-item" onclick="alert('即将上线，敬请期待');">
-                    <div class="grid-bg" style="background-image: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80')"></div>
-                    <span class="grid-count">0</span>
-                    <div class="grid-content">
-                        <h3>小程序</h3>
-                        <p>微信小程序、UniApp</p>
-                    </div>
-                    <div class="grid-overlay">
-                        <h3>小程序</h3>
-                        <p>微信小程序、UniApp</p>
-                    </div>
-                </div>
-                <div class="grid-item" onclick="location.href='games.html'">
-                    <div class="grid-bg" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80')"></div>
-                    <span class="grid-count" data-count="games.html">...</span>
-                    <div class="grid-content">
-                        <h3>游戏</h3>
-                        <p>HTML5游戏、互动体验</p>
-                    </div>
-                    <div class="grid-overlay">
-                        <h3>游戏</h3>
-                        <p>HTML5游戏、互动体验</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">精选</h2>
-            </div>
-            <div class="works">
-                <div class="work-item" onclick="location.href='game.html'">
-                    <div class="work-bg" style="background-image: url('https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=1200&q=80')"></div>
-                    <div class="work-overlay">
-                        <p class="label">游戏</p>
-                        <h3>行动代号</h3>
-                        <p>双人对战猜词游戏，AI生成词库，多种主题</p>
-                    </div>
-                </div>
-                <div class="work-item" onclick="location.href='/finlearn/'">
-                    <div class="work-bg" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80')"></div>
-                    <div class="work-overlay">
-                        <p class="label">学习</p>
-                        <h3>金融知识学习平台</h3>
-                        <p>系统化金融知识体系，10大模块循序渐进，覆盖宏观经济、投资分析、区块链等核心领域</p>
-                    </div>
-                </div>
-                <div class="work-item" onclick="location.href='tools.html'">
-                    <div class="work-bg" style="background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&q=80')"></div>
-                    <div class="work-overlay">
-                        <p class="label">工具</p>
-                        <h3>AI证件照生成</h3>
-                        <p>上传自拍，自动生成各国签证标准证件照</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <footer><p>© 2026 创想世界. 保留所有权利。</p></footer>
+
+<div class="app-layout">
+
+  <!-- ============================================================
+       LEFT SIDEBAR (Desktop)
+       ============================================================ -->
+  <aside class="sidebar">
+
+    <div class="sidebar-header-deco">★ PLAYER 01 ★</div>
+
+    <div class="avatar-wrap">
+      <div class="avatar-glitch"></div>
+      <img class="avatar" src="个人照.JPG" alt="Eason LV" loading="eager">
     </div>
-    <script>
-        async function updateCounts() {
-            const items = document.querySelectorAll('[data-count]');
-            for (const item of items) {
-                const page = item.dataset.count;
-                try {
-                    const res = await fetch(page);
-                    const text = await res.text();
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(text, 'text/html');
-                    // Count cards based on page type
-                    let count = 0;
-                    if (page.includes('tools')) {
-                        count = doc.querySelectorAll('.tool-card').length;
-                    } else if (page.includes('games')) {
-                        count = doc.querySelectorAll('.game-card').length;
-                    }
-                    item.textContent = count;
-                } catch (e) {
-                    item.textContent = '?';
-                }
-            }
-        }
-        updateCounts();
-    </script>
+
+    <div class="sidebar-name">
+      <span class="en">EASON LV</span>
+      <span class="cn">产品 · 开发 · 创造</span>
+    </div>
+
+    <div class="sidebar-bio">
+      用代码构建想象中的世界<br>
+      像素 · 游戏 · 开源
+    </div>
+
+    <div class="pixel-divider"></div>
+
+    <div class="social-links">
+      <a class="social-link" href="mailto:#" target="_blank">
+        <svg class="social-icon" viewBox="0 0 26 26"><rect x="1" y="5" width="24" height="16" stroke="#78350F" stroke-width="3" fill="none"/><polyline points="1,5 13,15 25,5" stroke="#78350F" stroke-width="3" fill="none"/></svg>
+        <span>EMAIL</span>
+      </a>
+      <a class="social-link" href="#" target="_blank">
+        <svg class="social-icon" viewBox="0 0 26 26"><rect x="1" y="3" width="24" height="20" rx="3" stroke="#78350F" stroke-width="3"/><polygon points="10,8 10,18 19,13" fill="#78350F"/></svg>
+        <span>YOUTUBE</span>
+      </a>
+      <a class="social-link" href="#" target="_blank">
+        <svg class="social-icon" viewBox="0 0 26 26"><rect x="1" y="1" width="24" height="24" rx="6" stroke="#78350F" stroke-width="3"/><circle cx="13" cy="13" r="6" stroke="#78350F" stroke-width="2.5"/><circle cx="20" cy="6" r="2" fill="#78350F"/></svg>
+        <span>INSTAGRAM</span>
+      </a>
+      <a class="social-link" href="#" target="_blank">
+        <svg class="social-icon" viewBox="0 0 26 26"><circle cx="13" cy="13" r="12" stroke="#78350F" stroke-width="3"/><text x="13" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#78350F" font-family="sans-serif">W</text></svg>
+        <span>WEIBO</span>
+      </a>
+      <a class="social-link" href="#" target="_blank">
+        <svg class="social-icon" viewBox="0 0 26 26"><rect x="1" y="1" width="24" height="24" rx="6" stroke="#78350F" stroke-width="3"/><text x="13" y="18" text-anchor="middle" font-size="11" font-weight="bold" fill="#78350F" font-family="sans-serif">RED</text></svg>
+        <span>REDBOOK</span>
+      </a>
+      <a class="social-link" href="#" target="_blank">
+        <svg class="social-icon" viewBox="0 0 26 26"><rect x="1" y="1" width="24" height="24" rx="5" stroke="#78350F" stroke-width="3"/><text x="13" y="18" text-anchor="middle" font-size="11" font-weight="bold" fill="#78350F" font-family="sans-serif">B</text></svg>
+        <span>BILIBILI</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       SCROLL NAV DOTS (Desktop)
+       ============================================================ -->
+  <nav class="scroll-nav" id="scrollNav" aria-label="Section navigation">
+    <div class="scroll-nav-dot active" data-target="sec-web" title="Web 项目"></div>
+    <div class="scroll-nav-dot" data-target="sec-wechat" title="小程序 & 小游戏"></div>
+    <div class="scroll-nav-dot" data-target="sec-skills" title="开源 Skills"></div>
+  </nav>
+
+  <!-- ============================================================
+       MAIN SCROLL
+       ============================================================ -->
+  <main class="main-scroll" id="mainScroll">
+
+    <!-- MOBILE COVER -->
+    <div class="mobile-cover mobile-only">
+      <div class="sidebar-header-deco" style="margin-bottom:-8px;">★ PLAYER 01 ★</div>
+      <div class="avatar-wrap">
+        <div class="avatar-glitch"></div>
+        <img class="avatar" src="个人照.JPG" alt="Eason LV" loading="eager">
+      </div>
+      <div class="sidebar-name">
+        <span class="en">EASON LV</span>
+        <span class="cn">产品 · 开发 · 创造</span>
+      </div>
+      <div class="sidebar-bio">
+        用代码构建想象中的世界<br>像素 · 游戏 · 开源
+      </div>
+      <div class="pixel-divider"></div>
+      <div class="scroll-down-indicator">▼ SCROLL ▼</div>
+    </div>
+
+    <!-- ================================
+         SECTION 1: Web Projects
+         ================================ -->
+    <section class="section" id="sec-web">
+      <div class="section-header">
+        <div class="section-tag">[ SECTION 01 ]</div>
+        <h2 class="section-title">WEB PROJECTS</h2>
+      </div>
+
+      <div class="project-grid cols-3">
+        <!-- 行动代号 -->
+        <a class="project-card" href="https://tuteng3.site/game.html" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32">
+              <rect x="2" y="2" width="8" height="8" fill="#78350F"/>
+              <rect x="12" y="2" width="8" height="8" fill="#D97706"/>
+              <rect x="22" y="2" width="8" height="8" fill="#78350F"/>
+              <rect x="2" y="12" width="8" height="8" fill="#78350F"/>
+              <rect x="12" y="12" width="8" height="8" fill="#22C55E"/>
+              <rect x="22" y="12" width="8" height="8" fill="#78350F"/>
+              <rect x="2" y="22" width="8" height="8" fill="#D97706"/>
+              <rect x="12" y="22" width="8" height="8" fill="#78350F"/>
+              <rect x="22" y="22" width="8" height="8" fill="#D97706"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">行动代号 CodeNames</div>
+            <ul class="card-detail">
+              <li>红蓝双人对战猜词派对游戏</li>
+              <li>AI 智能词库生成 (MiniMax M2.7)</li>
+              <li>15+ 预设主题 · 5种配色方案</li>
+            </ul>
+            <span class="tag">HTML5</span><span class="tag">AI</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
+
+        <!-- AI音乐生成器 -->
+        <a class="project-card" href="https://tuteng3.site/music_gen/" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32">
+              <rect x="4" y="2" width="6" height="8" fill="#78350F"/>
+              <rect x="4" y="14" width="6" height="16" fill="#78350F"/>
+              <rect x="10" y="8" width="8" height="6" fill="#D97706"/>
+              <circle cx="24" cy="16" r="8" fill="none" stroke="#78350F" stroke-width="3"/>
+              <rect x="22" y="4" width="3" height="12" fill="#D97706"/>
+              <rect x="28" y="18" width="4" height="4" fill="#22C55E"/>
+              <rect x="28" y="24" width="4" height="4" fill="#3B82F6"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">AI 音乐生成器</div>
+            <ul class="card-detail">
+              <li>AI 驱动的在线音乐创作工具</li>
+              <li>文本 / 旋律 → 完整音乐生成</li>
+              <li>即时播放 · 在线试听 · 下载</li>
+            </ul>
+            <span class="tag">AI</span><span class="tag">音乐</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
+
+        <!-- 金融学习 -->
+        <a class="project-card" href="https://tuteng3.site/finlearn" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32">
+              <rect x="2" y="22" width="8" height="4" fill="#D97706"/>
+              <rect x="12" y="12" width="8" height="14" fill="#78350F"/>
+              <rect x="22" y="4" width="8" height="22" fill="#22C55E"/>
+              <rect x="2" y="26" width="28" height="4" fill="#78350F"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">金融知识学习平台</div>
+            <ul class="card-detail">
+              <li>交互式金融知识体系化学习</li>
+              <li>10 大模块：宏观/投资/区块链</li>
+              <li>Agent World 驱动学习体验</li>
+            </ul>
+            <span class="tag">教育</span><span class="tag">金融</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
+
+        <!-- 证件照生成 -->
+        <a class="project-card" href="https://tuteng3.site/claw/photo/" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32">
+              <rect x="2" y="4" width="28" height="20" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
+              <circle cx="16" cy="13" r="6" fill="none" stroke="#78350F" stroke-width="2.5"/>
+              <rect x="10" y="24" width="12" height="5" rx="2" fill="#D97706"/>
+              <rect x="12" y="26" width="3" height="2" fill="#22C55E"/>
+              <rect x="21" y="26" width="3" height="2" fill="#3B82F6"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">AI 证件照生成</div>
+            <ul class="card-detail">
+              <li>自拍上传 → AI 生成标准证件照</li>
+              <li>阿里百炼通义万相 AI 生图引擎</li>
+              <li>支持多国护照/签证/身份证规格</li>
+            </ul>
+            <span class="tag">AI</span><span class="tag">工具</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
+
+        <!-- 视频Feed流 -->
+        <a class="project-card" href="https://tuteng3.site/video-feed/" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32">
+              <rect x="2" y="2" width="28" height="28" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
+              <rect x="9" y="8" width="14" height="10" rx="1" fill="#78350F"/>
+              <polygon points="14,11 14,15 17,13" fill="#FEF3C7"/>
+              <rect x="6" y="22" width="8" height="4" fill="#D97706"/>
+              <rect x="16" y="22" width="8" height="4" fill="#22C55E"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">自动滚动 Feed 流</div>
+            <ul class="card-detail">
+              <li>全屏自动滚动的视频 Feed 演示</li>
+              <li>支持亮色/暗色主题切换</li>
+              <li>类 TikTok 交互 · 点赞 · 滑动</li>
+            </ul>
+            <span class="tag">Demo</span><span class="tag">Feed</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
+      </div>
+
+      <!-- Scroll hint only on first section -->
+      <div class="scroll-hint">▼ SCROLL ▼</div>
+    </section>
+
+    <!-- ================================
+         SECTION 2: 微信小程序 & 小游戏
+         ================================ -->
+    <section class="section" id="sec-wechat">
+      <div class="section-header">
+        <div class="section-tag">[ SECTION 02 ]</div>
+        <h2 class="section-title">MINI PROGRAMS & GAMES</h2>
+      </div>
+
+      <div class="project-grid">
+        <!-- 商务计划 -->
+        <div class="project-card" tabindex="0">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32">
+              <rect x="3" y="2" width="26" height="28" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
+              <rect x="8" y="9" width="16" height="10" stroke="#78350F" stroke-width="2"/>
+              <rect x="8" y="22" width="12" height="4" fill="#D97706"/>
+              <rect x="13" y="9" width="6" height="10" fill="#22C55E" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">商务计划 WishList</div>
+            <ul class="card-detail">
+              <li>商务计划书创建与管理小程序</li>
+              <li>进度追踪 · 团队协作 · 备忘提醒</li>
+              <li>微信小程序，扫码即用</li>
+            </ul>
+            <span class="tag">小程序</span><span class="tag">效率</span>
+          </div>
+          <div class="qr-placeholder">
+            小程序<br>二维码<br>[ 占位 ]
+          </div>
+        </div>
+
+        <!-- 极速应动挑战 -->
+        <div class="project-card" tabindex="0">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32">
+              <rect x="4" y="2" width="6" height="24" fill="#78350F"/>
+              <rect x="4" y="18" width="24" height="8" fill="none" stroke="#78350F" stroke-width="2.5"/>
+              <polygon points="28,4 28,28 2,16" fill="#D97706"/>
+              <rect x="18" y="14" width="8" height="4" fill="#22C55E"/>
+              <rect x="22" y="20" width="4" height="4" fill="#D97706"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">极速应动挑战</div>
+            <ul class="card-detail">
+              <li>考验反应速度的射击小游戏</li>
+              <li>实时对战 · 速度挑战 · 排行榜</li>
+              <li>微信小游戏，即点即玩</li>
+            </ul>
+            <span class="tag">小游戏</span><span class="tag">竞技</span>
+          </div>
+          <div class="qr-placeholder">
+            小游戏<br>二维码<br>[ 占位 ]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 3: 开源 Skills
+         ================================ -->
+    <section class="section" id="sec-skills">
+      <div class="section-header">
+        <div class="section-tag">[ SECTION 03 ]</div>
+        <h2 class="section-title">OPEN SOURCE SKILLS</h2>
+      </div>
+
+      <div class="project-grid">
+        <!-- 新西兰签证 -->
+        <a class="project-card" href="https://github.com/search?q=user:easonlv+nz-visa" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32">
+              <rect x="2" y="2" width="28" height="18" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
+              <circle cx="11" cy="11" r="5" fill="none" stroke="#D97706" stroke-width="2.5"/>
+              <rect x="18" y="20" width="10" height="10" fill="#22C55E"/>
+              <rect x="2" y="20" width="12" height="10" fill="#3B82F6"/>
+              <rect x="18" y="25" width="10" height="2" fill="#78350F"/>
+              <rect x="5" y="25" width="6" height="2" fill="#78350F"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">新西兰签证材料生成器</div>
+            <ul class="card-detail">
+              <li>上传证件照 → 一键生成申请 PDF</li>
+              <li>OCR 识别 + 中译英 + 自动排版</li>
+              <li>符合新西兰移民局 (INZ) 规范</li>
+            </ul>
+            <span class="tag">Skill</span><span class="tag">AI</span><span class="tag">PDF</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
+
+        <!-- 闲鱼自动发货 -->
+        <a class="project-card" href="https://github.com/search?q=user:easonlv+xianyu" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32">
+              <ellipse cx="16" cy="10" rx="10" ry="6" fill="none" stroke="#78350F" stroke-width="3"/>
+              <path d="M6 10 Q16 24 26 10" fill="#D97706" stroke="#78350F" stroke-width="2.5"/>
+              <circle cx="12" cy="8" r="2" fill="#78350F"/>
+              <rect x="2" y="20" width="12" height="9" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
+              <rect x="18" y="20" width="12" height="9" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
+              <rect x="4" y="23" width="3" height="3" fill="#22C55E"/>
+              <rect x="20" y="23" width="3" height="3" fill="#22C55E"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">闲鱼自动发货框架</div>
+            <ul class="card-detail">
+              <li>闲鱼虚拟商品自动化发货系统</li>
+              <li>自动检测买家付款 → 触发发货</li>
+              <li>可扩展：秘钥/链接/图片/API</li>
+            </ul>
+            <span class="tag">Skill</span><span class="tag">自动化</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- MOBILE CONTACT -->
+    <div class="mobile-contact mobile-only">
+      <div class="sidebar-header-deco" style="margin-bottom:-8px;">★ GAME OVER? ★</div>
+      <div class="avatar-wrap" style="width:100px;height:100px;">
+        <img class="avatar" src="个人照.JPG" alt="Eason LV" style="width:100px;height:100px;">
+      </div>
+      <div class="sidebar-name">
+        <span class="en" style="font-size:16px;">EASON LV</span>
+        <span class="cn">保持联系</span>
+      </div>
+      <div class="pixel-divider"></div>
+      <div class="social-links" style="align-items:center;">
+        <a class="social-link" href="mailto:#">✉️ EMAIL</a>
+        <a class="social-link" href="#">▶️ YOUTUBE</a>
+        <a class="social-link" href="#">📷 INSTAGRAM</a>
+        <a class="social-link" href="#">🔵 WEIBO</a>
+        <a class="social-link" href="#">📕 REDBOOK</a>
+        <a class="social-link" href="#">📺 BILIBILI</a>
+      </div>
+      <p style="font-family:var(--font-terminal);font-size:14px;color:var(--text-muted);margin-top:24px;">
+        © 2026 Eason LV — Built with Pixels
+      </p>
+    </div>
+
+  </main>
+</div>
+
+<!-- Intersection Observer for scroll nav dots -->
+<script>
+(function() {
+  const sections = document.querySelectorAll('.section');
+  const dots = document.querySelectorAll('.scroll-nav-dot');
+  if (!sections.length || !dots.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        dots.forEach(d => d.classList.remove('active'));
+        const active = document.querySelector(`.scroll-nav-dot[data-target="${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Click to scroll
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const target = document.getElementById(dot.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
