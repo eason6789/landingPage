@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eason LV — 个人作品集</title>
+<title>陀螺(Eason)的创想世界</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@
   --font-pixel:    'Press Start 2P', 'ZCOOL QingKe HuangYou', cursive;
   --font-terminal: 'VT323', 'ZCOOL QingKe HuangYou', monospace;
 
-  --sidebar-w:     300px;
+  --sidebar-w:     310px;
   --transition:    120ms steps(2);
 }
 
@@ -56,10 +56,7 @@ body {
 
 body::before {
   content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
   opacity: 0.05;
   background-image:
     linear-gradient(rgba(120,53,15,0.4) 1px, transparent 1px),
@@ -74,72 +71,47 @@ a { color: var(--accent); text-decoration: none; }
    ============================================================ */
 .app-layout {
   display: flex;
-  height: 100vh;
-  height: 100dvh;
-  position: relative;
-  z-index: 1;
+  height: 100vh; height: 100dvh;
+  position: relative; z-index: 1;
 }
 
 /* ---- Sidebar ---- */
 .sidebar {
-  width: var(--sidebar-w);
-  min-width: var(--sidebar-w);
-  height: 100vh;
-  height: 100dvh;
+  width: var(--sidebar-w); min-width: var(--sidebar-w);
+  height: 100vh; height: 100dvh;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 24px;
-  gap: 24px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 32px 20px; gap: 18px;
   z-index: 10;
-  background: var(--bg-deep);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 50%, var(--bg) 100%);
   border-right: 4px solid var(--pixel-black);
 }
-
 .sidebar::before {
   content: '';
-  position: absolute;
-  right: -10px; top: 0; bottom: 0;
+  position: absolute; right: -10px; top: 0; bottom: 0;
   width: 6px;
-  background: repeating-linear-gradient(
-    0deg,
-    var(--pixel-shadow) 0px,
-    var(--pixel-shadow) 8px,
-    transparent 8px,
-    transparent 16px
-  );
+  background: repeating-linear-gradient(0deg,
+    var(--pixel-shadow) 0px, var(--pixel-shadow) 8px,
+    transparent 8px, transparent 16px);
 }
 
 .sidebar-header-deco {
-  font-family: var(--font-pixel);
-  font-size: 9px;
-  color: var(--text-muted);
-  letter-spacing: 0.2em;
-  text-align: center;
-  opacity: 0.6;
+  font-family: var(--font-pixel); font-size: 8px;
+  color: var(--text-muted); letter-spacing: 0.3em;
+  text-align: center; opacity: 0.6;
 }
 
-.avatar-wrap {
-  position: relative;
-  width: 140px; height: 140px;
-  flex-shrink: 0;
-}
+.avatar-wrap { position: relative; width: 120px; height: 120px; flex-shrink: 0; }
 .avatar {
-  width: 140px; height: 140px;
-  border-radius: 2px;
-  object-fit: cover;
-  image-rendering: pixelated;
-  display: block;
+  width: 120px; height: 120px; border-radius: 2px;
+  object-fit: cover; image-rendering: pixelated; display: block;
   border: 4px solid var(--pixel-black);
-  box-shadow: -5px -5px 0 0 var(--pixel-shadow), 5px 5px 0 0 rgba(0,0,0,0.06);
+  box-shadow: -4px -4px 0 0 var(--pixel-shadow), 4px 4px 0 0 rgba(0,0,0,0.06);
 }
 .avatar-glitch {
-  position: absolute;
-  inset: -8px;
-  border: 2px dashed var(--accent);
-  border-radius: 4px;
+  position: absolute; inset: -8px;
+  border: 2px dashed var(--accent); border-radius: 4px;
   pointer-events: none;
   animation: glitch-border 4s steps(2) infinite;
 }
@@ -150,17 +122,16 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .sidebar-name {
-  font-family: var(--font-pixel);
-  font-size: 16px; color: var(--pixel-black);
-  text-align: center; line-height: 1.8;
+  font-family: var(--font-pixel); font-size: 14px;
+  color: var(--pixel-black); text-align: center; line-height: 1.8;
 }
-.sidebar-name .en { font-size: 20px; display: block; }
-.sidebar-name .cn { font-size: 13px; color: var(--text-secondary); display: block; }
+.sidebar-name .en { font-size: 18px; display: block; }
+.sidebar-name .cn { font-size: 12px; color: var(--text-secondary); display: block; }
 
 .sidebar-bio {
-  font-family: var(--font-terminal);
-  font-size: 16px; color: var(--text-secondary);
-  text-align: center; line-height: 1.5; max-width: 220px;
+  font-family: var(--font-terminal); font-size: 15px;
+  color: var(--text-secondary); text-align: center; line-height: 1.5;
+  max-width: 240px;
 }
 
 .pixel-divider {
@@ -171,29 +142,46 @@ a { color: var(--accent); text-decoration: none; }
   flex-shrink: 0;
 }
 
-.social-links {
+/* ---- Contact links with QR hover ---- */
+.contact-list {
   display: flex; flex-direction: column;
-  gap: 10px; align-items: flex-start; flex-shrink: 0;
+  gap: 6px; align-items: flex-start; flex-shrink: 0;
+  width: 100%; max-width: 250px;
 }
-.social-link {
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--font-terminal); font-size: 17px;
-  color: var(--text); padding: 7px 14px;
+.contact-item {
+  position: relative;
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-terminal); font-size: 15px;
+  color: var(--text); padding: 5px 10px;
   border: 2px solid transparent;
   transition: all var(--transition);
   cursor: pointer; text-decoration: none; width: 100%;
 }
-.social-link:hover {
+.contact-item:hover {
   border-color: var(--pixel-black);
   background: var(--card);
   color: var(--accent-hover);
 }
-.social-icon {
-  width: 26px; height: 26px; flex-shrink: 0;
-  transition: transform var(--transition);
+.contact-item .c-icon {
+  width: 22px; height: 22px; flex-shrink: 0;
   image-rendering: pixelated;
 }
-.social-link:hover .social-icon { transform: scale(1.2); }
+.contact-item .c-label { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* QR tooltip */
+.contact-qr {
+  position: absolute; left: 110%; top: 50%;
+  transform: translateY(-50%);
+  width: 120px; height: 120px;
+  border: 3px solid var(--pixel-black);
+  box-shadow: 4px 4px 0 0 var(--pixel-shadow);
+  background: var(--card);
+  display: none;
+  z-index: 50;
+  image-rendering: pixelated;
+  object-fit: contain;
+}
+.contact-item:hover .contact-qr { display: block; }
 
 /* ---- Main Scroll ---- */
 .main-scroll {
@@ -201,69 +189,77 @@ a { color: var(--accent); text-decoration: none; }
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
-  height: 100vh;
-  height: 100dvh;
+  height: 100vh; height: 100dvh;
   position: relative;
 }
 .main-scroll::-webkit-scrollbar { width: 12px; }
 .main-scroll::-webkit-scrollbar-track {
-  background: var(--bg-deep);
-  border-left: 2px solid var(--border);
+  background: var(--bg-deep); border-left: 2px solid var(--border);
 }
 .main-scroll::-webkit-scrollbar-thumb {
-  background: var(--pixel-black);
-  border: 2px solid var(--bg-deep);
-  min-height: 40px;
+  background: var(--pixel-black); border: 2px solid var(--bg-deep); min-height: 40px;
 }
 .main-scroll::-webkit-scrollbar-thumb:hover { background: var(--accent-hover); }
 
 /* ---- Section ---- */
 .section {
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100vh; min-height: 100dvh;
   scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   justify-content: center;
   padding: 48px 48px 48px 40px;
   position: relative;
 }
 
-.section-header { margin-bottom: 36px; }
+/* ---- Section Header (more prominent) ---- */
+.section-header {
+  margin-bottom: 40px;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 3px solid var(--pixel-black);
+  box-shadow: 5px 5px 0 0 var(--pixel-shadow);
+  display: inline-block;
+  max-width: fit-content;
+  position: relative;
+}
+.section-header::after {
+  content: '';
+  position: absolute; bottom: -6px; left: 6px; right: -6px;
+  height: 3px;
+  background: repeating-linear-gradient(90deg,
+    var(--accent) 0px, var(--accent) 6px,
+    transparent 6px, transparent 12px);
+}
 .section-tag {
-  font-family: var(--font-pixel);
-  font-size: 9px; color: var(--accent);
-  letter-spacing: 0.25em; margin-bottom: 10px;
+  font-family: var(--font-pixel); font-size: 8px;
+  color: var(--accent); letter-spacing: 0.25em; margin-bottom: 8px;
+  opacity: 0.7;
 }
 .section-title {
-  font-family: var(--font-pixel);
-  font-size: 16px; color: var(--pixel-black);
-  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-pixel); font-size: 14px;
+  color: var(--pixel-black); line-height: 1.5;
 }
-.section-title::before {
-  content: '▶';
-  font-size: 11px; color: var(--accent);
-  animation: blink-cursor 1s steps(1) infinite;
-}
-@keyframes blink-cursor { 0%,100%{opacity:1} 50%{opacity:0.2} }
+.section-title .title-cn { font-size: 19px; display: block; margin-bottom: 3px; color: var(--pixel-black); }
+.section-title .title-en { font-size: 11px; color: var(--text-secondary); display: block; }
 
 /* ---- Sub-section ---- */
 .subsection { margin-bottom: 28px; }
 .subsection:last-child { margin-bottom: 0; }
 .subsection-title {
-  font-family: var(--font-pixel);
-  font-size: 12px; color: var(--text-secondary);
+  font-family: var(--font-pixel); font-size: 11px;
+  color: var(--text);
   margin-bottom: 14px;
-  padding-left: 12px;
-  border-left: 3px solid var(--accent);
+  padding: 8px 12px;
+  background: var(--bg-deep);
+  border-left: 4px solid var(--pixel-black);
+  display: inline-block;
 }
 
 /* ---- Project Grid ---- */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  max-width: 900px;
+  gap: 20px; max-width: 900px;
 }
 .project-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
 .project-grid.single-col { grid-template-columns: 1fr; max-width: 500px; }
@@ -299,42 +295,48 @@ a { color: var(--accent); text-decoration: none; }
 
 .card-info { flex: 1; min-width: 0; }
 .card-name {
-  font-family: var(--font-pixel);
-  font-size: 11px; color: var(--pixel-black);
-  margin-bottom: 4px; line-height: 1.4;
+  font-size: 15px; color: var(--pixel-black);
+  margin-bottom: 2px; line-height: 1.4;
+  font-family: var(--font-terminal);
+  font-weight: bold;
+}
+.card-name .cn-name {
+  font-family: var(--font-pixel); font-size: 12px; display: block;
+}
+.card-name .en-name {
+  font-size: 11px; color: var(--text-secondary);
+  font-family: var(--font-terminal); display: block;
 }
 
 .card-detail {
   max-height: 0; overflow: hidden;
   transition: max-height 0.2s steps(3), opacity 0.15s steps(2);
   font-family: var(--font-terminal);
-  font-size: 15px; color: var(--text-secondary);
+  font-size: 14px; color: var(--text);
   line-height: 1.5; opacity: 0;
 }
 .project-card:hover .card-detail { max-height: 120px; opacity: 1; }
 .card-detail li {
-  list-style: none; position: relative; padding-left: 12px;
+  list-style: none; position: relative; padding-left: 10px;
 }
 .card-detail li::before {
   content: '▸'; position: absolute; left: 0;
-  color: var(--accent); font-size: 12px;
+  color: var(--accent); font-size: 11px;
 }
 
 .card-arrow {
   position: absolute; top: 10px; right: 12px;
-  font-family: var(--font-pixel); font-size: 9px;
+  font-family: var(--font-pixel); font-size: 8px;
   color: var(--text-muted); opacity: 0;
   transition: opacity var(--transition);
 }
 .project-card:hover .card-arrow { opacity: 1; }
 
-/* QR image */
 .qr-img {
   width: 80px; height: 80px;
   border: 2px solid var(--pixel-black);
   image-rendering: pixelated;
-  flex-shrink: 0;
-  object-fit: contain;
+  flex-shrink: 0; object-fit: contain;
 }
 
 .tag {
@@ -345,24 +347,29 @@ a { color: var(--accent); text-decoration: none; }
   color: var(--pixel-black); background: var(--bg-deep);
   margin-right: 4px; margin-top: 6px;
 }
+.tag.hot {
+  background: #DC2626; color: #FFF;
+  border-color: #DC2626;
+  animation: hot-pulse 1.2s steps(2) infinite;
+}
+@keyframes hot-pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
 
 /* ---- Animated "..." dots ---- */
 .dots-continue {
-  display: flex; align-items: center; gap: 6px;
-  font-family: var(--font-pixel); font-size: 20px;
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--font-pixel); font-size: 18px;
   color: var(--text-muted);
-  padding: 20px 0 0 0;
-  letter-spacing: 2px;
+  padding: 18px 0 0 0;
 }
 .dots-continue .dot {
   animation: dot-blink 0.6s steps(1) infinite;
 }
 .dots-continue .dot:nth-child(2) { animation-delay: 0.2s; }
 .dots-continue .dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes dot-blink {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 1; }
-}
+@keyframes dot-blink { 0%,100%{opacity:0.15} 50%{opacity:1} }
 
 /* ---- Scroll Nav ---- */
 .scroll-nav {
@@ -378,8 +385,7 @@ a { color: var(--accent); text-decoration: none; }
   cursor: pointer;
   transition: all var(--transition);
 }
-.scroll-nav-dot:hover,
-.scroll-nav-dot.active {
+.scroll-nav-dot:hover, .scroll-nav-dot.active {
   background: var(--pixel-black);
   border-color: var(--accent);
   transform: scale(1.3);
@@ -393,8 +399,8 @@ a { color: var(--accent); text-decoration: none; }
   pointer-events: none; z-index: 5;
 }
 @keyframes float-hint {
-  0%,100% { transform: translateY(0); opacity:0.5; }
-  50% { transform: translateY(-8px); opacity:1; }
+  0%,100%{transform:translateY(0);opacity:.5}
+  50%{transform:translateY(-8px);opacity:1}
 }
 
 .mobile-only { display: none; }
@@ -403,42 +409,38 @@ a { color: var(--accent); text-decoration: none; }
    MOBILE
    ============================================================ */
 @media (max-width: 768px) {
-  body {
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    height: 100vh; height: 100dvh;
-  }
-  .app-layout { display: block; height: auto; }
+  body { overflow: hidden; }
+  .app-layout { display: block; height: 100vh; height: 100dvh; overflow: hidden; }
   .sidebar { display: none; }
   .scroll-nav { display: none; }
   .mobile-only { display: block; }
 
   .main-scroll {
-    height: auto; overflow: visible; scroll-snap-type: none;
-  }
+	    height: 100vh; height: 100dvh;
+	    overflow-y: scroll;
+	    scroll-snap-type: y mandatory;
+	  }
 
   .section {
     min-height: 100vh; min-height: 100dvh;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    padding: 40px 20px; justify-content: center;
+    scroll-snap-align: start; scroll-snap-stop: always;
+    padding: 36px 18px; justify-content: center;
   }
 
+  /* Mobile Cover */
   .mobile-cover {
     min-height: 100vh; min-height: 100dvh;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    scroll-snap-align: start; scroll-snap-stop: always;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    padding: 40px 24px; gap: 24px;
-    text-align: center;
-    background: var(--bg-deep);
+    padding: 40px 24px; gap: 20px;
+    text-align: center; background: var(--bg-deep);
   }
-  .mobile-cover .avatar-wrap { width: 120px; height: 120px; }
-  .mobile-cover .avatar { width: 120px; height: 120px; }
-  .mobile-cover .sidebar-name .en { font-size: 18px; }
-  .mobile-cover .sidebar-name .cn { font-size: 12px; }
-  .mobile-cover .sidebar-bio { font-size: 15px; }
+  .mobile-cover .avatar-wrap { width: 110px; height: 110px; }
+  .mobile-cover .avatar { width: 110px; height: 110px; }
+  .mobile-cover .sidebar-name .en { font-size: 17px; }
+  .mobile-cover .sidebar-name .cn { font-size: 11px; }
+  .mobile-cover .sidebar-bio { font-size: 14px; }
 
   .scroll-down-indicator {
     position: absolute; bottom: 30px; left: 50%;
@@ -448,17 +450,14 @@ a { color: var(--accent); text-decoration: none; }
     animation: float-hint 2s steps(4) infinite;
   }
 
-  .section-header { margin-bottom: 24px; }
-  .section-title { font-size: 13px; }
-  .section-title::before { display: none; }
+  .section-header { margin-bottom: 24px; padding: 12px 16px; }
+  .section-title .title-cn { font-size: 16px; }
+  .section-title .title-en { font-size: 10px; }
 
-  .subsection-title { font-size: 11px; }
+  .subsection-title { font-size: 10px; }
 
-  .project-grid,
-  .project-grid.cols-3,
-  .project-grid.single-col {
-    grid-template-columns: 1fr;
-    gap: 14px; max-width: 100%;
+  .project-grid, .project-grid.cols-3, .project-grid.single-col {
+    grid-template-columns: 1fr; gap: 14px; max-width: 100%;
   }
 
   .project-card {
@@ -469,19 +468,26 @@ a { color: var(--accent); text-decoration: none; }
 
   .card-icon { width: 44px; height: 44px; }
   .card-icon svg { width: 26px; height: 26px; }
+  .card-name .cn-name { font-size: 11px; }
 
   .qr-img { width: 64px; height: 64px; }
 
+  /* Mobile contact pages */
   .mobile-contact {
     min-height: 100vh; min-height: 100dvh;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    scroll-snap-align: start; scroll-snap-stop: always;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     padding: 40px 24px; gap: 20px;
     text-align: center; background: var(--bg-deep);
   }
-  .mobile-contact .social-links { align-items: center; }
+  .mobile-contact .contact-list { align-items: center; }
+  .mobile-contact .contact-qr {
+    position: static; transform: none;
+    display: block; margin: 0 auto;
+  }
+  .mobile-contact .contact-item { flex-direction: column; gap: 8px; width: auto; }
+  .mobile-contact .contact-item:hover { border-color: transparent; background: transparent; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -509,40 +515,57 @@ a { color: var(--accent); text-decoration: none; }
     </div>
 
     <div class="sidebar-name">
-      <span class="en">EASON LV</span>
-      <span class="cn">产品 · 开发 · 创造</span>
+      <span class="en" style="font-size:17px;">陀螺(Eason)</span>
+      <span class="cn">创意 · 产品 · 开发</span>
     </div>
 
     <div class="sidebar-bio">
-      用代码构建想象中的世界<br>像素 · 游戏 · 开源
+      AI 就是生产力
     </div>
 
     <div class="pixel-divider"></div>
 
-    <div class="social-links">
-      <a class="social-link" href="mailto:#" target="_blank">
-        <svg class="social-icon" viewBox="0 0 26 26"><rect x="1" y="5" width="24" height="16" stroke="#78350F" stroke-width="3" fill="none"/><polyline points="1,5 13,15 25,5" stroke="#78350F" stroke-width="3" fill="none"/></svg>
-        <span>EMAIL</span>
+    <!-- Contact: hover shows QR, click jumps to link -->
+    <div class="contact-list">
+      <!-- GitHub -->
+      <a class="contact-item" href="https://github.com/eason6789" target="_blank" rel="noopener">
+        <svg class="c-icon" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#78350F" stroke-width="2.5"/><path d="M7 13 Q11 16 15 13" fill="none" stroke="#78350F" stroke-width="2"/><circle cx="8" cy="8" r="1.5" fill="#78350F"/><circle cx="14" cy="8" r="1.5" fill="#78350F"/></svg>
+        <span class="c-label">@eason6789</span>
+        <img class="contact-qr" src="qr-github.jpg" alt="GitHub QR" loading="lazy">
       </a>
-      <a class="social-link" href="#" target="_blank">
-        <svg class="social-icon" viewBox="0 0 26 26"><rect x="1" y="3" width="24" height="20" rx="3" stroke="#78350F" stroke-width="3"/><polygon points="10,8 10,18 19,13" fill="#78350F"/></svg>
-        <span>YOUTUBE</span>
+
+      <!-- 小红书 -->
+      <a class="contact-item" href="https://www.xiaohongshu.com/user/profile/557fb45c861d6233dd8faa62" target="_blank" rel="noopener">
+        <svg class="c-icon" viewBox="0 0 22 22"><rect x="3" y="3" width="16" height="16" rx="5" stroke="#78350F" stroke-width="2.5"/><text x="11" y="16" text-anchor="middle" font-size="9" font-weight="bold" fill="#78350F" font-family="sans-serif">RED</text></svg>
+        <span class="c-label">@陀螺是大王</span>
+        <img class="contact-qr" src="qr-redbook.jpg" alt="小红书 QR" loading="lazy">
       </a>
-      <a class="social-link" href="#" target="_blank">
-        <svg class="social-icon" viewBox="0 0 26 26"><rect x="1" y="1" width="24" height="24" rx="6" stroke="#78350F" stroke-width="3"/><circle cx="13" cy="13" r="6" stroke="#78350F" stroke-width="2.5"/><circle cx="20" cy="6" r="2" fill="#78350F"/></svg>
-        <span>INSTAGRAM</span>
+
+      <!-- 视频号 -->
+      <a class="contact-item" href="https://weixin.qq.com/sph/AzAq1nTxXI" target="_blank" rel="noopener">
+        <svg class="c-icon" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" stroke="#78350F" stroke-width="2.5"/><polygon points="11,6 11,16 15,13" fill="#78350F"/></svg>
+        <span class="c-label">@陀螺就是我</span>
+        <img class="contact-qr" src="qr-videocall.jpg" alt="视频号 QR" loading="lazy">
       </a>
-      <a class="social-link" href="#" target="_blank">
-        <svg class="social-icon" viewBox="0 0 26 26"><circle cx="13" cy="13" r="12" stroke="#78350F" stroke-width="3"/><text x="13" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#78350F" font-family="sans-serif">W</text></svg>
-        <span>WEIBO</span>
+
+      <!-- 抖音 -->
+      <a class="contact-item" href="https://v.douyin.com/DurNWxDV2qk/" target="_blank" rel="noopener">
+        <svg class="c-icon" viewBox="0 0 22 22"><rect x="3" y="3" width="16" height="16" rx="5" stroke="#78350F" stroke-width="2.5"/><text x="11" y="16" text-anchor="middle" font-size="9" font-weight="bold" fill="#78350F" font-family="sans-serif">D</text></svg>
+        <span class="c-label">@抽筋小陀螺</span>
+        <img class="contact-qr" src="qr-douyin.jpg" alt="抖音 QR" loading="lazy">
       </a>
-      <a class="social-link" href="#" target="_blank">
-        <svg class="social-icon" viewBox="0 0 26 26"><rect x="1" y="1" width="24" height="24" rx="6" stroke="#78350F" stroke-width="3"/><text x="13" y="18" text-anchor="middle" font-size="11" font-weight="bold" fill="#78350F" font-family="sans-serif">RED</text></svg>
-        <span>REDBOOK</span>
+
+      <!-- 微博 -->
+      <a class="contact-item" href="https://weibo.com/u/1245369407" target="_blank" rel="noopener">
+        <svg class="c-icon" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" stroke="#78350F" stroke-width="2.5"/><text x="11" y="16" text-anchor="middle" font-size="9" font-weight="bold" fill="#78350F" font-family="sans-serif">W</text></svg>
+        <span class="c-label">@齐天大陀螺</span>
+        <img class="contact-qr" src="qr-weibo.png" alt="微博 QR" loading="lazy">
       </a>
-      <a class="social-link" href="#" target="_blank">
-        <svg class="social-icon" viewBox="0 0 26 26"><rect x="1" y="1" width="24" height="24" rx="5" stroke="#78350F" stroke-width="3"/><text x="13" y="18" text-anchor="middle" font-size="11" font-weight="bold" fill="#78350F" font-family="sans-serif">B</text></svg>
-        <span>BILIBILI</span>
+
+      <!-- Email -->
+      <a class="contact-item" href="mailto:easonlv95@gmail.com">
+        <svg class="c-icon" viewBox="0 0 22 22"><rect x="2" y="4" width="18" height="14" rx="2" stroke="#78350F" stroke-width="2.5" fill="none"/><polyline points="2,4 11,12 20,4" stroke="#78350F" stroke-width="2.5" fill="none"/></svg>
+        <span class="c-label">easonlv95@gmail.com</span>
       </a>
     </div>
   </aside>
@@ -551,10 +574,10 @@ a { color: var(--accent); text-decoration: none; }
        SCROLL NAV DOTS
        ============================================================ -->
   <nav class="scroll-nav" id="scrollNav">
-    <div class="scroll-nav-dot active" data-target="sec-tools" title="Web 工具"></div>
-    <div class="scroll-nav-dot" data-target="sec-demo" title="Demo"></div>
-    <div class="scroll-nav-dot" data-target="sec-wechat" title="小程序 & 小游戏"></div>
-    <div class="scroll-nav-dot" data-target="sec-skills" title="开源 Skills"></div>
+    <div class="scroll-nav-dot active" data-target="sec-tools"></div>
+    <div class="scroll-nav-dot" data-target="sec-demo"></div>
+    <div class="scroll-nav-dot" data-target="sec-wechat"></div>
+    <div class="scroll-nav-dot" data-target="sec-skills"></div>
   </nav>
 
   <!-- ============================================================
@@ -564,29 +587,30 @@ a { color: var(--accent); text-decoration: none; }
 
     <!-- ========== MOBILE COVER ========== -->
     <div class="mobile-cover mobile-only">
-      <div class="sidebar-header-deco" style="margin-bottom:-8px;">★ PLAYER 01 ★</div>
+      <div class="sidebar-header-deco">★ PLAYER 01 ★</div>
       <div class="avatar-wrap">
         <div class="avatar-glitch"></div>
         <img class="avatar" src="pixel-avatar.png" alt="Eason LV" loading="eager">
       </div>
       <div class="sidebar-name">
-        <span class="en">EASON LV</span>
-        <span class="cn">产品 · 开发 · 创造</span>
+        <span class="en" style="font-size:17px;">陀螺(Eason)</span>
+        <span class="cn">创意 · 产品 · 开发</span>
       </div>
-      <div class="sidebar-bio">
-        用代码构建想象中的世界<br>像素 · 游戏 · 开源
-      </div>
+      <div class="sidebar-bio">AI 就是生产力</div>
       <div class="pixel-divider"></div>
       <div class="scroll-down-indicator">▼ SCROLL ▼</div>
     </div>
 
     <!-- ================================
-         SECTION 01: WEB TOOLS (Web 工具)
+         SECTION 01: Web 工具 (WEB TOOLS)
          ================================ -->
     <section class="section" id="sec-tools">
       <div class="section-header">
         <div class="section-tag">[ SECTION 01 ]</div>
-        <h2 class="section-title">WEB TOOLS (Web 工具)</h2>
+        <h2 class="section-title">
+          <span class="title-cn">Web 工具</span>
+          <span class="title-en">WEB TOOLS</span>
+        </h2>
       </div>
 
       <div class="project-grid cols-3">
@@ -602,13 +626,16 @@ a { color: var(--accent); text-decoration: none; }
             </svg>
           </div>
           <div class="card-info">
-            <div class="card-name">AI 音乐生成器</div>
+            <div class="card-name">
+              <span class="cn-name">AI 音乐生成器</span>
+              <span class="en-name">AI Music Generator</span>
+            </div>
             <ul class="card-detail">
               <li>AI 驱动的在线音乐创作工具</li>
               <li>文本转音乐 · 翻唱 · MiniMax 2.6</li>
               <li>即时生成 · 在线播放 · 下载</li>
             </ul>
-            <span class="tag">AI</span><span class="tag">音乐</span>
+            <span class="tag">AI</span><span class="tag">音乐</span><span class="tag hot">HOT</span>
           </div>
           <span class="card-arrow">GO ▶</span>
         </a>
@@ -624,10 +651,13 @@ a { color: var(--accent); text-decoration: none; }
             </svg>
           </div>
           <div class="card-info">
-            <div class="card-name">金融知识学习平台</div>
+            <div class="card-name">
+              <span class="cn-name">金融知识学习平台</span>
+              <span class="en-name">Finc Study</span>
+            </div>
             <ul class="card-detail">
               <li>交互式金融知识体系化学习</li>
-              <li>10 大模块：宏观/投资/区块链</li>
+              <li>10 大模块：宏观 / 投资 / 区块链</li>
               <li>Agent World 驱动学习体验</li>
             </ul>
             <span class="tag">教育</span><span class="tag">金融</span>
@@ -645,13 +675,16 @@ a { color: var(--accent); text-decoration: none; }
             </svg>
           </div>
           <div class="card-info">
-            <div class="card-name">AI 证件照生成</div>
+            <div class="card-name">
+              <span class="cn-name">AI 证件照生成</span>
+              <span class="en-name">ID Photo AI</span>
+            </div>
             <ul class="card-detail">
               <li>自拍上传 → AI 生成标准证件照</li>
               <li>阿里百炼通义万相 AI 生图引擎</li>
-              <li>多国护照/签证/身份证规格支持</li>
+              <li>多国护照 / 签证 / 身份证规格</li>
             </ul>
-            <span class="tag">AI</span><span class="tag">工具</span>
+            <span class="tag">AI</span><span class="tag">工具</span><span class="tag hot">HOT</span>
           </div>
           <span class="card-arrow">GO ▶</span>
         </a>
@@ -659,12 +692,15 @@ a { color: var(--accent); text-decoration: none; }
     </section>
 
     <!-- ================================
-         SECTION 02: DEMO (演示)
+         SECTION 02: 演示 (DEMO)
          ================================ -->
     <section class="section" id="sec-demo">
       <div class="section-header">
         <div class="section-tag">[ SECTION 02 ]</div>
-        <h2 class="section-title">DEMO (演示)</h2>
+        <h2 class="section-title">
+          <span class="title-cn">演示</span>
+          <span class="title-en">DEMO</span>
+        </h2>
       </div>
 
       <div class="project-grid">
@@ -684,7 +720,10 @@ a { color: var(--accent); text-decoration: none; }
             </svg>
           </div>
           <div class="card-info">
-            <div class="card-name">行动代号 CodeNames</div>
+            <div class="card-name">
+              <span class="cn-name">行动代号</span>
+              <span class="en-name">CodeNames</span>
+            </div>
             <ul class="card-detail">
               <li>红蓝双人对战猜词派对游戏</li>
               <li>AI 智能词库生成 (MiniMax M2.7)</li>
@@ -695,7 +734,7 @@ a { color: var(--accent); text-decoration: none; }
           <span class="card-arrow">GO ▶</span>
         </a>
 
-        <!-- 视频Feed流 -->
+        <!-- Feed流 -->
         <a class="project-card" href="https://tuteng3.site/video-feed/" target="_blank" rel="noopener">
           <div class="card-icon">
             <svg viewBox="0 0 32 32">
@@ -707,10 +746,13 @@ a { color: var(--accent); text-decoration: none; }
             </svg>
           </div>
           <div class="card-info">
-            <div class="card-name">自动滚动 Feed 流</div>
+            <div class="card-name">
+              <span class="cn-name">自动滚动 Feed 流</span>
+              <span class="en-name">Video Feed</span>
+            </div>
             <ul class="card-detail">
               <li>全屏自动滚动的视频 Feed 演示</li>
-              <li>亮色/暗色主题切换</li>
+              <li>亮色 / 暗色主题切换</li>
               <li>类 TikTok 交互 · 点赞 · 滑动</li>
             </ul>
             <span class="tag">Demo</span><span class="tag">Feed</span>
@@ -719,25 +761,26 @@ a { color: var(--accent); text-decoration: none; }
         </a>
       </div>
 
-      <!-- Animated dots -->
       <div class="dots-continue">
         <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-        <span style="font-size:10px;margin-left:8px;">to be continued</span>
       </div>
     </section>
 
     <!-- ================================
-         SECTION 03: MINI PROGRAMS & GAMES (小程序 & 小游戏)
+         SECTION 03: 小程序 & 小游戏 (MINI PROGRAMS & GAMES)
          ================================ -->
     <section class="section" id="sec-wechat">
       <div class="section-header">
         <div class="section-tag">[ SECTION 03 ]</div>
-        <h2 class="section-title">MINI PROGRAMS & GAMES (小程序 & 小游戏)</h2>
+        <h2 class="section-title">
+          <span class="title-cn">小程序 & 小游戏</span>
+          <span class="title-en">MINI PROGRAMS & GAMES</span>
+        </h2>
       </div>
 
       <!-- Sub: 小程序 -->
       <div class="subsection">
-        <h3 class="subsection-title">▶ 小程序 (Mini Program)</h3>
+        <h3 class="subsection-title">小程序 Mini Program</h3>
         <div class="project-grid single-col">
           <div class="project-card" tabindex="0">
             <div class="card-icon">
@@ -748,7 +791,10 @@ a { color: var(--accent); text-decoration: none; }
               </svg>
             </div>
             <div class="card-info">
-              <div class="card-name">计划事务清单 WishList</div>
+              <div class="card-name">
+                <span class="cn-name">计划事务清单</span>
+                <span class="en-name">WishList</span>
+              </div>
               <ul class="card-detail">
                 <li>商务计划书创建与管理小程序</li>
                 <li>进度追踪 · 团队协作 · 备忘提醒</li>
@@ -761,13 +807,12 @@ a { color: var(--accent); text-decoration: none; }
         </div>
         <div class="dots-continue">
           <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-          <span style="font-size:10px;margin-left:8px;">to be continued</span>
         </div>
       </div>
 
       <!-- Sub: 小游戏 -->
       <div class="subsection">
-        <h3 class="subsection-title">▶ 小游戏 (Mini Game)</h3>
+        <h3 class="subsection-title">小游戏 Mini Game</h3>
         <div class="project-grid single-col">
           <div class="project-card" tabindex="0">
             <div class="card-icon">
@@ -779,7 +824,10 @@ a { color: var(--accent); text-decoration: none; }
               </svg>
             </div>
             <div class="card-info">
-              <div class="card-name">极速命中挑战</div>
+              <div class="card-name">
+                <span class="cn-name">极速命中挑战</span>
+                <span class="en-name">Speed Reaction</span>
+              </div>
               <ul class="card-detail">
                 <li>考验反应速度的射击小游戏</li>
                 <li>实时对战 · 速度挑战 · 排行榜</li>
@@ -792,18 +840,20 @@ a { color: var(--accent); text-decoration: none; }
         </div>
         <div class="dots-continue">
           <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-          <span style="font-size:10px;margin-left:8px;">to be continued</span>
         </div>
       </div>
     </section>
 
     <!-- ================================
-         SECTION 04: OPEN SOURCE SKILLS (开源 Skills)
+         SECTION 04: 开源 Skills (OPEN SOURCE SKILLS)
          ================================ -->
     <section class="section" id="sec-skills">
       <div class="section-header">
         <div class="section-tag">[ SECTION 04 ]</div>
-        <h2 class="section-title">OPEN SOURCE SKILLS (开源 Skills)</h2>
+        <h2 class="section-title">
+          <span class="title-cn">开源 Skills</span>
+          <span class="title-en">OPEN SOURCE SKILLS</span>
+        </h2>
       </div>
 
       <div class="project-grid">
@@ -818,7 +868,10 @@ a { color: var(--accent); text-decoration: none; }
             </svg>
           </div>
           <div class="card-info">
-            <div class="card-name">新西兰签证材料生成器</div>
+            <div class="card-name">
+              <span class="cn-name">新西兰签证材料生成器</span>
+              <span class="en-name">NZ Visa 4CN</span>
+            </div>
             <ul class="card-detail">
               <li>上传证件照 → 一键生成申请 PDF</li>
               <li>OCR 识别 + 中译英 + 自动排版</li>
@@ -841,11 +894,14 @@ a { color: var(--accent); text-decoration: none; }
             </svg>
           </div>
           <div class="card-info">
-            <div class="card-name">闲鱼自动发货框架</div>
+            <div class="card-name">
+              <span class="cn-name">闲鱼自动发货框架</span>
+              <span class="en-name">Xianyu Auto Send</span>
+            </div>
             <ul class="card-detail">
               <li>闲鱼虚拟商品自动化发货系统</li>
               <li>自动检测买家付款 → 触发发货</li>
-              <li>可扩展：秘钥/链接/图片/API</li>
+              <li>可扩展：秘钥 / 链接 / 图片 / API</li>
             </ul>
             <span class="tag">Skill</span><span class="tag">自动化</span>
           </div>
@@ -855,38 +911,66 @@ a { color: var(--accent); text-decoration: none; }
 
       <div class="dots-continue">
         <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-        <span style="font-size:10px;margin-left:8px;">to be continued</span>
       </div>
     </section>
 
-    <!-- ========== MOBILE CONTACT ========== -->
+    <!-- ========== MOBILE: GitHub Contact ========== -->
     <div class="mobile-contact mobile-only">
-      <div class="sidebar-header-deco" style="margin-bottom:-8px;">★ GAME OVER? ★</div>
-      <div class="avatar-wrap" style="width:100px;height:100px;">
-        <img class="avatar" src="pixel-avatar.png" alt="Eason LV" style="width:100px;height:100px;">
-      </div>
+      <div class="sidebar-header-deco">★ CONTACT ★</div>
       <div class="sidebar-name">
         <span class="en" style="font-size:16px;">EASON LV</span>
-        <span class="cn">保持联系</span>
+        <span class="cn">如果你是程序员…</span>
+      </div>
+      <div class="sidebar-bio">通过 GitHub 找到我</div>
+      <div class="pixel-divider"></div>
+      <a class="contact-item" href="https://github.com/eason6789" target="_blank" rel="noopener" style="flex-direction:column;gap:10px;width:auto;">
+        <img class="contact-qr" src="qr-github.jpg" alt="GitHub" style="position:static;transform:none;display:block;width:130px;height:130px;">
+        <span style="font-family:var(--font-terminal);font-size:16px;">@eason6789</span>
+      </a>
+      <p style="font-family:var(--font-terminal);font-size:13px;color:var(--text-muted);margin-top:12px;">
+        ▼ 继续下滑 ▼
+      </p>
+    </div>
+
+    <!-- ========== MOBILE: Social Contact ========== -->
+    <div class="mobile-contact mobile-only">
+      <div class="sidebar-header-deco">★ CONNECT ★</div>
+      <div class="avatar-wrap" style="margin-bottom:8px;">
+        <img class="avatar" src="个人照.JPG" alt="Eason LV" loading="lazy" style="width:100px;height:100px;">
+      </div>
+      <div class="sidebar-name">
+        <span class="en" style="font-size:16px;">保持联系</span>
       </div>
       <div class="pixel-divider"></div>
-      <div class="social-links" style="align-items:center;">
-        <a class="social-link" href="mailto:#">✉️ EMAIL</a>
-        <a class="social-link" href="#">▶️ YOUTUBE</a>
-        <a class="social-link" href="#">📷 INSTAGRAM</a>
-        <a class="social-link" href="#">🔵 WEIBO</a>
-        <a class="social-link" href="#">📕 REDBOOK</a>
-        <a class="social-link" href="#">📺 BILIBILI</a>
+      <div class="contact-list" style="align-items:center;gap:14px;">
+        <a class="contact-item" href="https://www.xiaohongshu.com/user/profile/557fb45c861d6233dd8faa62" target="_blank" rel="noopener" style="flex-direction:column;gap:8px;width:auto;">
+          <img class="contact-qr" src="qr-redbook.jpg" alt="小红书" style="position:static;transform:none;display:block;width:100px;height:100px;">
+          <span>@陀螺是大王</span>
+        </a>
+        <a class="contact-item" href="https://weixin.qq.com/sph/AzAq1nTxXI" target="_blank" rel="noopener" style="flex-direction:column;gap:8px;width:auto;">
+          <img class="contact-qr" src="qr-videocall.jpg" alt="视频号" style="position:static;transform:none;display:block;width:100px;height:100px;">
+          <span>@陀螺就是我</span>
+        </a>
+        <a class="contact-item" href="https://v.douyin.com/DurNWxDV2qk/" target="_blank" rel="noopener" style="flex-direction:column;gap:8px;width:auto;">
+          <img class="contact-qr" src="qr-douyin.jpg" alt="抖音" style="position:static;transform:none;display:block;width:100px;height:100px;">
+          <span>@抽筋小陀螺</span>
+        </a>
+        <a class="contact-item" href="https://weibo.com/u/1245369407" target="_blank" rel="noopener" style="flex-direction:column;gap:8px;width:auto;">
+          <img class="contact-qr" src="qr-weibo.png" alt="微博" style="position:static;transform:none;display:block;width:100px;height:100px;">
+          <span>@齐天大陀螺</span>
+        </a>
+        <a class="contact-item" href="mailto:easonlv95@gmail.com">
+          <span>✉️ EMAIL</span>
+        </a>
       </div>
       <p style="font-family:var(--font-terminal);font-size:14px;color:var(--text-muted);margin-top:24px;">
-        © 2026 Eason LV — Built with Pixels
+        © 2026 陀螺（Eason）— Built with Pixels
       </p>
     </div>
 
   </main>
 </div>
 
-<!-- Intersection Observer for scroll nav dots -->
 <script>
 (function(){
   const sections = document.querySelectorAll('.section');
