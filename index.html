@@ -83,11 +83,12 @@ a { color: var(--accent); text-decoration: none; }
   height: 100vh; height: 100dvh;
   position: relative;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 32px 16px; gap: 14px;
+  align-items: center;
+  padding: 28px 16px 20px; gap: 10px;
   z-index: 10;
   background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 50%, var(--bg) 100%);
   border-right: 4px solid var(--pixel-black);
+  overflow-y: auto;
 }
 .sidebar::before {
   content: '';
@@ -102,11 +103,13 @@ a { color: var(--accent); text-decoration: none; }
   font-family: var(--font-pixel); font-size: 8px;
   color: var(--text-muted); letter-spacing: 0.3em;
   text-align: center; opacity: 0.6;
+  flex-shrink: 0;
 }
 
-.avatar-wrap { position: relative; width: 120px; height: 120px; flex-shrink: 0; }
+/* Avatar */
+.avatar-wrap { position: relative; width: 110px; height: 110px; flex-shrink: 0; }
 .avatar {
-  width: 120px; height: 120px; border-radius: 2px;
+  width: 110px; height: 110px; border-radius: 2px;
   object-fit: cover; image-rendering: pixelated; display: block;
   border: 4px solid var(--pixel-black);
   box-shadow: -4px -4px 0 0 var(--pixel-shadow), 4px 4px 0 0 rgba(0,0,0,0.06);
@@ -125,85 +128,87 @@ a { color: var(--accent); text-decoration: none; }
 
 .sidebar-name {
   font-family: var(--font-pixel); font-size: 14px;
-  color: var(--pixel-black); text-align: center; line-height: 1.8;
+  color: var(--pixel-black); text-align: center; line-height: 1.7;
+  flex-shrink: 0;
 }
-.sidebar-name .en { font-size: 17px; display: block; }
-.sidebar-name .cn { font-size: 12px; color: var(--text-secondary); display: block; }
+.sidebar-name .en { font-size: 16px; display: block; }
+.sidebar-name .cn { font-size: 11px; color: var(--text-secondary); display: block; }
 
 .sidebar-bio {
-  font-family: var(--font-terminal); font-size: 15px;
-  color: var(--text-secondary); text-align: center; line-height: 1.5;
-  max-width: 240px;
+  font-family: var(--font-terminal); font-size: 14px;
+  color: var(--text-secondary); text-align: center; line-height: 1.4;
+  max-width: 240px; flex-shrink: 0;
 }
 
 .pixel-divider {
-  width: 70%; height: 3px;
+  width: 70%; height: 3px; flex-shrink: 0;
   background: repeating-linear-gradient(90deg,
     var(--pixel-black) 0px, var(--pixel-black) 10px,
     transparent 10px, transparent 20px);
-  flex-shrink: 0;
 }
 
-/* ---- Contact List (Desktop Sidebar) ---- */
-.contact-list {
+/* Sidebar links (GitHub + Email) */
+.sidebar-links {
   display: flex; flex-direction: column;
-  gap: 10px; align-items: flex-start; flex-shrink: 0;
-  width: 100%; max-width: 260px;
+  gap: 8px; align-items: center; flex-shrink: 0;
+  width: 100%;
 }
-.contact-item {
-  position: relative;
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--font-terminal); font-size: 16px;
-  color: var(--text); padding: 8px 10px;
+.sidebar-link {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-terminal); font-size: 13px;
+  color: var(--text); padding: 5px 10px;
   border: 2px solid transparent;
   transition: all var(--transition);
-  cursor: pointer; text-decoration: none; width: 100%;
-  line-height: 1.4;
+  text-decoration: none;
+  line-height: 1.3;
 }
-.contact-item:hover {
+.sidebar-link:hover {
   border-color: var(--pixel-black);
   background: var(--card);
   color: var(--accent-hover);
 }
-.contact-item .c-icon {
-  width: 26px; height: 26px; flex-shrink: 0;
-  image-rendering: pixelated;
+.sidebar-link svg {
+  width: 20px; height: 20px; flex-shrink: 0;
 }
-.contact-item .c-platform {
-  font-family: var(--font-pixel2); font-size: 10px;
-  color: var(--text-secondary); min-width: 40px;
-}
-.contact-item .c-handle {
-  font-size: 14px; color: var(--text);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--accent);
-}
-.contact-item:hover .c-handle { color: var(--accent-hover); }
 
-/* QR tooltip — 原图尺寸显示 */
-.contact-qr {
-  position: absolute; left: 105%; top: 50%;
-  transform: translateY(-50%);
-  width: auto; height: auto;
-  max-width: 80vw; max-height: 80vh;
-  border: 3px solid var(--pixel-black);
-  box-shadow: 4px 4px 0 0 var(--pixel-shadow);
-  background: var(--card);
-  display: none;
-  z-index: 100;
-  image-rendering: pixelated;
-  object-fit: contain;
-  padding: 8px;
+/* Real photo in sidebar */
+.sidebar-photo {
+  flex-shrink: 0;
 }
-.contact-item:hover .contact-qr { display: block; }
+.real-photo {
+  width: 70px; height: 70px; border-radius: 2px;
+  object-fit: cover;
+  border: 3px solid var(--pixel-black);
+  box-shadow: 3px 3px 0 0 var(--pixel-shadow);
+  display: block;
+}
+
+/* Social icon row */
+.sidebar-socials {
+  display: flex; gap: 10px; align-items: center;
+  flex-shrink: 0; flex-wrap: wrap; justify-content: center;
+}
+.social-dot {
+  width: 34px; height: 34px;
+  border: 2px solid var(--pixel-black);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--card);
+  transition: all var(--transition);
+  border-radius: 2px;
+  font-family: var(--font-pixel2); font-size: 9px;
+  color: var(--text); text-decoration: none;
+}
+.social-dot:hover {
+  background: var(--pixel-black);
+  color: var(--bg);
+  transform: scale(1.1);
+}
 
 /* ---- Main Scroll ---- */
 .main-scroll {
   flex: 1;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
   height: 100vh; height: 100dvh;
   position: relative;
 }
@@ -226,7 +231,7 @@ a { color: var(--accent); text-decoration: none; }
   position: relative;
 }
 
-/* ---- Section Header (NO card bg, prominent text) ---- */
+/* ---- Section Header ---- */
 .section-header {
   margin-bottom: 36px;
   position: relative;
@@ -351,7 +356,7 @@ a { color: var(--accent); text-decoration: none; }
 }
 .project-card:hover .card-arrow { opacity: 1; }
 
-/* ---- HOT/NEW Badge (top-right, spiky) ---- */
+/* ---- HOT/NEW Badge ---- */
 .hot-badge {
   position: absolute; top: -12px; right: -14px;
   font-family: var(--font-pixel); font-size: 7px;
@@ -411,7 +416,7 @@ a { color: var(--accent); text-decoration: none; }
 .dots-continue .dot:nth-child(3) { animation-delay: 0.4s; }
 @keyframes dot-blink { 0%,100%{opacity:0.12} 50%{opacity:1} }
 
-/* ---- Modal Overlay (for QR popups) ---- */
+/* ---- Modal Overlay ---- */
 .modal-overlay {
   display: none;
   position: fixed; inset: 0;
@@ -452,11 +457,91 @@ a { color: var(--accent); text-decoration: none; }
   color: var(--pixel-black); margin-bottom: 12px;
 }
 
+/* ---- Desktop Contact Pages ---- */
+.contact-page {
+  min-height: 100vh; min-height: 100dvh;
+  scroll-snap-align: start;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 48px 40px; gap: 20px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+  position: relative;
+}
+.contact-page .page-tag {
+  font-family: var(--font-pixel); font-size: 8px;
+  color: var(--text-muted); letter-spacing: 0.3em;
+  opacity: 0.6;
+}
+.contact-page .page-title {
+  font-family: var(--font-pixel); font-size: 18px;
+  color: var(--pixel-black);
+}
+.contact-page .page-subtitle {
+  font-family: var(--font-terminal); font-size: 17px;
+  color: var(--text-secondary); max-width: 400px;
+}
+.contact-page .contact-qr-display {
+  width: auto; height: auto;
+  max-width: 260px; max-height: 260px;
+  border: 4px solid var(--pixel-black);
+  box-shadow: 4px 4px 0 0 var(--pixel-shadow);
+  image-rendering: pixelated;
+}
+.contact-page .contact-handle-big {
+  font-family: var(--font-pixel2); font-size: 16px;
+  color: var(--pixel-black);
+}
+.contact-page .contact-link {
+  font-family: var(--font-terminal); font-size: 20px;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color var(--transition);
+}
+.contact-page .contact-link:hover { color: var(--accent-hover); }
+
+/* Social grid on desktop contact page */
+.contact-social-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 700px;
+}
+.contact-social-item {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px;
+  padding: 16px;
+  border: 3px solid var(--pixel-black);
+  background: var(--card);
+  box-shadow: 3px 3px 0 0 var(--pixel-shadow);
+  transition: all var(--transition);
+  text-decoration: none; color: inherit;
+}
+.contact-social-item:hover {
+  box-shadow: 5px 5px 0 0 var(--pixel-black);
+  transform: translate(-2px, -2px);
+}
+.contact-social-item img {
+  width: auto; height: auto;
+  max-width: 120px; max-height: 120px;
+  border: 2px solid var(--pixel-black);
+  image-rendering: pixelated;
+}
+.contact-social-item .cs-platform {
+  font-family: var(--font-pixel2); font-size: 10px;
+  color: var(--text);
+}
+.contact-social-item .cs-handle {
+  font-family: var(--font-terminal); font-size: 14px;
+  color: var(--accent);
+}
+
 /* ---- Scroll Nav ---- */
 .scroll-nav {
   position: fixed; right: 20px; top: 50%;
   transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 14px;
+  display: flex; flex-direction: column; gap: 12px;
   z-index: 100;
 }
 .scroll-nav-dot {
@@ -533,10 +618,6 @@ a { color: var(--accent); text-decoration: none; }
     animation: float-hint 2s steps(4) infinite;
     margin-top: 8px;
   }
-  @keyframes float-hint-mobile {
-    0%,100%{transform:translateY(0);opacity:.5}
-    50%{transform:translateY(-8px);opacity:1}
-  }
 
   .section-header { margin-bottom: 24px; }
   .section-title .title-cn { font-size: 20px; }
@@ -568,7 +649,23 @@ a { color: var(--accent); text-decoration: none; }
 
   .modal-box img { width: 280px; height: 280px; }
 
-  /* Mobile contact pages */
+  /* Contact pages on mobile */
+  .contact-page {
+    min-height: 100vh; min-height: 100dvh;
+    scroll-snap-align: start; scroll-snap-stop: always;
+    padding: 40px 24px; gap: 18px;
+  }
+  .contact-page .page-title { font-size: 15px; }
+  .contact-page .page-subtitle { font-size: 15px; }
+  .contact-social-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px; max-width: 100%;
+  }
+  .contact-social-item { padding: 12px 8px; }
+  .contact-social-item img { max-width: 80px; max-height: 80px; }
+  .contact-social-item .cs-handle { font-size: 12px; }
+
+  /* Mobile contact (legacy mobile-only) */
   .mobile-contact {
     min-height: 100vh; min-height: 100dvh;
     scroll-snap-align: start; scroll-snap-stop: always;
@@ -602,14 +699,15 @@ a { color: var(--accent); text-decoration: none; }
 <div class="app-layout">
 
   <!-- ============================================================
-       LEFT SIDEBAR (Desktop)
+       LEFT SIDEBAR (Desktop) — Personal Brand Area
        ============================================================ -->
   <aside class="sidebar">
     <div class="sidebar-header-deco">★ PLAYER BOSS ★</div>
 
+    <!-- Cartoon pixel avatar -->
     <div class="avatar-wrap">
       <div class="avatar-glitch"></div>
-      <img class="avatar" src="个人照.JPG" alt="Eason LV" loading="eager">
+      <img class="avatar" src="pixel-avatar-v3.png" alt="Eason LV" loading="eager">
     </div>
 
     <div class="sidebar-name">
@@ -620,84 +718,52 @@ a { color: var(--accent); text-decoration: none; }
     <div class="sidebar-bio">AI 就是生产力</div>
     <div class="pixel-divider"></div>
 
-    <!-- Contact: icon + 平台名 + @handle(hover出QR) -->
-    <div class="contact-list">
-      <!-- GitHub (NO QR) -->
-      <a class="contact-item" href="https://github.com/eason6789" target="_blank" rel="noopener">
-        <svg class="c-icon" viewBox="0 0 26 26">
-          <circle cx="13" cy="13" r="11" fill="none" stroke="#78350F" stroke-width="2.5"/>
-          <path d="M8 15 Q13 19 18 15" fill="none" stroke="#78350F" stroke-width="2.2"/>
-          <circle cx="10" cy="9" r="1.8" fill="#78350F"/>
-          <circle cx="16" cy="9" r="1.8" fill="#78350F"/>
+    <!-- GitHub + Email -->
+    <div class="sidebar-links">
+      <a class="sidebar-link" href="https://github.com/eason6789" target="_blank" rel="noopener">
+        <svg viewBox="0 0 20 20">
+          <circle cx="10" cy="10" r="8.5" fill="none" stroke="#78350F" stroke-width="2"/>
+          <path d="M6 11.5 Q10 15 14 11.5" fill="none" stroke="#78350F" stroke-width="1.8"/>
+          <circle cx="7.5" cy="7" r="1.4" fill="#78350F"/>
+          <circle cx="12.5" cy="7" r="1.4" fill="#78350F"/>
         </svg>
-        <span class="c-platform">GitHub</span>
-        <span class="c-handle">@eason6789</span>
+        GitHub <span style="color:var(--accent);margin-left:2px;">@eason6789</span>
       </a>
+      <a class="sidebar-link" href="mailto:easonlv95@gmail.com">
+        <svg viewBox="0 0 20 20">
+          <rect x="2" y="4" width="16" height="12" rx="1.5" stroke="#78350F" stroke-width="2" fill="none"/>
+          <polyline points="2,4 10,10 18,4" stroke="#78350F" stroke-width="2" fill="none"/>
+        </svg>
+        <span style="font-size:11px;">easonlv95@gmail.com</span>
+      </a>
+    </div>
 
-      <!-- 小红书 -->
-      <a class="contact-item" href="https://www.xiaohongshu.com/user/profile/557fb45c861d6233dd8faa62" target="_blank" rel="noopener">
-        <svg class="c-icon" viewBox="0 0 26 26">
-          <rect x="4" y="4" width="18" height="18" rx="5" stroke="#78350F" stroke-width="2.5"/>
-          <text x="13" y="17.5" text-anchor="middle" font-size="8" font-weight="bold" fill="#78350F" font-family="sans-serif">RED</text>
-        </svg>
-        <span class="c-platform">小红书</span>
-        <span class="c-handle">@陀螺是大王</span>
-        <img class="contact-qr" src="qr-redbook.jpg" alt="小红书 QR" loading="lazy">
-      </a>
+    <div class="pixel-divider"></div>
 
-      <!-- 视频号 -->
-      <a class="contact-item" href="https://weixin.qq.com/sph/AzAq1nTxXI" target="_blank" rel="noopener">
-        <svg class="c-icon" viewBox="0 0 26 26">
-          <circle cx="13" cy="13" r="11" stroke="#78350F" stroke-width="2.5"/>
-          <polygon points="13,7 13,18 17,14.5" fill="#78350F"/>
-        </svg>
-        <span class="c-platform">视频号</span>
-        <span class="c-handle">@陀螺就是我</span>
-        <img class="contact-qr" src="qr-videocall.jpg" alt="视频号 QR" loading="lazy">
-      </a>
+    <!-- Real photo -->
+    <div class="sidebar-photo">
+      <img class="real-photo" src="个人照.JPG" alt="Eason LV" loading="lazy">
+    </div>
 
-      <!-- 抖音 -->
-      <a class="contact-item" href="https://v.douyin.com/DurNWxDV2qk/" target="_blank" rel="noopener">
-        <svg class="c-icon" viewBox="0 0 26 26">
-          <rect x="4" y="4" width="18" height="18" rx="5" stroke="#78350F" stroke-width="2.5"/>
-          <text x="13" y="17.5" text-anchor="middle" font-size="8" font-weight="bold" fill="#78350F" font-family="sans-serif">D</text>
-        </svg>
-        <span class="c-platform">抖音</span>
-        <span class="c-handle">@抽筋小陀螺</span>
-        <img class="contact-qr" src="qr-douyin.jpg" alt="抖音 QR" loading="lazy">
-      </a>
-
-      <!-- 微博 -->
-      <a class="contact-item" href="https://weibo.com/u/1245369407" target="_blank" rel="noopener">
-        <svg class="c-icon" viewBox="0 0 26 26">
-          <circle cx="13" cy="13" r="11" stroke="#78350F" stroke-width="2.5"/>
-          <text x="13" y="17.5" text-anchor="middle" font-size="8" font-weight="bold" fill="#78350F" font-family="sans-serif">W</text>
-        </svg>
-        <span class="c-platform">微博</span>
-        <span class="c-handle">@齐天大陀螺</span>
-        <img class="contact-qr" src="qr-weibo.png" alt="微博 QR" loading="lazy">
-      </a>
-
-      <!-- Email -->
-      <a class="contact-item" href="mailto:easonlv95@gmail.com">
-        <svg class="c-icon" viewBox="0 0 26 26">
-          <rect x="3" y="5" width="20" height="16" rx="2" stroke="#78350F" stroke-width="2.5" fill="none"/>
-          <polyline points="3,5 13,13 23,5" stroke="#78350F" stroke-width="2.5" fill="none"/>
-        </svg>
-        <span class="c-platform">Email</span>
-        <span class="c-handle">easonlv95@gmail.com</span>
-      </a>
+    <!-- Social media icon row -->
+    <div class="sidebar-socials">
+      <a class="social-dot" href="https://www.xiaohongshu.com/user/profile/557fb45c861d6233dd8faa62" target="_blank" rel="noopener" title="小红书">RED</a>
+      <a class="social-dot" href="https://weixin.qq.com/sph/AzAq1nTxXI" target="_blank" rel="noopener" title="视频号">V</a>
+      <a class="social-dot" href="https://v.douyin.com/DurNWxDV2qk/" target="_blank" rel="noopener" title="抖音">DY</a>
+      <a class="social-dot" href="https://weibo.com/u/1245369407" target="_blank" rel="noopener" title="微博">WB</a>
     </div>
   </aside>
 
   <!-- ============================================================
-       SCROLL NAV DOTS
+       SCROLL NAV DOTS (Desktop)
        ============================================================ -->
   <nav class="scroll-nav" id="scrollNav">
     <div class="scroll-nav-dot active" data-target="sec-tools"></div>
     <div class="scroll-nav-dot" data-target="sec-demo"></div>
     <div class="scroll-nav-dot" data-target="sec-wechat"></div>
     <div class="scroll-nav-dot" data-target="sec-opensource"></div>
+    <div class="scroll-nav-dot" data-target="sec-contact-github"></div>
+    <div class="scroll-nav-dot" data-target="sec-contact-social"></div>
   </nav>
 
   <!-- ============================================================
@@ -960,8 +1026,8 @@ a { color: var(--accent); text-decoration: none; }
           </div>
         </div>
         <div class="dots-continue">
+          <span>To be continue</span>
           <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-          <span>To be continue…</span>
         </div>
       </div>
 
@@ -994,8 +1060,8 @@ a { color: var(--accent); text-decoration: none; }
           </div>
         </div>
         <div class="dots-continue">
+          <span>To be continue</span>
           <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-          <span>To be continue…</span>
         </div>
       </div>
     </section>
@@ -1073,68 +1139,73 @@ a { color: var(--accent); text-decoration: none; }
       <div class="subsection">
         <h3 class="subsection-title">开源项目</h3>
         <div class="dots-continue" style="padding-top:4px;">
+          <span>To be continue</span>
           <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-          <span>To be continue…</span>
         </div>
       </div>
     </section>
 
-    <!-- ========== MOBILE: GitHub Contact ========== -->
-    <div class="mobile-contact mobile-only">
-      <div class="sidebar-header-deco">★ CONTACT ★</div>
-      <div class="sidebar-name">
-        <span class="en" style="font-size:16px;">EASON LV</span>
-        <span class="cn">如果你是程序员…</span>
-      </div>
-      <div class="sidebar-bio">通过 GitHub 找到我</div>
-      <div class="pixel-divider"></div>
-      <a class="contact-item" href="https://github.com/eason6789" target="_blank" rel="noopener" style="flex-direction:column;gap:10px;width:auto;">
-        <img class="contact-qr" src="qr-github.jpg" alt="GitHub" style="position:static;transform:none;display:block;width:200px;height:200px;">
-        <span style="font-family:var(--font-pixel2);font-size:13px;">GitHub</span>
-        <span class="c-handle" style="font-size:16px;">@eason6789</span>
+    <!-- ================================
+         CONTACT PAGE 1: GitHub (Desktop + Mobile)
+         ================================ -->
+    <div class="contact-page" id="sec-contact-github">
+      <div class="page-tag">★ CONTACT ★</div>
+      <div class="page-title">如果你是程序员…</div>
+      <div class="page-subtitle">通过 GitHub 找到我</div>
+      <div class="pixel-divider" style="width:120px;"></div>
+      <a href="https://github.com/eason6789" target="_blank" rel="noopener">
+        <img class="contact-qr-display" src="qr-github.jpg" alt="GitHub QR">
       </a>
-      <p style="font-family:var(--font-terminal);font-size:13px;color:var(--text-muted);margin-top:12px;">
+      <a class="contact-handle-big" href="https://github.com/eason6789" target="_blank" rel="noopener" style="text-decoration:underline;text-underline-offset:4px;">@eason6789</a>
+      <p style="font-family:var(--font-terminal);font-size:14px;color:var(--text-muted);margin-top:8px;">
         ▼ 继续下滑 ▼
       </p>
     </div>
 
-    <!-- ========== MOBILE: Social Contact (last page, real photo) ========== -->
-    <div class="mobile-contact mobile-only">
-      <div class="sidebar-header-deco">★ CONNECT ★</div>
-      <div class="avatar-wrap" style="margin-bottom:8px;width:90px;height:90px;">
-        <img class="avatar" src="个人照.JPG" alt="Eason LV" loading="lazy" style="width:90px;height:90px;">
+    <!-- ================================
+         CONTACT PAGE 2: Social (Desktop + Mobile)
+         ================================ -->
+    <div class="contact-page" id="sec-contact-social">
+      <div class="page-tag">★ CONNECT ★</div>
+      <div class="page-title">保持联系</div>
+      <div class="page-subtitle">更多社交平台找到我</div>
+
+      <div class="sidebar-photo" style="margin-bottom:4px;">
+        <img class="real-photo" src="个人照.JPG" alt="Eason LV" loading="lazy" style="width:80px;height:80px;">
       </div>
-      <div class="sidebar-name">
-        <span class="en" style="font-size:16px;">保持联系</span>
-      </div>
-      <div class="pixel-divider"></div>
-      <div class="contact-list" style="align-items:center;gap:16px;">
-        <a class="contact-item" href="https://www.xiaohongshu.com/user/profile/557fb45c861d6233dd8faa62" target="_blank" rel="noopener" style="flex-direction:column;gap:6px;width:auto;">
-          <img class="contact-qr" src="qr-redbook.jpg" alt="小红书" style="position:static;transform:none;display:block;width:200px;height:200px;">
-          <span class="c-platform" style="font-size:11px;">小红书</span>
-          <span class="c-handle" style="font-size:15px;">@陀螺是大王</span>
+      <div class="pixel-divider" style="width:120px;"></div>
+
+      <div class="contact-social-grid">
+        <a class="contact-social-item" href="https://www.xiaohongshu.com/user/profile/557fb45c861d6233dd8faa62" target="_blank" rel="noopener">
+          <img src="qr-redbook.jpg" alt="小红书" loading="lazy">
+          <span class="cs-platform">小红书</span>
+          <span class="cs-handle">@陀螺是大王</span>
         </a>
-        <a class="contact-item" href="https://weixin.qq.com/sph/AzAq1nTxXI" target="_blank" rel="noopener" style="flex-direction:column;gap:6px;width:auto;">
-          <img class="contact-qr" src="qr-videocall.jpg" alt="视频号" style="position:static;transform:none;display:block;width:200px;height:200px;">
-          <span class="c-platform" style="font-size:11px;">视频号</span>
-          <span class="c-handle" style="font-size:15px;">@陀螺就是我</span>
+        <a class="contact-social-item" href="https://weixin.qq.com/sph/AzAq1nTxXI" target="_blank" rel="noopener">
+          <img src="qr-videocall.jpg" alt="视频号" loading="lazy">
+          <span class="cs-platform">视频号</span>
+          <span class="cs-handle">@陀螺就是我</span>
         </a>
-        <a class="contact-item" href="https://v.douyin.com/DurNWxDV2qk/" target="_blank" rel="noopener" style="flex-direction:column;gap:6px;width:auto;">
-          <img class="contact-qr" src="qr-douyin.jpg" alt="抖音" style="position:static;transform:none;display:block;width:200px;height:200px;">
-          <span class="c-platform" style="font-size:11px;">抖音</span>
-          <span class="c-handle" style="font-size:15px;">@抽筋小陀螺</span>
+        <a class="contact-social-item" href="https://v.douyin.com/DurNWxDV2qk/" target="_blank" rel="noopener">
+          <img src="qr-douyin.jpg" alt="抖音" loading="lazy">
+          <span class="cs-platform">抖音</span>
+          <span class="cs-handle">@抽筋小陀螺</span>
         </a>
-        <a class="contact-item" href="https://weibo.com/u/1245369407" target="_blank" rel="noopener" style="flex-direction:column;gap:6px;width:auto;">
-          <img class="contact-qr" src="qr-weibo.png" alt="微博" style="position:static;transform:none;display:block;width:200px;height:200px;">
-          <span class="c-platform" style="font-size:11px;">微博</span>
-          <span class="c-handle" style="font-size:15px;">@齐天大陀螺</span>
-        </a>
-        <a class="contact-item" href="mailto:easonlv95@gmail.com" style="flex-direction:column;gap:6px;width:auto;">
-          <span class="c-platform" style="font-size:11px;">Email</span>
-          <span class="c-handle" style="font-size:15px;">easonlv95@gmail.com</span>
+        <a class="contact-social-item" href="https://weibo.com/u/1245369407" target="_blank" rel="noopener">
+          <img src="qr-weibo.png" alt="微博" loading="lazy">
+          <span class="cs-platform">微博</span>
+          <span class="cs-handle">@齐天大陀螺</span>
         </a>
       </div>
-      <p style="font-family:var(--font-terminal);font-size:14px;color:var(--text-muted);margin-top:24px;">
+
+      <div class="contact-social-grid" style="grid-template-columns:1fr;max-width:340px;margin-top:4px;">
+        <a class="contact-social-item" href="mailto:easonlv95@gmail.com" style="flex-direction:row;gap:16px;padding:14px 24px;">
+          <span class="cs-platform">Email</span>
+          <span class="cs-handle">easonlv95@gmail.com</span>
+        </a>
+      </div>
+
+      <p style="font-family:var(--font-terminal);font-size:14px;color:var(--text-muted);margin-top:20px;">
         (c) 2026 陀螺(Eason) — Built with Pixels
       </p>
     </div>
@@ -1155,38 +1226,47 @@ a { color: var(--accent); text-decoration: none; }
 
 <script>
 (function(){
-  /* ---- Scroll nav observer ---- */
-  const sections = document.querySelectorAll('.section');
-  const dots = document.querySelectorAll('.scroll-nav-dot');
-  const scrollHint = document.querySelector('.scroll-hint');
-  const lastSection = sections[sections.length - 1];
+  var mainScroll = document.getElementById('mainScroll');
 
-  if(sections.length && dots.length) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
+  /* ---- Collect all snap targets ---- */
+  var allTargets = document.querySelectorAll('.section, .contact-page');
+  var dots = document.querySelectorAll('.scroll-nav-dot');
+  var scrollHint = document.querySelector('.scroll-hint');
+  var lastTarget = allTargets[allTargets.length - 1];
+
+  /* ---- IntersectionObserver: highlight active dot ---- */
+  if(allTargets.length && dots.length) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
         if(entry.isIntersecting) {
-          dots.forEach(d => d.classList.remove('active'));
-          const active = document.querySelector(`.scroll-nav-dot[data-target="${entry.target.id}"]`);
+          dots.forEach(function(d) { d.classList.remove('active'); });
+          var active = document.querySelector('.scroll-nav-dot[data-target="' + entry.target.id + '"]');
           if(active) active.classList.add('active');
         }
       });
     }, { threshold: 0.5 });
-    sections.forEach(s => observer.observe(s));
+    allTargets.forEach(function(s) { observer.observe(s); });
 
-    // Hide scroll-hint when last section is visible
-    const hintObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
+    /* Hide scroll-hint when last section is visible */
+    var hintObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
         if(scrollHint) {
           scrollHint.style.opacity = entry.isIntersecting ? '0' : '';
         }
       });
     }, { threshold: 0.3 });
-    if(lastSection) hintObserver.observe(lastSection);
+    if(lastTarget) hintObserver.observe(lastTarget);
 
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        const target = document.getElementById(dot.dataset.target);
-        if(target) target.scrollIntoView({ behavior: 'smooth' });
+    /* ---- Scroll nav dot click → same behavior as direct scroll ---- */
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        var target = document.getElementById(dot.dataset.target);
+        if(target && mainScroll) {
+          mainScroll.scrollTo({
+            top: target.offsetTop,
+            behavior: 'smooth'
+          });
+        }
       });
     });
   }
