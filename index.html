@@ -563,9 +563,10 @@ a { color: var(--accent); text-decoration: none; }
   font-family: var(--font-pixel); font-size: 9px;
   color: var(--text-muted);
   animation: float-hint 2s steps(4) infinite;
-  pointer-events: none; z-index: 5;
+  z-index: 5;
   text-align: center;
   white-space: nowrap;
+  cursor: pointer;
 }
 @keyframes float-hint {
   0%,100%{transform:translate(-50%,0);opacity:.5}
@@ -1232,14 +1233,11 @@ a { color: var(--accent); text-decoration: none; }
     if(item) item.classList.add('active');
   }
 
-  /* ---- Scroll to section (used by both nav dot and sidebar nav) ---- */
+  /* ---- Scroll to section (used by nav dots, sidebar nav, scroll hints) ---- */
   function scrollToSection(targetId) {
     var target = document.getElementById(targetId);
-    if(target && mainScroll) {
-      mainScroll.scrollTo({
-        top: target.offsetTop,
-        behavior: 'smooth'
-      });
+    if(target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
@@ -1254,6 +1252,20 @@ a { color: var(--accent); text-decoration: none; }
     }, { threshold: 0.5 });
     allTargets.forEach(function(s) { observer.observe(s); });
   }
+
+  /* ---- Scroll hint clicks: advance to next section ---- */
+  var scrollHints = document.querySelectorAll('.scroll-hint');
+  var targetIds = Array.from(allTargets).map(function(el) { return el.id; });
+  scrollHints.forEach(function(hint) {
+    hint.addEventListener('click', function() {
+      // Find which section this hint belongs to
+      var parent = hint.closest('.section, .contact-page');
+      if (!parent) return;
+      var currentIdx = targetIds.indexOf(parent.id);
+      var nextId = targetIds[currentIdx + 1];
+      if (nextId) scrollToSection(nextId);
+    });
+  });
 
   /* ---- Scroll nav dot clicks ---- */
   navDots.forEach(function(dot) {
