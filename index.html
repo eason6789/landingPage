@@ -149,35 +149,38 @@ a { color: var(--accent); text-decoration: none; }
 /* ---- Section Nav (Sidebar) ---- */
 .sidebar-nav {
   display: flex; flex-direction: column;
-  gap: 6px; width: 100%; flex-shrink: 0;
+  gap: 8px; width: 100%; flex-shrink: 0;
+  padding: 0 8px;
 }
 .sidebar-nav-item {
-  display: block;
-  font-family: var(--font-pixel2); font-size: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-pixel2); font-size: 11px;
   color: var(--text);
-  padding: 10px 14px;
-  border: 2px solid transparent;
+  padding: 11px 12px;
+  border: 3px solid transparent;
   cursor: pointer;
   transition: all var(--transition);
-  text-align: left;
-  letter-spacing: 0.02em;
+  text-align: center;
   text-decoration: none;
-  line-height: 1.3;
+  line-height: 1.4;
+  background: transparent;
 }
 .sidebar-nav-item .nav-num {
-  font-family: var(--font-pixel); font-size: 8px;
-  color: var(--text-muted); margin-right: 6px;
+  font-family: var(--font-pixel); font-size: 9px;
+  color: var(--text-muted); margin-right: 8px;
+  opacity: 0.7;
 }
 .sidebar-nav-item:hover {
   border-color: var(--pixel-black);
   background: var(--card);
-  color: var(--accent-hover);
+  box-shadow: 3px 3px 0 0 var(--pixel-shadow);
+  transform: translate(-1px, -1px);
 }
 .sidebar-nav-item.active {
   border-color: var(--pixel-black);
   background: var(--card);
   color: var(--pixel-black);
-  box-shadow: 3px 3px 0 0 var(--pixel-shadow);
+  box-shadow: 4px 4px 0 0 var(--pixel-black);
 }
 
 /* ---- Main Scroll ---- */
@@ -454,26 +457,34 @@ a { color: var(--accent); text-decoration: none; }
 
 /* ---- Contact Row ---- */
 .contact-row {
-  display: flex; align-items: center; gap: 40px;
-  max-width: 620px;
+  display: flex; align-items: flex-start; gap: 36px;
+  max-width: 600px; width: 100%;
 }
 .contact-row-img {
-  flex-shrink: 0;
+  width: 100px; flex-shrink: 0;
 }
 .contact-row-img img {
-  display: block;
+  display: block; width: 100px; height: 100px;
   border: 4px solid var(--pixel-black);
   box-shadow: 4px 4px 0 0 var(--pixel-shadow);
   image-rendering: pixelated;
   object-fit: cover;
-}
-.contact-row-img .avatar-img {
-  width: 100px; height: 100px; border-radius: 2px;
+  border-radius: 2px;
 }
 
 .contact-row-links {
-  display: flex; flex-direction: column; gap: 12px;
-  align-items: flex-start; text-align: left;
+  display: flex; flex-direction: column; gap: 10px;
+  align-items: flex-start; text-align: left; flex: 1;
+}
+.contact-row-intro {
+  font-family: var(--font-terminal); font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 4px; line-height: 1.5;
+}
+.contact-row-secheader {
+  font-family: var(--font-pixel2); font-size: 13px;
+  color: var(--text);
+  margin-bottom: 2px;
 }
 
 /* ---- Contact Item (with hover QR tooltip) ---- */
@@ -694,13 +705,13 @@ a { color: var(--accent); text-decoration: none; }
     <!-- Section Navigation -->
     <nav class="sidebar-nav" id="sidebarNav">
       <a class="sidebar-nav-item active" data-target="sec-tools">
-        <span class="nav-num">01</span>Web 工具
+        <span class="nav-num">01</span>AI 工具
       </a>
       <a class="sidebar-nav-item" data-target="sec-demo">
         <span class="nav-num">02</span>演示
       </a>
       <a class="sidebar-nav-item" data-target="sec-wechat">
-        <span class="nav-num">03</span>微信生态-小程序 & 小游戏
+        <span class="nav-num">03</span>小程序 & 小游戏
       </a>
       <a class="sidebar-nav-item" data-target="sec-opensource">
         <span class="nav-num">04</span>开源项目
@@ -744,14 +755,14 @@ a { color: var(--accent); text-decoration: none; }
     </div>
 
     <!-- ================================
-         SECTION 01: Web 工具 (WEB TOOLS)
+         SECTION 01: AI 工具 (AI TOOLS)
          ================================ -->
     <section class="section" id="sec-tools">
       <div class="section-header">
         <div class="section-tag">[ SECTION 01 ]</div>
         <h2 class="section-title">
-          <span class="title-cn">Web 工具</span>
-          <span class="title-en">WEB TOOLS</span>
+          <span class="title-cn">AI 工具</span>
+          <span class="title-en">AI TOOLS</span>
         </h2>
       </div>
 
@@ -779,31 +790,6 @@ a { color: var(--accent); text-decoration: none; }
               <li>即时生成 · 在线播放 · 下载</li>
             </ul>
             <span class="tag">AI</span><span class="tag">音乐</span>
-          </div>
-          <span class="card-arrow">GO ▶</span>
-        </a>
-
-        <!-- 金融学习 -->
-        <a class="project-card" href="https://tuteng3.site/finlearn" target="_blank" rel="noopener">
-          <div class="card-icon">
-            <svg viewBox="0 0 34 34">
-              <rect x="3" y="24" width="8" height="4" fill="#D97706"/>
-              <rect x="13" y="14" width="8" height="14" fill="#78350F"/>
-              <rect x="23" y="6" width="8" height="22" fill="#22C55E"/>
-              <rect x="3" y="28" width="28" height="4" fill="#78350F"/>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-name">
-              <span class="cn-name">金融知识学习平台</span>
-              <span class="en-name">Finc Study</span>
-            </div>
-            <ul class="card-detail">
-              <li>交互式金融知识体系化学习</li>
-              <li>10 大模块：宏观 / 投资 / 区块链</li>
-              <li>Agent World 驱动学习体验</li>
-            </ul>
-            <span class="tag">教育</span><span class="tag">金融</span>
           </div>
           <span class="card-arrow">GO ▶</span>
         </a>
@@ -931,6 +917,31 @@ a { color: var(--accent); text-decoration: none; }
           </div>
           <span class="card-arrow">GO ▶</span>
         </a>
+
+        <!-- 金融学习 -->
+        <a class="project-card" href="https://tuteng3.site/finlearn" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 34 34">
+              <rect x="3" y="24" width="8" height="4" fill="#D97706"/>
+              <rect x="13" y="14" width="8" height="14" fill="#78350F"/>
+              <rect x="23" y="6" width="8" height="22" fill="#22C55E"/>
+              <rect x="3" y="28" width="28" height="4" fill="#78350F"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">
+              <span class="cn-name">金融知识学习平台</span>
+              <span class="en-name">Finc Study</span>
+            </div>
+            <ul class="card-detail">
+              <li>交互式金融知识体系化学习</li>
+              <li>10 大模块：宏观 / 投资 / 区块链</li>
+              <li>Agent World 驱动学习体验</li>
+            </ul>
+            <span class="tag">教育</span><span class="tag">金融</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
       </div>
 
       <div class="dots-continue">
@@ -940,14 +951,14 @@ a { color: var(--accent); text-decoration: none; }
     </section>
 
     <!-- ================================
-         SECTION 03: 微信生态-小程序 & 小游戏
+         SECTION 03: 小程序 & 小游戏
          ================================ -->
     <section class="section" id="sec-wechat">
       <div class="section-header">
         <div class="section-tag">[ SECTION 03 ]</div>
         <h2 class="section-title">
-          <span class="title-cn">微信生态-小程序 & 小游戏</span>
-          <span class="title-en">WECHAT ECO · MINI PROGRAMS & GAMES</span>
+          <span class="title-cn">小程序 & 小游戏</span>
+          <span class="title-en">MINI PROGRAMS & GAMES</span>
         </h2>
       </div>
 
@@ -1107,12 +1118,13 @@ a { color: var(--accent); text-decoration: none; }
     <div class="contact-page" id="sec-contact">
       <div class="page-tag">★ CONNECT ★</div>
 
-      <!-- Top Row: Cartoon Avatar + GitHub/Email -->
+      <!-- Top Row: GitHub QR + GitHub/Email -->
       <div class="contact-row">
         <div class="contact-row-img">
-          <img class="avatar-img" src="pixel-avatar-v3.png" alt="Eason LV" loading="lazy">
+          <img src="qr-github.jpg" alt="GitHub QR" loading="lazy">
         </div>
         <div class="contact-row-links">
+          <div class="contact-row-intro">如果你是程序员，请通过这些方式联系我</div>
           <!-- GitHub -->
           <a class="contact-item" href="https://github.com/eason6789" target="_blank" rel="noopener">
             <svg class="ci-icon" viewBox="0 0 24 24">
@@ -1141,9 +1153,10 @@ a { color: var(--accent); text-decoration: none; }
       <!-- Bottom Row: Real Photo + Social Media -->
       <div class="contact-row">
         <div class="contact-row-img">
-          <img class="avatar-img" src="个人照.JPG" alt="Eason LV" loading="lazy" style="border-radius:2px;">
+          <img src="个人照.JPG" alt="Eason LV" loading="lazy">
         </div>
         <div class="contact-row-links">
+          <div class="contact-row-secheader">保持联系</div>
           <!-- 小红书 -->
           <a class="contact-item" href="https://www.xiaohongshu.com/user/profile/557fb45c861d6233dd8faa62" target="_blank" rel="noopener">
             <svg class="ci-icon" viewBox="0 0 24 24">
@@ -1187,7 +1200,7 @@ a { color: var(--accent); text-decoration: none; }
         </div>
       </div>
 
-      <p class="contact-copyright">(c) 2026 陀螺(Eason) — Built with Pixels</p>
+      <p class="contact-copyright">(c) 2026 陀螺(Eason) — 中国深圳 · Shenzhen, China</p>
     </div>
 
   </main>
