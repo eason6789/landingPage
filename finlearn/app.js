@@ -36,7 +36,22 @@ const MODULES = [
       {
         title: "货币政策",
         items: [
-          { title: "美联储货币政策概述", subtitle: "联邦基金利率 | 双重使命(充分就业+物价稳定) | FOMC", tag: "core" }
+          { title: "美联储货币政策概述", subtitle: "联邦基金利率 | 双重使命(充分就业+物价稳定) | FOMC", tag: "core" },
+          { title: "货币政策工具详解", subtitle: "IORB/ON RRP/OMO/贴现窗口 | 利率走廊机制 | 工具互动", tag: "core" },
+          { title: "财政政策工具", subtitle: "政府支出/税收/转移支付 | 自动稳定器 | 赤字与债务", tag: "core" },
+          { title: "政策协同与资产表现", subtitle: "货币政策×财政政策矩阵 | 软着陆vs衰退 | 资产轮动", tag: "expanded" },
+          { title: "货币政策历史案例", subtitle: "1994-1995/2007-2008/2019/2022-2023 | 加息周期对比", tag: "expanded" }
+        ]
+      },
+      {
+        title: "银行体系",
+        items: [
+          { title: "商业银行的起源", subtitle: "金匠论(英格兰银行1694) | 汇兑论(山西票号) | 两种起源理论", tag: "core" },
+          { title: "商业银行业务模式", subtitle: "负债业务/资产业务/中间业务 | 存贷利差 | FTP定价", tag: "core" },
+          { title: "银行监管体系", subtitle: "HKMA三级制 | 巴塞尔协议III | 资本充足率/杠杆率", tag: "core" },
+          { title: "银行安全性与流动性", subtitle: "CAR/LCR/LMR | 硅谷银行案例警示 | 挤兑风险", tag: "core" },
+          { title: "反洗钱与金融犯罪防范", subtitle: "KYC/CDD/NC/SC/TM | 洗钱三阶段 | 监管科技", tag: "expanded" },
+          { title: "银行财务报表分析", subtitle: "ZA Bank利润表/资产负债表 | NIM/成本收入比 | 收入结构拆解", tag: "expanded" }
         ]
       }
     ]
@@ -667,6 +682,76 @@ const KNOWLEDGE_CONTENT = {
     title_cn: "美联储货币政策概述",
     en: "The Federal Reserve, through the Federal Open Market Committee (FOMC), sets the target range for the federal funds rate — the interest rate at which banks lend reserves to each other overnight. This rate influences broader borrowing costs across the economy, including mortgages, corporate loans, and consumer credit.\n\nThe Fed's dual mandate is to promote **maximum employment** and **stable prices** (targeting 2% inflation). Historical fed funds rate cycles since 1980 include multiple hikes and cuts, often in response to economic conditions.",
     cn: "美联储通过联邦公开市场委员会（FOMC）设定联邦基金利率的目标区间，即银行之间隔夜拆借准备金的利率。这一利率影响着整个经济中更广泛的借贷成本，包括抵押贷款、企业贷款和消费信贷。\n\n美联储的双重使命是促进**充分就业**和**稳定物价**（目标通胀率为2%）。自1980年以来，联邦基金利率经历了多轮加息和降息周期，通常是对经济形势的回应。"
+  },
+  "1-货币政策工具详解": {
+    bilingual: true,
+    title: "Monetary Policy Tools in Detail",
+    title_cn: "货币政策工具详解",
+    en: "The Fed uses the interest rate corridor mechanism with multiple tools:\n\n**Interest on Reserve Balances (IORB)**: The rate the Fed pays banks on reserves held at the Fed. This is the primary tool anchoring short-term rates.\n\n**Overnight Reverse Repurchase (ON RRP)**: The rate the Fed pays non-bank financial institutions (e.g., money market funds) for overnight deposits. Acts as the floor of the federal funds rate.\n\n**Open Market Operations (OMO)**: The Fed buys/sells Treasury securities to adjust the supply of reserves in the banking system, fine-tuning the fed funds rate.\n\n**Discount Rate**: The rate at which banks can borrow directly from the Fed's discount window — typically set above the fed funds target as a ceiling.\n\n**Fed Funds Rate** sits between the IORB (ceiling) and ON RRP (floor), forming the interest rate corridor.\n\n| Tool | Target | Mechanism | Role |\n|------|--------|-----------|------|\n| IORB | Banks | Pay interest on reserves | Anchor rate |\n| ON RRP | Non-bank institutions | Overnight reverse repo | Rate floor |\n| OMO | Banking system | Buy/sell Treasuries | Fine-tune reserves |\n| Discount Rate | Banks | Direct lending window | Rate ceiling |",
+    cn: "美联储通过利率走廊机制，运用多种工具实施货币政策：\n\n**准备金余额利率（IORB）**：美联储向银行存放在央行的准备金支付的利率，是锚定短期利率的主要工具。\n\n**隔夜逆回购利率（ON RRP）**：美联储向非银行金融机构（如货币市场基金）支付的隔夜存款利率，构成联邦基金利率的下限。\n\n**公开市场操作（OMO）**：美联储买卖国债以调整银行体系的准备金供给，精准调控联邦基金利率。\n\n**贴现率（Discount Rate）**：银行可直接从美联储贴现窗口借款的利率，通常设定在联邦基金目标利率之上作为利率上限。\n\n**联邦基金利率**介于IORB（上限）和ON RRP（下限）之间，形成利率走廊机制。\n\n| 工具 | 目标对象 | 机制 | 角色 |\n|------|----------|------|------|\n| IORB | 银行 | 支付准备金利息 | 锚定利率 |\n| ON RRP | 非银机构 | 隔夜逆回购 | 利率下限 |\n| OMO | 银行体系 | 买卖国债 | 调节准备金 |\n| 贴现率 | 银行 | 直接借款窗口 | 利率上限 |"
+  },
+  "1-财政政策工具": {
+    bilingual: true,
+    title: "Fiscal Policy Tools",
+    title_cn: "财政政策工具",
+    en: "Fiscal policy is the use of government spending and taxation to influence economic activity, working alongside monetary policy.\n\n**Government Spending**: Direct expenditure on goods, services, and public works. Increased spending during recessions can boost aggregate demand, while reduced spending during expansions can help cool an overheated economy.\n\n**Taxation**: Adjusting tax rates to influence disposable income and business investment. Tax cuts stimulate consumption and investment; tax increases restrain demand.\n\n**Transfer Payments**: Social Security, unemployment benefits, and other payments that automatically respond to economic conditions. These act as automatic stabilizers, expanding during downturns and contracting during expansions.\n\n**Fiscal Deficit**: Government deficit = expenditure - revenue. Higher deficits during recessions are typical; concerns arise when deficits remain high during economic expansions.",
+    cn: "财政政策是运用政府支出和税收影响经济活动的工具，与货币政策协同运作。\n\n**政府支出**：对商品、服务和公共工程的直接支出。经济衰退时增加支出可提振总需求；经济扩张时减少支出有助于为过热经济降温。\n\n**税收**：调整税率以影响可支配收入和企业投资。减税刺激消费和投资；增税抑制需求。\n\n**转移支付**：社会保障、失业救济金等随着经济状况自动调整的支付。这些作为自动稳定器，在经济下行时扩大、在经济上行时收缩。\n\n**财政赤字**：政府赤字=支出-收入。衰退期间赤字上升是正常现象；但在经济扩张期间赤字仍居高不下则令人担忧。"
+  },
+  "1-政策协同与资产表现": {
+    bilingual: true,
+    title: "Policy Coordination & Asset Performance",
+    title_cn: "政策协同与资产表现",
+    en: "The interaction between monetary and fiscal policy shapes economic outcomes and asset performance.\n\n**Policy Matrix**:\n- Tight fiscal + tight monetary: slows growth, fights severe inflation\n- Easy fiscal + tight monetary: fiscal stimulus offset by rate hikes, bond yields may rise\n- Tight fiscal + easy monetary: fiscal restraint + monetary support, beneficial for bonds\n- Easy fiscal + easy monetary: supports growth, but risks inflation\n\n**Soft Landing vs Recession**: A soft landing is when tightening policy successfully brings down inflation without triggering a significant downturn. A hard landing (recession) occurs when policy tightening overshoots, causing widespread contraction.\n\n**Asset Performance Across Cycles**: Different assets perform differently depending on growth and inflation regimes:\n- High growth + high inflation: Commodities, gold\n- High growth + low inflation: Equities, real estate\n- Low growth + high inflation: Gold, inflation-protected bonds\n- Low growth + low inflation: Government bonds, defensive stocks",
+    cn: "货币政策与财政政策的互动塑造经济走向和资产表现。\n\n**政策矩阵**：\n- 紧缩财政+紧缩货币：放缓增长，应对严重通胀\n- 宽松财政+紧缩货币：财政刺激被加息抵消，债券收益率可能上升\n- 紧缩财政+宽松货币：财政克制+货币支持，利好债券\n- 宽松财政+宽松货币：支持增长，但存在通胀风险\n\n**软着陆与衰退**：软着陆是指紧缩政策成功压低通胀而不引发严重衰退。硬着陆（经济衰退）是指政策紧缩过度，导致大范围经济收缩。\n\n**不同周期的资产表现**：\n- 高增长+高通胀：大宗商品、黄金\n- 高增长+低通胀：股票、房地产\n- 低增长+高通胀：黄金、通胀保值债券\n- 低增长+低通胀：国债、防御型股票"
+  },
+  "1-货币政策历史案例": {
+    bilingual: true,
+    title: "Historical Monetary Policy Case Studies",
+    title_cn: "货币政策历史案例",
+    en: "Key U.S. rate-hiking cycles and their outcomes:\n\n**1994-1995**: The Fed doubled the fed funds rate from 3% to 6% in 12 months. Result: soft landing achieved — inflation stabilized, GDP growth resumed, and the late-1990s boom followed.\n\n**2007-2008**: The Fed aggressively cut rates from 5.25% to near 0% as the subprime crisis unfolded. Despite rapid easing, the housing bubble burst triggered the deepest recession since the Great Depression.\n\n**2019**: The Fed cut rates three times (from 2.5% to 1.75%) as insurance against trade-war uncertainty. Result: economic expansion continued, labor market remained strong.\n\n**2022-2023**: Aggressive rate hikes from near 0% to 5.5% to fight post-pandemic inflation (CPI peaked at 9.1%). As of mid-2023, inflation moderated toward 3% with unemployment remaining low — an emerging soft landing narrative.",
+    cn: "美联储主要加息周期及结果：\n\n**1994-1995年**：美联储在12个月内将联邦基金利率从3%翻倍至6%。结果：实现软着陆——通胀稳定，GDP增长恢复，随后迎来了90年代末的经济繁荣。\n\n**2007-2008年**：次贷危机爆发，美联储将利率从5.25%大幅下调至接近0%。尽管快速宽松，房地产泡沫破裂仍引发了自大萧条以来最严重的衰退。\n\n**2019年**：美联储因贸易战不确定性三次降息（从2.5%至1.75%）。结果：经济持续扩张，劳动力市场保持强劲。\n\n**2022-2023年**：为应对疫情后通胀（CPI峰值9.1%），美联储从接近0%激进加息至5.5%。至2023年中期，通胀回落至约3%，失业率保持低位——软着陆叙事逐渐形成。"
+  },
+  "1-商业银行的起源": {
+    bilingual: true,
+    title: "Origins of Commercial Banking",
+    title_cn: "商业银行的起源",
+    en: "Two mainstream theories explain the origin of banking:\n\n**1. The Goldsmith Theory (England, 17th Century)**\nPeople entrusted their gold to private goldsmiths for safekeeping, paying a custody fee. Goldsmiths issued receipts as proof of deposit, which later began circulating as money. Goldsmiths soon realized that so long as not all depositors withdrew on the same day, they could issue more receipts than the gold they held — creating early bank credit. This shows banking emerged from **savings and lending**.\n\nIn 1694, the **Bank of England** was established as the world's first joint-stock central bank, marking the origin of modern central banking.\n\n**2. The Remittance Theory (Shanxi Piaohao, Qing Dynasty)**\nDuring the mid-Qing Dynasty, as economic development accelerated, the original methods of currency transfer could no longer support growing commerce. Shanxi Piaohao (draft banks) emerged, primarily engaged in remittance — customers deposited silver at one location and withdrew it at another using a draft issued by the Piaohao. This shows banking emerged from the **remittance and exchange function**.",
+    cn: "关于银行的起源，有两种主流的解释：\n\n**1. 金匠论（17世纪英国）**\n人们将金子存放在私密的金匠处保管，并支付保管费。金匠们开具收据作为取金凭证。随着越来越多人存入黄金，金匠发现只要不是所有人同一天来取，就可以发行超过实际黄金储备的凭证——这就是早期的银行票据创造。这表明银行的出现与**储藏及贷款**相关。\n\n1694年，**英格兰银行**作为世界上第一家股份制银行在伦敦成立，标志着各国中央银行体制的起源。\n\n**2. 汇兑论（清代山西票号）**\n清代中期，随着经济发展和商品流通加快，原有的货币使用方式不再适应形势。山西票号应运而生，主要从事汇兑业务——将银子交到票号柜上，凭汇票在别处取款。这显示银行的出现与**汇兑功能**相关联。"
+  },
+  "1-商业银行业务模式": {
+    bilingual: true,
+    title: "Commercial Bank Business Model",
+    title_cn: "商业银行业务模式",
+    en: "A commercial bank's business divides into three categories:\n\n**1. Liability Business (Sources of Funds)**\n- Customer Deposits: The primary funding source. Deposits are classified by customer type (retail, corporate, interbank) and product type (demand deposits — withdraw anytime; time deposits — fixed term, higher rate).\n- Interbank Borrowing: Borrowing from other banks and financial institutions in the interbank market when funds are short.\n- Central Bank Borrowing: Loans from the central bank (collateralized or uncollateralized).\n- Debt Issuance: Banks can also raise funds by issuing their own bonds.\n\n**2. Asset Business (Uses of Funds)**\n- Loan Business: The core of banking — credit loans (unsecured), mortgage loans (secured by property), guaranteed loans (third-party guarantee), and bill discounting (purchasing unmatured bills at a discount).\n- Treasury Business: Managing the bank's own funds through interbank deposits, bond trading, interest rate swaps, FX transactions, etc.\n\n**3. Off-Balance Sheet / Intermediary Business**\nBusiness that generates income without constituting on-balance-sheet assets or liabilities: payment settlement, bank cards, agency brokerage, fund distribution.\n\n**FTP Pricing**: Banks use Funds Transfer Pricing (FTP) to internally price deposits and loans, enabling profitability measurement across business units.",
+    cn: "商业银行的业务分为三大类：\n\n**1. 负债业务（资金来源）**\n- 客户存款：最主要的资金来源。按客户类型分个人/对公/同业存款；按产品类型分活期存款（可随时支取，利率较低）和定期存款（固定期限，利率较高）。\n- 同业拆借：资金短缺时在银行间市场向其他金融机构借款。\n- 中央银行借款：向央行贷款（质押借款或信用借款）。\n- 发债融资：银行也可通过自身发债募集资金。\n\n**2. 资产业务（资金运用）**\n- 贷款业务：银行核心业务——信用贷款（无担保）、抵押贷款（房产/设备抵押）、保证贷款（第三方担保）、票据贴现（未到期票据折价卖给银行）。\n- 资金业务（Treasury）：银行将自有资金用于同业存款、债券买卖、利率互换、掉期、期权等。\n\n**3. 中间业务（表外业务）**\n不构成银行表内资产负债但带来收入的业务：支付结算、银行卡、代理经纪、基金理财销售。\n\n**FTP定价**：银行采用内部资金转移定价（FTP）对存贷款进行内部定价，实现各业务单元的创利绩效评估。存贷比（LDR）= 贷款/存款，是银行资产配置的重要衡量指标。"
+  },
+  "1-银行监管体系": {
+    bilingual: true,
+    title: "Bank Regulatory Framework",
+    title_cn: "银行监管体系",
+    en: "**Hong Kong Monetary Authority (HKMA)** is the core banking regulator in Hong Kong, also performing central bank functions including monetary policy.\n\n**Three-Tier Banking System**:\n| Tier | Type | Description |\n|------|------|-------------|\n| Tier 1 | Licensed Banks | Full retail and wholesale banking; unrestricted use of 'bank' name |\n| Tier 2 | Restricted License Banks | Primarily private banking and trust activities; limited scope |\n| Tier 3 | Deposit-Taking Companies | Agency and custodian services; deposits ≥HK$100k, cap at HK$500k |\n\nThe **Banking Ordinance** provides the legal foundation for banking regulation in Hong Kong. Beyond HKMA, banks are supervised by other regulators including the SFC, Insurance Authority, and Deposit Protection Board.\n\n**Basel III** sets global standards for capital adequacy (CAR ≥8%), leverage ratio (≥3%), and liquidity requirements.",
+    cn: "**香港金融管理局（HKMA）**是香港银行业监管机构的核心，同时承担制定货币政策的中央银行职能。\n\n**香港三级银行制度**：\n| 级别 | 类型 | 说明 |\n|------|------|------|\n| 第一级 | 持牌银行 | 经营本地及离岸银行业务，可不受限制使用「银行」之名 |\n| 第二级 | 有限制持牌银行 | 主要从事私人银行和信托业务 |\n| 第三级 | 接受存款公司 | 以代客服务和代理业务为主，可接受≥10万港元存款，上限50万 |\n\n**《银行条例》**是香港银行业监管的法律基础。除金管局外，银行还受证监会（SFC）、保险业监管局、存款保障委员会等机构监管。\n\n**巴塞尔协议III**设定了全球统一的资本充足率（CAR≥8%）、杠杆率（≥3%）和流动性要求标准。"
+  },
+  "1-银行安全性与流动性": {
+    bilingual: true,
+    title: "Bank Safety & Liquidity",
+    title_cn: "银行安全性与流动性",
+    en: "Commercial banks operate on three principles: maintaining **safety**, **liquidity**, and pursuing profitability while preventing financial crime.\n\n**1. Safety — Capital Adequacy**\n- **Capital Adequacy Ratio (CAR)** = Capital / Risk-Weighted Assets (RWA). Higher RWA → more capital needed to cover potential losses.\n- Minimum requirements: CET1 ≥ 4.5%, Tier 1 ≥ 6%, Total CAR ≥ 8%.\n- **Leverage Ratio** = Tier 1 Capital / Total (on + off) balance sheet exposure. Basel III minimum: 3%.\n\n**2. Liquidity**\n- **Liquidity Coverage Ratio (LCR)** = HQLA / Net Cash Outflows (30-day stress scenario) ≥ 100%.\n- **Liquidity Maintenance Ratio (LMR)**: measures stable funding relative to required stable funding.\n\n**Silicon Valley Bank (SVB) Case Study**: SVB collapsed in 2023 due to a classic asset-liability mismatch:\n1. Deposits surged during the tech boom\n2. SVB heavily invested in long-term U.S. Treasuries\n3. Fed aggressively hiked rates → bond prices fell sharply\n4. Unrealized losses on HTM (held-to-maturity) securities ballooned\n5. Rating downgrades triggered depositor panic\n6. A bank run ensued, forcing FDIC receivership\n\nThe SVB case illustrates why BOTH solvency (capital) and liquidity matter — SVB was solvent by assets but illiquid when depositors fled.",
+    cn: "商业银行的经营原则可概括为：在保证**安全性**和**流动性**的基础上追求经营利润，并防范金融犯罪。\n\n**1. 安全性 — 资本充足率**\n- **资本充足率（CAR）**= 资本 / 风险加权资产（RWA）。银行持有的风险资产越多，潜在亏损越大，就需要更多资本来覆盖亏损风险。\n- 最低要求：核心一级资本充足率（CET1）≥4.5%，一级资本充足率≥6%，总资本充足率≥8%。\n- **杠杆比率** = 一级资本 / 未加权表内外资产总计。巴塞尔III最低要求3%。\n\n**2. 流动性**\n- **流动性覆盖率（LCR）**= 优质流动性资产（HQLA）/ 未来30天净现金流出 ≥ 100%。\n- **流动性维持比率（LMR）**：衡量可用稳定资金相对于所需稳定资金的比例。\n\n**硅谷银行（SVB）警示案例**：SVB于2023年因经典的资产负债错配而倒闭：\n1. 科技热潮期间存款激增\n2. SVB大量投资美国长期国债\n3. 美联储激进加息 → 债券价格大幅下跌\n4. 持有至到期（HTM）证券的未兑现亏损急剧膨胀\n5. 评级下调引发储户恐慌\n6. 挤兑发生，被迫进入FDIC破产接管\n\nSVB案例说明：偿债能力（资本）和流动性同等重要——SVB资产有偿还能力，但储户逃离时缺乏流动性。"
+  },
+  "1-反洗钱与金融犯罪防范": {
+    bilingual: true,
+    title: "Anti-Money Laundering & Financial Crime Prevention",
+    title_cn: "反洗钱与金融犯罪防范",
+    en: "Beyond safety and liquidity, regulators examine whether banks adequately prevent financial crimes (money laundering and fraud).\n\n**Money Laundering Three Stages**:\n1. **Placement**: Introducing illicit funds into the financial system\n2. **Layering**: Concealing the source through complex transaction networks\n3. **Integration**: Making funds appear legitimate, re-entering the economy\n\n**Anti-Money Laundering (AML) System Modules**:\n| Module | Full Name | Function |\n|--------|-----------|----------|\n| NC | Name Check | Scans customer names against sanction lists, assessing name/country similarity to blacklists |\n| SC | Sanity Check | Scans transaction fields (payer/payee names) for flagged keywords (e.g., politically exposed persons) |\n| TM | Transaction Monitoring | Monitors all account fund movements, analyzing abnormal or irregular transaction patterns |\n| CDD | Customer Due Diligence | Calculates customer risk ratings (high/medium/low) based on preset models at defined intervals |\n\n**KYC (Know Your Customer)** is the foundational process of customer identity verification before establishing a banking relationship.",
+    cn: "除安全性和流动性外，监管还会考察银行在防范金融犯罪（洗钱和诈骗）方面是否做得充分。\n\n**洗钱三阶段**：\n1. **放置（Placement）**：将非法资金存入金融系统\n2. **离析（Layering）**：通过复杂交易网络隐藏资金来源\n3. **整合（Integration）**：使资金看起来合法，重新进入经济体系\n\n**反洗钱（AML）系统主要模块**：\n| 模块 | 全称 | 功能 |\n|------|------|------|\n| NC | 名称检查 (Name Check) | 扫描客户姓名与制裁名单的匹配度，判断名称与国家与黑名单的相似度 |\n| SC | 交易扫描 (Sanity Check) | 扫描交易中的收付款方名称和机构字段，筛选特定敏感词汇（如政治人物姓名） |\n| TM | 交易监控 (Transaction Monitoring) | 监控客户账户所有资金动向，分析不规范或异常交易行为 |\n| CDD | 客户尽职调查 (Customer Due Diligence) | 基于预设模型定期计算客户风险等级（高/中/低） |\n\n**KYC（了解你的客户）**是建立银行关系前客户身份识别的基础流程。"
+  },
+  "1-银行财务报表分析": {
+    bilingual: true,
+    title: "Bank Financial Statement Analysis",
+    title_cn: "银行财务报表分析",
+    en: "Analyzing a bank's financial statements reveals its business model, profitability, and risk profile.\n\n**Income Statement Structure** (ZA Bank example):\n| Line Item | Description |\n|-----------|-------------|\n| Interest Income | Interest from loans and investments |\n| Interest Expense | Interest paid to depositors |\n| **Net Interest Income** | Interest Income − Interest Expense |\n| Fee & Commission Income | Account maintenance, transfer fees, card fees |\n| Trading Gains | Securities trading and FX gains |\n| Credit Impairment Losses | Provisions for bad loans |\n| Operating Expenses | Staff costs, IT, rent |\n| **Net Profit** | Total Income − Total Costs |\n\n**Key Ratios**:\n| Ratio | Formula | Significance |\n|-------|---------|-------------|\n| Net Interest Margin (NIM) | Net Interest Income / Interest-Earning Assets | Core profitability; higher is better |\n| Cost-to-Income Ratio | Operating Expenses / Total Income | Efficiency; lower is better |\n| Net Profit Margin | Net Profit / Total Income | Overall profitability |\n| Loan-to-Deposit Ratio (LDR) | Loans / Deposits | Asset utilization vs. liquidity risk |\n\n**Balance Sheet Key Items**: Customer deposits form the largest liability component (ZA Bank: HK$21.1 billion). Loans and advances are the primary earning assets. The equity section shows accumulated profits/losses and capital adequacy.",
+    cn: "分析银行财务报表可以了解其商业模式、盈利能力和风险状况。\n\n**利润表结构**（以ZA Bank为例）：\n| 项目 | 说明 |\n|------|------|\n| 利息收入 | 贷款和投资的利息收入 |\n| 利息支出 | 支付给存款人的利息 |\n| **净利息收入** | 利息收入 − 利息支出 |\n| 服务费及佣金收入 | 账户管理费、转账费、银行卡费 |\n| 证券交易收益 | 证券交易和外汇收益 |\n| 信用减值损失 | 坏账拨备 |\n| 营业费用 | 员工成本、IT、租金 |\n| **净利润** | 总收入 − 总成本 |\n\n**关键比率**：\n| 比率 | 公式 | 意义 |\n|------|------|------|\n| 净利息收益率（NIM） | 净利息收入 / 生息资产 | 核心盈利能力，越高越好 |\n| 成本收入比 | 营业费用 / 总收入 | 效率指标，越低越好 |\n| 净利润率 | 净利润 / 总收入 | 整体盈利能力 |\n| 存贷比（LDR） | 贷款 / 存款 | 资产利用率与流动性风险平衡 |\n\n**资产负债表关键项**：客户存款构成负债端的最大部分（ZA Bank：211亿港元），贷款是主要收益资产。权益部分显示累计盈亏和资本充足情况。"
   }
 };
 
