@@ -181,19 +181,20 @@ a { color: var(--accent); text-decoration: none; }
 }
 .contact-item:hover .c-handle { color: var(--accent-hover); }
 
-/* QR tooltip */
+/* QR tooltip — 原图尺寸显示 */
 .contact-qr {
   position: absolute; left: 105%; top: 50%;
   transform: translateY(-50%);
-  width: 130px; height: 130px;
+  width: auto; height: auto;
+  max-width: 80vw; max-height: 80vh;
   border: 3px solid var(--pixel-black);
   box-shadow: 4px 4px 0 0 var(--pixel-shadow);
   background: var(--card);
   display: none;
-  z-index: 50;
+  z-index: 100;
   image-rendering: pixelated;
   object-fit: contain;
-  padding: 4px;
+  padding: 8px;
 }
 .contact-item:hover .contact-qr { display: block; }
 
@@ -249,7 +250,6 @@ a { color: var(--accent); text-decoration: none; }
   font-size: 13px; color: var(--text-secondary); display: block;
   letter-spacing: 0.1em;
 }
-/* Decorative pixel line under section title */
 .section-title::after {
   content: '';
   display: block;
@@ -351,15 +351,11 @@ a { color: var(--accent); text-decoration: none; }
 }
 .project-card:hover .card-arrow { opacity: 1; }
 
-/* ---- HOT Badge (top-right, spiky) ---- */
+/* ---- HOT/NEW Badge (top-right, spiky) ---- */
 .hot-badge {
   position: absolute; top: -12px; right: -14px;
   font-family: var(--font-pixel); font-size: 7px;
   color: #FFF; background: var(--hot-red);
-}
-.hot-badge.new {
-  background: #22C55E;
-  color: #1C1917;
   width: 44px; height: 44px;
   display: flex; align-items: center; justify-content: center;
   text-align: center;
@@ -370,8 +366,12 @@ a { color: var(--accent); text-decoration: none; }
     20% 30%, 10% 10%, 35% 20%
   );
   animation: hot-pulse 1s steps(2) infinite;
-  z-index: 10;
+  z-index: 1;
   line-height: 1.2;
+}
+.hot-badge.new {
+  background: var(--pixel-green);
+  color: #1C1917;
 }
 @keyframes hot-pulse {
   0%,100% { transform: scale(1); opacity: 1; }
@@ -411,6 +411,47 @@ a { color: var(--accent); text-decoration: none; }
 .dots-continue .dot:nth-child(3) { animation-delay: 0.4s; }
 @keyframes dot-blink { 0%,100%{opacity:0.12} 50%{opacity:1} }
 
+/* ---- Modal Overlay (for QR popups) ---- */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  position: relative;
+  background: var(--card);
+  border: 4px solid var(--pixel-black);
+  box-shadow: 8px 8px 0 0 var(--pixel-shadow);
+  padding: 32px 28px 24px;
+  text-align: center;
+  max-width: 90vw;
+  cursor: default;
+}
+.modal-box img {
+  width: auto; height: auto;
+  max-width: 80vw; max-height: 70dvh;
+  border: 3px solid var(--pixel-black);
+  image-rendering: pixelated;
+  object-fit: contain;
+}
+.modal-close {
+  position: absolute; top: 4px; right: 10px;
+  font-family: var(--font-pixel); font-size: 16px;
+  color: var(--text-muted); cursor: pointer;
+  background: none; border: none; padding: 6px 10px;
+  transition: color var(--transition);
+  line-height: 1;
+}
+.modal-close:hover { color: var(--hot-red); }
+.modal-title {
+  font-family: var(--font-pixel2); font-size: 14px;
+  color: var(--pixel-black); margin-bottom: 12px;
+}
+
 /* ---- Scroll Nav ---- */
 .scroll-nav {
   position: fixed; right: 20px; top: 50%;
@@ -432,15 +473,18 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .scroll-hint {
-  position: absolute; bottom: 24px; right: 48px;
-  font-family: var(--font-pixel); font-size: 8px;
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-pixel); font-size: 9px;
   color: var(--text-muted);
   animation: float-hint 2s steps(4) infinite;
   pointer-events: none; z-index: 5;
+  text-align: center;
+  white-space: nowrap;
 }
 @keyframes float-hint {
-  0%,100%{transform:translateY(0);opacity:.5}
-  50%{transform:translateY(-8px);opacity:1}
+  0%,100%{transform:translate(-50%,0);opacity:.5}
+  50%{transform:translate(-50%,-8px);opacity:1}
 }
 
 .mobile-only { display: none; }
@@ -453,6 +497,7 @@ a { color: var(--accent); text-decoration: none; }
   .app-layout { display: block; height: 100vh; height: 100dvh; overflow: hidden; }
   .sidebar { display: none; }
   .scroll-nav { display: none; }
+  .scroll-hint { display: none; }
   .mobile-only { display: block; }
 
   .main-scroll {
@@ -483,11 +528,14 @@ a { color: var(--accent); text-decoration: none; }
   .mobile-cover .sidebar-bio { font-size: 14px; }
 
   .scroll-down-indicator {
-    position: absolute; bottom: 30px; left: 50%;
-    transform: translateX(-50%);
     font-family: var(--font-terminal); font-size: 14px;
     color: var(--text-muted);
     animation: float-hint 2s steps(4) infinite;
+    margin-top: 8px;
+  }
+  @keyframes float-hint-mobile {
+    0%,100%{transform:translateY(0);opacity:.5}
+    50%{transform:translateY(-8px);opacity:1}
   }
 
   .section-header { margin-bottom: 24px; }
@@ -518,6 +566,8 @@ a { color: var(--accent); text-decoration: none; }
   .dots-continue { font-size: 10px; }
   .dots-continue .dot { font-size: 18px; }
 
+  .modal-box img { width: 280px; height: 280px; }
+
   /* Mobile contact pages */
   .mobile-contact {
     min-height: 100vh; min-height: 100dvh;
@@ -528,10 +578,7 @@ a { color: var(--accent); text-decoration: none; }
     text-align: center; background: var(--bg-deep);
   }
   .mobile-contact .contact-list { align-items: center; }
-  .mobile-contact .contact-qr {
-    position: static; transform: none;
-    display: block; margin: 0 auto;
-  }
+  .mobile-contact .contact-qr { display: none; }
   .mobile-contact .contact-item {
     flex-direction: column; gap: 8px; width: auto;
     font-size: 15px;
@@ -558,7 +605,7 @@ a { color: var(--accent); text-decoration: none; }
        LEFT SIDEBAR (Desktop)
        ============================================================ -->
   <aside class="sidebar">
-    <div class="sidebar-header-deco">★ PLAYER 01 ★</div>
+    <div class="sidebar-header-deco">★ PLAYER BOSS ★</div>
 
     <div class="avatar-wrap">
       <div class="avatar-glitch"></div>
@@ -575,7 +622,7 @@ a { color: var(--accent); text-decoration: none; }
 
     <!-- Contact: icon + 平台名 + @handle(hover出QR) -->
     <div class="contact-list">
-      <!-- GitHub -->
+      <!-- GitHub (NO QR) -->
       <a class="contact-item" href="https://github.com/eason6789" target="_blank" rel="noopener">
         <svg class="c-icon" viewBox="0 0 26 26">
           <circle cx="13" cy="13" r="11" fill="none" stroke="#78350F" stroke-width="2.5"/>
@@ -585,7 +632,6 @@ a { color: var(--accent); text-decoration: none; }
         </svg>
         <span class="c-platform">GitHub</span>
         <span class="c-handle">@eason6789</span>
-        <img class="contact-qr" src="qr-github.jpg" alt="GitHub QR" loading="lazy">
       </a>
 
       <!-- 小红书 -->
@@ -651,7 +697,7 @@ a { color: var(--accent); text-decoration: none; }
     <div class="scroll-nav-dot active" data-target="sec-tools"></div>
     <div class="scroll-nav-dot" data-target="sec-demo"></div>
     <div class="scroll-nav-dot" data-target="sec-wechat"></div>
-    <div class="scroll-nav-dot" data-target="sec-skills"></div>
+    <div class="scroll-nav-dot" data-target="sec-opensource"></div>
   </nav>
 
   <!-- ============================================================
@@ -659,9 +705,12 @@ a { color: var(--accent); text-decoration: none; }
        ============================================================ -->
   <main class="main-scroll" id="mainScroll">
 
+    <!-- Desktop scroll hint -->
+    <div class="scroll-hint">▼ SCROLL ▼</div>
+
     <!-- ========== MOBILE COVER ========== -->
     <div class="mobile-cover mobile-only">
-      <div class="sidebar-header-deco">★ PLAYER 01 ★</div>
+      <div class="sidebar-header-deco">★ PLAYER BOSS ★</div>
       <div class="avatar-wrap">
         <div class="avatar-glitch"></div>
         <img class="avatar" src="pixel-avatar.png" alt="Eason LV" loading="eager">
@@ -687,7 +736,7 @@ a { color: var(--accent); text-decoration: none; }
         </h2>
       </div>
 
-      <div class="project-grid cols-3">
+      <div class="project-grid">
         <!-- AI音乐生成器 -->
         <a class="project-card" href="https://tuteng3.site/music_gen/" target="_blank" rel="noopener">
           <span class="hot-badge">HOT</span>
@@ -764,6 +813,34 @@ a { color: var(--accent); text-decoration: none; }
           </div>
           <span class="card-arrow">GO ▶</span>
         </a>
+
+        <!-- Vocab Duo (AI单词本) -->
+        <a class="project-card" href="https://tuteng3.site/vocab-duo/" target="_blank" rel="noopener">
+          <span class="hot-badge new">NEW</span>
+          <div class="card-icon">
+            <svg viewBox="0 0 34 34">
+              <rect x="3" y="2" width="28" height="30" rx="3" fill="none" stroke="#78350F" stroke-width="3"/>
+              <rect x="8" y="7" width="18" height="12" rx="1" fill="#D97706"/>
+              <line x1="10" y1="12" x2="24" y2="12" stroke="#FEF3C7" stroke-width="1.5"/>
+              <line x1="10" y1="15" x2="20" y2="15" stroke="#FEF3C7" stroke-width="1.5"/>
+              <rect x="10" y="22" width="6" height="6" fill="#22C55E"/>
+              <rect x="18" y="22" width="6" height="6" fill="#3B82F6"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-name">
+              <span class="cn-name">AI 单词本</span>
+              <span class="en-name">Vocab Duo</span>
+            </div>
+            <ul class="card-detail">
+              <li>拍照识别 → AI 自动生成单词本</li>
+              <li>类 Duolingo 交互 · 间隔重复算法</li>
+              <li>三种题型：选择 / 翻译 / 拼写</li>
+            </ul>
+            <span class="tag">AI</span><span class="tag">OCR</span><span class="tag">学习</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
       </div>
     </section>
 
@@ -837,35 +914,6 @@ a { color: var(--accent); text-decoration: none; }
         </a>
       </div>
 
-      <!-- Vocab Duo -->
-        <a class="project-card" href="https://tuteng3.site/vocab-duo/" target="_blank" rel="noopener">
-          <span class="hot-badge new">NEW</span>
-          <div class="card-icon">
-            <svg viewBox="0 0 34 34">
-              <rect x="3" y="2" width="28" height="30" rx="3" fill="none" stroke="#78350F" stroke-width="3"/>
-              <rect x="8" y="7" width="18" height="12" rx="1" fill="#D97706"/>
-              <line x1="10" y1="12" x2="24" y2="12" stroke="#FEF3C7" stroke-width="1.5"/>
-              <line x1="10" y1="15" x2="20" y2="15" stroke="#FEF3C7" stroke-width="1.5"/>
-              <rect x="10" y="22" width="6" height="6" fill="#22C55E"/>
-              <rect x="18" y="22" width="6" height="6" fill="#3B82F6"/>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-name">
-              <span class="cn-name">AI 单词本</span>
-              <span class="en-name">Vocab Duo</span>
-            </div>
-            <ul class="card-detail">
-              <li>拍照识别 → AI 自动生成单词本</li>
-              <li>类 Duolingo 交互 · 间隔重复算法</li>
-              <li>三种题型：选择 / 翻译 / 拼写</li>
-            </ul>
-            <span class="tag">AI</span><span class="tag">OCR</span><span class="tag">学习</span>
-          </div>
-          <span class="card-arrow">GO ▶</span>
-        </a>
-      </div>
-
       <div class="dots-continue">
         <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
         <span>To be continue…</span>
@@ -888,7 +936,7 @@ a { color: var(--accent); text-decoration: none; }
       <div class="subsection">
         <h3 class="subsection-title">小程序 Mini Program</h3>
         <div class="project-grid single-col">
-          <div class="project-card" tabindex="0">
+          <div class="project-card" tabindex="0" onclick="openModal('qr-wishlist.png','计划事务清单 WishList')">
             <div class="card-icon">
               <svg viewBox="0 0 34 34">
                 <rect x="4" y="3" width="26" height="28" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
@@ -904,7 +952,7 @@ a { color: var(--accent); text-decoration: none; }
               <ul class="card-detail">
                 <li>商务计划书创建与管理小程序</li>
                 <li>进度追踪 · 团队协作 · 备忘提醒</li>
-                <li>微信扫码即用</li>
+                <li>点击查看小程序二维码</li>
               </ul>
               <span class="tag">小程序</span><span class="tag">效率</span>
             </div>
@@ -921,7 +969,7 @@ a { color: var(--accent); text-decoration: none; }
       <div class="subsection">
         <h3 class="subsection-title">小游戏 Mini Game</h3>
         <div class="project-grid single-col">
-          <div class="project-card" tabindex="0">
+          <div class="project-card" tabindex="0" onclick="openModal('qr-minigame.png','极速命中挑战 Speed Reaction')">
             <div class="card-icon">
               <svg viewBox="0 0 34 34">
                 <rect x="5" y="3" width="6" height="24" fill="#78350F"/>
@@ -938,7 +986,7 @@ a { color: var(--accent); text-decoration: none; }
               <ul class="card-detail">
                 <li>考验反应速度的射击小游戏</li>
                 <li>实时对战 · 速度挑战 · 排行榜</li>
-                <li>微信小游戏，即点即玩</li>
+                <li>点击查看小游戏二维码</li>
               </ul>
               <span class="tag">小游戏</span><span class="tag">竞技</span>
             </div>
@@ -953,73 +1001,81 @@ a { color: var(--accent); text-decoration: none; }
     </section>
 
     <!-- ================================
-         SECTION 04: 开源 Skills (OPEN SOURCE SKILLS)
+         SECTION 04: 开源项目 (OPEN SOURCE)
          ================================ -->
-    <section class="section" id="sec-skills">
+    <section class="section" id="sec-opensource">
       <div class="section-header">
         <div class="section-tag">[ SECTION 04 ]</div>
         <h2 class="section-title">
-          <span class="title-cn">开源 Skills</span>
-          <span class="title-en">OPEN SOURCE SKILLS</span>
+          <span class="title-cn">开源项目</span>
+          <span class="title-en">OPEN SOURCE PROJECTS</span>
         </h2>
       </div>
 
-      <div class="project-grid">
-        <!-- 新西兰签证 -->
-        <a class="project-card" href="https://github.com/eason6789/nz-visa-4cn" target="_blank" rel="noopener">
-          <div class="card-icon">
-            <svg viewBox="0 0 34 34">
-              <rect x="3" y="3" width="28" height="18" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
-              <circle cx="12" cy="12" r="5" fill="none" stroke="#D97706" stroke-width="2.5"/>
-              <rect x="19" y="21" width="10" height="10" fill="#22C55E"/>
-              <rect x="3" y="21" width="12" height="10" fill="#3B82F6"/>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-name">
-              <span class="cn-name">新西兰签证材料生成器</span>
-              <span class="en-name">NZ Visa 4CN</span>
+      <!-- Sub: 开源 Skills -->
+      <div class="subsection">
+        <h3 class="subsection-title">开源 Skills</h3>
+        <div class="project-grid">
+          <!-- 新西兰签证 -->
+          <a class="project-card" href="https://github.com/eason6789/nz-visa-4cn" target="_blank" rel="noopener">
+            <div class="card-icon">
+              <svg viewBox="0 0 34 34">
+                <rect x="3" y="3" width="28" height="18" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
+                <circle cx="12" cy="12" r="5" fill="none" stroke="#D97706" stroke-width="2.5"/>
+                <rect x="19" y="21" width="10" height="10" fill="#22C55E"/>
+                <rect x="3" y="21" width="12" height="10" fill="#3B82F6"/>
+              </svg>
             </div>
-            <ul class="card-detail">
-              <li>上传证件照 → 一键生成申请 PDF</li>
-              <li>OCR 识别 + 中译英 + 自动排版</li>
-              <li>符合新西兰移民局 (INZ) 规范</li>
-            </ul>
-            <span class="tag">Skill</span><span class="tag">AI</span><span class="tag">PDF</span>
-          </div>
-          <span class="card-arrow">GO ▶</span>
-        </a>
+            <div class="card-info">
+              <div class="card-name">
+                <span class="cn-name">新西兰签证材料生成器</span>
+                <span class="en-name">NZ Visa 4CN</span>
+              </div>
+              <ul class="card-detail">
+                <li>上传证件照 → 一键生成申请 PDF</li>
+                <li>OCR 识别 + 中译英 + 自动排版</li>
+                <li>符合新西兰移民局 (INZ) 规范</li>
+              </ul>
+              <span class="tag">Skill</span><span class="tag">AI</span><span class="tag">PDF</span>
+            </div>
+            <span class="card-arrow">GO ▶</span>
+          </a>
 
-        <!-- 闲鱼自动发货 -->
-        <a class="project-card" href="https://github.com/eason6789/xianyu-auto-send-skills" target="_blank" rel="noopener">
-          <div class="card-icon">
-            <svg viewBox="0 0 34 34">
-              <ellipse cx="17" cy="11" rx="10" ry="6" fill="none" stroke="#78350F" stroke-width="3"/>
-              <path d="M7 11 Q17 25 27 11" fill="#D97706" stroke="#78350F" stroke-width="2.5"/>
-              <circle cx="13" cy="9" r="2" fill="#78350F"/>
-              <rect x="3" y="21" width="12" height="9" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
-              <rect x="19" y="21" width="12" height="9" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-name">
-              <span class="cn-name">闲鱼自动发货框架</span>
-              <span class="en-name">Xianyu Auto Send</span>
+          <!-- 闲鱼自动发货 -->
+          <a class="project-card" href="https://github.com/eason6789/xianyu-auto-send-skills" target="_blank" rel="noopener">
+            <div class="card-icon">
+              <svg viewBox="0 0 34 34">
+                <ellipse cx="17" cy="11" rx="10" ry="6" fill="none" stroke="#78350F" stroke-width="3"/>
+                <path d="M7 11 Q17 25 27 11" fill="#D97706" stroke="#78350F" stroke-width="2.5"/>
+                <circle cx="13" cy="9" r="2" fill="#78350F"/>
+                <rect x="3" y="21" width="12" height="9" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
+                <rect x="19" y="21" width="12" height="9" rx="2" fill="none" stroke="#78350F" stroke-width="3"/>
+              </svg>
             </div>
-            <ul class="card-detail">
-              <li>闲鱼虚拟商品自动化发货系统</li>
-              <li>自动检测买家付款 → 触发发货</li>
-              <li>可扩展：秘钥 / 链接 / 图片 / API</li>
-            </ul>
-            <span class="tag">Skill</span><span class="tag">自动化</span>
-          </div>
-          <span class="card-arrow">GO ▶</span>
-        </a>
+            <div class="card-info">
+              <div class="card-name">
+                <span class="cn-name">闲鱼自动发货框架</span>
+                <span class="en-name">Xianyu Auto Send</span>
+              </div>
+              <ul class="card-detail">
+                <li>闲鱼虚拟商品自动化发货系统</li>
+                <li>自动检测买家付款 → 触发发货</li>
+                <li>可扩展：秘钥 / 链接 / 图片 / API</li>
+              </ul>
+              <span class="tag">Skill</span><span class="tag">自动化</span>
+            </div>
+            <span class="card-arrow">GO ▶</span>
+          </a>
+        </div>
       </div>
 
-      <div class="dots-continue">
-        <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-        <span>To be continue…</span>
+      <!-- Sub: 开源项目 -->
+      <div class="subsection">
+        <h3 class="subsection-title">开源项目</h3>
+        <div class="dots-continue" style="padding-top:4px;">
+          <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+          <span>To be continue…</span>
+        </div>
       </div>
     </section>
 
@@ -1033,7 +1089,7 @@ a { color: var(--accent); text-decoration: none; }
       <div class="sidebar-bio">通过 GitHub 找到我</div>
       <div class="pixel-divider"></div>
       <a class="contact-item" href="https://github.com/eason6789" target="_blank" rel="noopener" style="flex-direction:column;gap:10px;width:auto;">
-        <img class="contact-qr" src="qr-github.jpg" alt="GitHub" style="position:static;transform:none;display:block;width:140px;height:140px;">
+        <img class="contact-qr" src="qr-github.jpg" alt="GitHub" style="position:static;transform:none;display:block;width:200px;height:200px;">
         <span style="font-family:var(--font-pixel2);font-size:13px;">GitHub</span>
         <span class="c-handle" style="font-size:16px;">@eason6789</span>
       </a>
@@ -1054,22 +1110,22 @@ a { color: var(--accent); text-decoration: none; }
       <div class="pixel-divider"></div>
       <div class="contact-list" style="align-items:center;gap:16px;">
         <a class="contact-item" href="https://www.xiaohongshu.com/user/profile/557fb45c861d6233dd8faa62" target="_blank" rel="noopener" style="flex-direction:column;gap:6px;width:auto;">
-          <img class="contact-qr" src="qr-redbook.jpg" alt="小红书" style="position:static;transform:none;display:block;width:110px;height:110px;">
+          <img class="contact-qr" src="qr-redbook.jpg" alt="小红书" style="position:static;transform:none;display:block;width:200px;height:200px;">
           <span class="c-platform" style="font-size:11px;">小红书</span>
           <span class="c-handle" style="font-size:15px;">@陀螺是大王</span>
         </a>
         <a class="contact-item" href="https://weixin.qq.com/sph/AzAq1nTxXI" target="_blank" rel="noopener" style="flex-direction:column;gap:6px;width:auto;">
-          <img class="contact-qr" src="qr-videocall.jpg" alt="视频号" style="position:static;transform:none;display:block;width:110px;height:110px;">
+          <img class="contact-qr" src="qr-videocall.jpg" alt="视频号" style="position:static;transform:none;display:block;width:200px;height:200px;">
           <span class="c-platform" style="font-size:11px;">视频号</span>
           <span class="c-handle" style="font-size:15px;">@陀螺就是我</span>
         </a>
         <a class="contact-item" href="https://v.douyin.com/DurNWxDV2qk/" target="_blank" rel="noopener" style="flex-direction:column;gap:6px;width:auto;">
-          <img class="contact-qr" src="qr-douyin.jpg" alt="抖音" style="position:static;transform:none;display:block;width:110px;height:110px;">
+          <img class="contact-qr" src="qr-douyin.jpg" alt="抖音" style="position:static;transform:none;display:block;width:200px;height:200px;">
           <span class="c-platform" style="font-size:11px;">抖音</span>
           <span class="c-handle" style="font-size:15px;">@抽筋小陀螺</span>
         </a>
         <a class="contact-item" href="https://weibo.com/u/1245369407" target="_blank" rel="noopener" style="flex-direction:column;gap:6px;width:auto;">
-          <img class="contact-qr" src="qr-weibo.png" alt="微博" style="position:static;transform:none;display:block;width:110px;height:110px;">
+          <img class="contact-qr" src="qr-weibo.png" alt="微博" style="position:static;transform:none;display:block;width:200px;height:200px;">
           <span class="c-platform" style="font-size:11px;">微博</span>
           <span class="c-handle" style="font-size:15px;">@齐天大陀螺</span>
         </a>
@@ -1086,29 +1142,55 @@ a { color: var(--accent); text-decoration: none; }
   </main>
 </div>
 
+<!-- ============================================================
+     QR Modal Overlay
+     ============================================================ -->
+<div class="modal-overlay" id="qrModal" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()" aria-label="关闭">✕</button>
+    <div class="modal-title" id="modalTitle"></div>
+    <img id="modalImg" src="" alt="QR Code">
+  </div>
+</div>
+
 <script>
 (function(){
+  /* ---- Scroll nav observer ---- */
   const sections = document.querySelectorAll('.section');
   const dots = document.querySelectorAll('.scroll-nav-dot');
-  if(!sections.length || !dots.length) return;
+  if(sections.length && dots.length) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          dots.forEach(d => d.classList.remove('active'));
+          const active = document.querySelector(`.scroll-nav-dot[data-target="${entry.target.id}"]`);
+          if(active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(s => observer.observe(s));
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        dots.forEach(d => d.classList.remove('active'));
-        const active = document.querySelector(`.scroll-nav-dot[data-target="${entry.target.id}"]`);
-        if(active) active.classList.add('active');
-      }
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const target = document.getElementById(dot.dataset.target);
+        if(target) target.scrollIntoView({ behavior: 'smooth' });
+      });
     });
-  }, { threshold: 0.5 });
+  }
 
-  sections.forEach(s => observer.observe(s));
-
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      const target = document.getElementById(dot.dataset.target);
-      if(target) target.scrollIntoView({ behavior: 'smooth' });
-    });
+  /* ---- Modal ---- */
+  window.openModal = function(src, title) {
+    document.getElementById('modalImg').src = src;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('qrModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeModal = function() {
+    document.getElementById('qrModal').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  document.addEventListener('keydown', function(e) {
+    if(e.key === 'Escape') closeModal();
   });
 })();
 </script>

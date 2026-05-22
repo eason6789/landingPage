@@ -1171,3 +1171,144 @@ body {
 @media (max-width: 768px) {
   .bilingual-columns { grid-template-columns: 1fr; }
 }
+
+/* ===== OCR Progress Badges ===== */
+.ocr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.03em;
+}
+.ocr-badge-complete {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.ocr-badge-partial {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-orange);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.ocr-badge-pending {
+  background: rgba(100, 116, 139, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+.module-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.ocr-badge-card {
+  flex-shrink: 0;
+}
+
+/* OCR banner on module detail */
+.ocr-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+.ocr-banner-complete {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: var(--accent-green);
+}
+.ocr-banner-partial {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  color: var(--accent-orange);
+}
+.ocr-banner-pending {
+  background: rgba(100, 116, 139, 0.08);
+  border: 1px solid rgba(100, 116, 139, 0.15);
+  color: var(--text-muted);
+}
+.ocr-banner-icon { font-size: 18px; }
+.ocr-banner-text strong { color: var(--text-primary); }
+
+/* Bilingual indicator dot on knowledge items */
+.bilingual-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  margin-left: 6px;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+}
+.knowledge-item-title {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ===== Global OCR Progress Bar ===== */
+.ocr-global-progress {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.ocr-global-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.ocr-global-icon { font-size: 16px; }
+.ocr-global-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.ocr-global-count {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+.ocr-global-pct {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-green);
+}
+.ocr-global-bar {
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.ocr-global-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-primary));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.ocr-global-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.ocr-legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.ocr-legend-done { background: var(--accent-green); }
+.ocr-legend-pending { background: var(--text-muted); }

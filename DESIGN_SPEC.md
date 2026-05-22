@@ -105,10 +105,10 @@
 
 | # | 中文标题 | 英文标题 | 项目数 | 状态 |
 |---|---------|---------|--------|------|
-| 01 | Web 工具 | WEB TOOLS | 3 | 满 |
-| 02 | 演示 | DEMO | 3 | 满 |
+| 01 | Web 工具 | WEB TOOLS | 4 | 满 |
+| 02 | 演示 | DEMO | 2 | 有 To be continue |
 | 03 | 小程序 & 小游戏 | MINI PROGRAMS & GAMES | 1+1 | 有 To be continue |
-| 04 | 开源 Skills | OPEN SOURCE SKILLS | 2 | 有 To be continue |
+| 04 | 开源项目 | OPEN SOURCE PROJECTS | 2+0 | 有 To be continue |
 
 ---
 
@@ -146,6 +146,7 @@
 | 🎵 | AI 音乐生成器 | AI Music Generator | /music_gen/ | AI, 音乐 | HOT |
 | 📊 | 金融知识学习平台 | Finc Study | /finlearn | 教育, 金融 | - |
 | 📸 | AI 证件照生成 | ID Photo AI | /claw/photo/ | AI, 工具 | HOT |
+| 📚 | AI 单词本 | Vocab Duo | /vocab-duo/ | AI, OCR, 学习 | NEW |
 
 ### Section 02: 演示
 
@@ -153,7 +154,6 @@
 |------|--------|--------|-----|------|------|
 | 🎮 | 行动代号 | CodeNames | /game.html | HTML5, AI | - |
 | 📱 | 自动滚动 Feed 流 | Video Feed | /video-feed/ | Demo, Feed | - |
-| 📚 | AI 单词本 | Vocab Duo | /vocab-duo/ | AI, OCR, 学习 | NEW |
 
 ### Section 03: 小程序 & 小游戏
 
@@ -167,12 +167,18 @@
 |--------|--------|--------|------|
 | 极速命中挑战 | Speed Reaction | qr-minigame.png | 小游戏, 竞技 |
 
-### Section 04: 开源 Skills
+### Section 04: 开源项目
 
+**开源 Skills:**
 | 项目名 | 英文名 | URL | 标签 |
 |--------|--------|-----|------|
 | 新西兰签证材料生成器 | NZ Visa 4CN | GitHub | Skill, AI, PDF |
 | 闲鱼自动发货框架 | Xianyu Auto Send | GitHub | Skill, 自动化 |
+
+**开源项目:**
+| 项目名 | 英文名 | URL | 标签 |
+|--------|--------|-----|------|
+| (待添加) | - | - | To be continue |
 
 ---
 
@@ -244,12 +250,49 @@
 
 ---
 
-## 十二、待办事项
+## 十二、新增项目规范流程
 
-- [ ] 像素头像以图生图生成（阿里百炼通义万相）
-- [ ] 演示区可能增加更多项目
-- [ ] 小程序/小游戏区域扩展
+### 前置条件
+1. 项目需已部署到 tuteng3.site 或其子路径，确保可通过 URL 直接访问
+2. 准备好项目名称（中英文）、一句话描述、标签（最多 3 个）
+
+### 添加步骤
+1. **确定归属 Section** — 根据项目类型归入对应 Section（Web 工具 / 演示 / 小程序&小游戏 / 开源项目）
+2. **制作 SVG 图标** — 34×34 viewBox，使用 `--text`(#78350F)、`--accent`(#D97706)、`--pixel-green`(#22C55E) 色板中的颜色
+3. **写入 HTML** — 复制 `.project-card` 模板，替换图标、中英文名、URL、标签、3 条 hover 描述
+4. **角标判断** — 新上线项目加 `<span class="hot-badge new">NEW</span>`，热门项目加 `<span class="hot-badge">HOT</span>`，普通项目不加
+5. **更新 Scroll Nav** — 若新增 Section，需同步添加 `.scroll-nav-dot` 导航点
+6. **更新本规范文档** — 在项目清单对应 Section 下新增一行
+
+### 角标规则
+| 角标 | 触发条件 | CSS类 | 颜色 |
+|------|---------|-------|------|
+| HOT | 访问量大/热门的项目 | `hot-badge` | 红色 #DC2626 |
+| NEW | 最近 2 周内上线的新项目 | `hot-badge new` | 绿色 #22C55E |
+| 无 | 常规项目 | - | - |
+
+### 卡片字段规范
+- **中文名**: 2-6 字，简洁直白
+- **英文名**: 对应英文，Title Case
+- **hover 描述**: 3 条 `<li>`，每条 12-20 字，覆盖核心功能、技术栈、亮点
+- **标签**: 每个项目 2-3 个 `.tag`，分类明确（如 AI / 工具 / 教育）
+
+### 部署 Checklist
+- [ ] `index.html` 修改后同步到 `/root/project/portfolio-home/src/index.html`
+- [ ] 如有新图片/资源，同步上传至服务器
+- [ ] nginx 如有新 location 块，测试并 reload
+- [ ] `git commit` + `git push` 到 github.com/eason6789/landingPage
+- [ ] 浏览器验证 https://tuteng3.site/ 正常访问
 
 ---
 
-*最后更新: 2026-05-21*
+## 十三、待办事项
+
+- [x] 像素头像生成（阿里百炼 Qwen-VL + wan2.6-t2i）
+- [ ] 演示区可能增加更多项目
+- [ ] 小程序/小游戏区域扩展
+- [ ] 开源项目子区域添加实际项目
+
+---
+
+*最后更新: 2026-05-22*

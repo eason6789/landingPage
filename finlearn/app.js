@@ -695,7 +695,10 @@ function init() {
   
   // Render modules grid
   renderModulesGrid();
-  
+
+  // Render OCR progress
+  renderOCRGlobalProgress();
+
   // Update progress
   updateTotalProgress();
   
@@ -764,10 +767,37 @@ function renderModulesGrid() {
         <div class="module-card-topics">
           ${m.sections.slice(0, 3).map(s => `<span class="topic-tag">${s.title.substring(0, 8)}</span>`).join('')}
         </div>
+        ${(() => {
+          const ocr = getModuleOCRCoverage(m.id);
+          if (ocr.pct >= 80) return `<span class="ocr-badge ocr-badge-card ocr-badge-complete">✓ OCR ${ocr.covered}条</span>`;
+          if (ocr.pct > 0) return `<span class="ocr-badge ocr-badge-card ocr-badge-partial">◐ OCR ${ocr.covered}/${ocr.total}</span>`;
+          return `<span class="ocr-badge ocr-badge-card ocr-badge-pending">○ 待OCR</span>`;
+        })()}
         <span class="module-card-arrow">→</span>
       </div>
     </div>`;
   }).join('');
+}
+
+function renderOCRGlobalProgress() {
+  const ocr = getTotalOCRCoverage();
+  const el = document.getElementById('ocrGlobalProgress');
+  if (!el) return;
+  el.innerHTML = `
+    <div class="ocr-global-header">
+      <span class="ocr-global-icon">📄</span>
+      <span class="ocr-global-title">OCR 双语内容进度</span>
+      <span class="ocr-global-count">${ocr.covered} / ${ocr.total} 条已完成</span>
+      <span class="ocr-global-pct">${ocr.pct}%</span>
+    </div>
+    <div class="ocr-global-bar">
+      <div class="ocr-global-fill" style="width:${ocr.pct}%"></div>
+    </div>
+    <div class="ocr-global-legend">
+      <span class="ocr-legend-dot ocr-legend-done"></span>已完成 (模块1: 宏观经济基础)
+      <span class="ocr-legend-dot ocr-legend-pending"></span>待处理 (模块2-10)
+    </div>
+  `;
 }
 
 // ===== Render Module Detail =====
@@ -801,16 +831,29 @@ function renderModuleDetail(moduleId) {
     </div>
   `;
 
+  // OCR status banner
+  const ocr = getModuleOCRCoverage(m.id);
+  let ocrBanner = '';
+  if (ocr.pct >= 80) {
+    ocrBanner = `<div class="ocr-banner ocr-banner-complete"><span class="ocr-banner-icon">✅</span><span class="ocr-banner-text"><strong>OCR 已完成</strong> — 共 ${ocr.covered} 条中英双语内容，来源于原始学习材料截图提取</span></div>`;
+  } else if (ocr.pct > 0) {
+    ocrBanner = `<div class="ocr-banner ocr-banner-partial"><span class="ocr-banner-icon">🔶</span><span class="ocr-banner-text"><strong>OCR 进行中</strong> — ${ocr.covered}/${ocr.total} 条已完成双语提取</span></div>`;
+  } else {
+    ocrBanner = `<div class="ocr-banner ocr-banner-pending"><span class="ocr-banner-icon">⏳</span><span class="ocr-banner-text"><strong>OCR 待处理</strong> — 该模块的双语内容尚未从原始材料中提取，当前为占位知识点</span></div>`;
+  }
+
   // Update content
   const content = document.getElementById('moduleContent');
-  content.innerHTML = m.sections.map((section, si) => {
+  content.innerHTML = ocrBanner + m.sections.map((section, si) => {
     const items = section.items.map((item, ii) => {
       const key = `${m.id}-${item.title}`;
       const checked = state.completedItems.has(key);
+      const kc = KNOWLEDGE_CONTENT[key];
+      const hasBilingual = kc && kc.bilingual;
       return `<div class="knowledge-item ${checked ? 'checked' : ''}" data-key="${key}" data-item='${JSON.stringify({title: item.title, moduleId: m.id, section: section.title, item}).replace(/'/g, "&#39;")}'>
         <div class="knowledge-item-check">${checked ? '✓' : ''}</div>
         <div class="knowledge-item-content">
-          <div class="knowledge-item-title">${item.title}</div>
+          <div class="knowledge-item-title">${item.title}${hasBilingual ? '<span class="bilingual-dot" title="中英双语OCR内容"></span>' : ''}</div>
           <div class="knowledge-item-subtitle">${item.subtitle}</div>
         </div>
         <span class="knowledge-item-tag tag-${item.tag}">${getTagName(item.tag)}</span>
@@ -842,6 +885,31 @@ function renderModuleDetail(moduleId) {
 function getTagName(tag) {
   const map = { core: '核心', expanded: '进阶', practice: '实战', trend: '前沿' };
   return map[tag] || tag;
+}
+
+function getModuleOCRCoverage(id) {
+  const m = MODULES.find(x => x.id === id);
+  let total = 0, covered = 0;
+  m.sections.forEach(s => {
+    s.items.forEach(item => {
+      total++;
+      const key = `${id}-${item.title}`;
+      if (KNOWLEDGE_CONTENT[key] && KNOWLEDGE_CONTENT[key].bilingual) {
+        covered++;
+      }
+    });
+  });
+  return { covered, total, pct: total > 0 ? Math.round((covered / total) * 100) : 0 };
+}
+
+function getTotalOCRCoverage() {
+  let total = 0, covered = 0;
+  MODULES.forEach(m => {
+    const c = getModuleOCRCoverage(m.id);
+    total += c.total;
+    covered += c.covered;
+  });
+  return { covered, total, pct: total > 0 ? Math.round((covered / total) * 100) : 0 };
 }
 
 function getModuleTotalCount(id) {
