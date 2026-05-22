@@ -398,13 +398,13 @@ a { color: var(--accent); text-decoration: none; }
 
 /* ---- "To be continue..." ---- */
 .dots-continue {
-  display: flex; align-items: center; gap: 4px;
+  display: flex; align-items: center; gap: 3px;
   font-family: var(--font-pixel2); font-size: 12px;
   color: var(--text-muted);
   padding: 12px 0 0 6px;
 }
 .dots-continue .dot {
-  font-size: 22px;
+  font-size: 18px;
   animation: dot-blink 0.6s steps(1) infinite;
 }
 .dots-continue .dot:nth-child(2) { animation-delay: 0.2s; }
@@ -713,7 +713,7 @@ a { color: var(--accent); text-decoration: none; }
       <div class="sidebar-header-deco">★ PLAYER BOSS ★</div>
       <div class="avatar-wrap">
         <div class="avatar-glitch"></div>
-        <img class="avatar" src="pixel-avatar.png" alt="Eason LV" loading="eager">
+        <img class="avatar" src="pixel-avatar-v3.png" alt="Eason LV" loading="eager">
       </div>
       <div class="sidebar-name">
         <span class="en">陀螺(Eason)</span>
@@ -915,8 +915,8 @@ a { color: var(--accent); text-decoration: none; }
       </div>
 
       <div class="dots-continue">
+        <span>To be continue</span>
         <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-        <span>To be continue…</span>
       </div>
     </section>
 
@@ -1158,6 +1158,9 @@ a { color: var(--accent); text-decoration: none; }
   /* ---- Scroll nav observer ---- */
   const sections = document.querySelectorAll('.section');
   const dots = document.querySelectorAll('.scroll-nav-dot');
+  const scrollHint = document.querySelector('.scroll-hint');
+  const lastSection = sections[sections.length - 1];
+
   if(sections.length && dots.length) {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -1169,6 +1172,16 @@ a { color: var(--accent); text-decoration: none; }
       });
     }, { threshold: 0.5 });
     sections.forEach(s => observer.observe(s));
+
+    // Hide scroll-hint when last section is visible
+    const hintObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(scrollHint) {
+          scrollHint.style.opacity = entry.isIntersecting ? '0' : '';
+        }
+      });
+    }, { threshold: 0.3 });
+    if(lastSection) hintObserver.observe(lastSection);
 
     dots.forEach(dot => {
       dot.addEventListener('click', () => {
