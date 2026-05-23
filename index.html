@@ -504,7 +504,7 @@ a { color: var(--accent); text-decoration: none; }
 }
 .contact-item .ci-platform {
   font-family: var(--font-pixel2); font-size: 10px;
-  color: var(--text-secondary); min-width: 48px;
+  color: var(--text-secondary); width: 52px; text-align: left;
 }
 .contact-item .ci-handle {
   font-size: 15px; color: var(--text);
@@ -572,6 +572,10 @@ a { color: var(--accent); text-decoration: none; }
   0%,100%{transform:translate(-50%,0);opacity:.5}
   50%{transform:translate(-50%,-8px);opacity:1}
 }
+@keyframes float-vertical {
+  0%,100%{transform:translateY(0);opacity:.5}
+  50%{transform:translateY(-8px);opacity:1}
+}
 
 .mobile-only { display: none; }
 
@@ -583,7 +587,7 @@ a { color: var(--accent); text-decoration: none; }
   .app-layout { display: block; height: 100vh; height: 100dvh; overflow: hidden; }
   .sidebar { display: none; }
   .scroll-nav { display: none; }
-  .scroll-hint { display: none; }
+  .scroll-hint { display: block; }
   .mobile-only { display: block; }
 
   .main-scroll {
@@ -596,6 +600,7 @@ a { color: var(--accent); text-decoration: none; }
     min-height: 100vh; min-height: 100dvh;
     scroll-snap-align: start; scroll-snap-stop: always;
     padding: 36px 18px; justify-content: center;
+    position: relative;
   }
 
   .contact-page {
@@ -622,8 +627,8 @@ a { color: var(--accent); text-decoration: none; }
   .scroll-down-indicator {
     font-family: var(--font-terminal); font-size: 14px;
     color: var(--text-muted);
-    animation: float-hint 2s steps(4) infinite;
-    margin-top: 8px;
+    animation: float-vertical 2s steps(4) infinite;
+    margin-top: 8px; text-align: center; width: 100%; cursor: pointer;
   }
 
   .section-header { margin-bottom: 24px; }
@@ -687,7 +692,7 @@ a { color: var(--accent); text-decoration: none; }
 
     <div class="avatar-wrap">
       <div class="avatar-glitch"></div>
-      <img class="avatar" src="pixel-avatar-v3.png" alt="Eason LV" loading="eager">
+      <img class="avatar" src="pixel-avatar-v4.png" alt="Eason LV" loading="eager">
     </div>
 
     <div class="sidebar-name">
@@ -736,7 +741,7 @@ a { color: var(--accent); text-decoration: none; }
       <div class="sidebar-header-deco">★ PLAYER BOSS ★</div>
       <div class="avatar-wrap">
         <div class="avatar-glitch"></div>
-        <img class="avatar" src="pixel-avatar-v3.png" alt="Eason LV" loading="eager">
+        <img class="avatar" src="pixel-avatar-v4.png" alt="Eason LV" loading="eager">
       </div>
       <div class="sidebar-name">
         <span class="en">陀螺(Eason)</span>
@@ -1254,7 +1259,7 @@ a { color: var(--accent); text-decoration: none; }
   }
 
   /* ---- Scroll hint clicks: advance to next section ---- */
-  var scrollHints = document.querySelectorAll('.scroll-hint');
+  var scrollHints = document.querySelectorAll('.scroll-hint, .scroll-down-indicator');
   var targetIds = Array.from(allTargets).map(function(el) { return el.id; });
   scrollHints.forEach(function(hint) {
     hint.addEventListener('click', function() {
