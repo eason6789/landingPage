@@ -77,3 +77,7 @@ server {
 
 - Nginx
 - Let's Encrypt (SSL)
+
+## 环境变量
+
+本项目为纯静态前端，**无需配置环境变量**。
