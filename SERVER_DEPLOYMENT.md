@@ -8,8 +8,8 @@
 
 ## 服务器配置
 
-- **项目路径**: `/root/project/portfolio-home/src/`
-- **Web 根目录**: `/root/project/portfolio-home/src/`
+- **项目路径**: `<YOUR_WEB_ROOT>/`
+- **Web 根目录**: `<YOUR_WEB_ROOT>/`
 - **Nginx 配置**: `/etc/nginx/conf.d/tuteng3.site.conf`
 
 ## 部署步骤
@@ -23,27 +23,27 @@
 cd /Users/easonlv/Code/web/landingPage
 
 # 上传所有文件（排除 .gitignore 和备份文件）
-scp -r . root@119.29.178.222:/root/project/portfolio-home/src/
+scp -r . root@<YOUR_SERVER_IP>:<YOUR_WEB_ROOT>/
 ```
 
 #### 步骤 2: 验证部署
 
 ```bash
 # SSH 到服务器验证
-ssh root@119.29.178.222 "ls -la /root/project/portfolio-home/src/index.html"
+ssh root@<YOUR_SERVER_IP> "ls -la <YOUR_WEB_ROOT>/index.html"
 ```
 
 ### 方式二：手动部署
 
 ```bash
 # SSH 到服务器
-ssh root@119.29.178.222
+ssh root@<YOUR_SERVER_IP>
 
 # 创建目录（如果不存在）
-mkdir -p /root/project/portfolio-home/src
+mkdir -p <YOUR_WEB_ROOT>
 
 # 从 Git 拉取最新代码
-cd /root/project/portfolio-home/src
+cd <YOUR_WEB_ROOT>
 git pull origin main
 ```
 
@@ -54,8 +54,8 @@ git pull origin main
 ```nginx
 server {
     listen 80 default_server;
-    server_name tuteng3.site www.tuteng3.site 119.29.178.222;
-    root /root/project/portfolio-home/src;
+    server_name tuteng3.site www.tuteng3.site <YOUR_SERVER_IP>;
+    root <YOUR_WEB_ROOT>;
     index index.html index.htm;
 
     location / {
@@ -65,12 +65,12 @@ server {
 
 server {
     listen 443 ssl http2;
-    server_name tuteng3.site www.tuteng3.site 119.29.178.222;
+    server_name tuteng3.site www.tuteng3.site <YOUR_SERVER_IP>;
 
     ssl_certificate /etc/letsencrypt/live/tuteng3.site/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/tuteng3.site/privkey.pem;
 
-    root /root/project/portfolio-home/src;
+    root <YOUR_WEB_ROOT>;
     index index.html index.htm;
 
     location / {
@@ -84,19 +84,19 @@ server {
 ### 重启 Nginx
 
 ```bash
-ssh root@119.29.178.222 "nginx -s reload"
+ssh root@<YOUR_SERVER_IP> "nginx -s reload"
 ```
 
 ### 查看日志
 
 ```bash
-ssh root@119.29.178.222 "tail -f /var/log/nginx/access.log"
+ssh root@<YOUR_SERVER_IP> "tail -f /var/log/nginx/access.log"
 ```
 
 ## 注意事项
 
 1. **静态页面项目**: 这是一个纯静态网站，无需构建
-2. **文件上传**: 直接上传到 `/root/project/portfolio-home/src/` 目录
+2. **文件上传**: 直接上传到 `<YOUR_WEB_ROOT>/` 目录
 3. **备份**: 部署前可以先备份现有文件
 4. **子项目**:
    - `/games.html` - 游戏页面

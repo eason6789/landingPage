@@ -198,7 +198,7 @@
 | 视频号 | @陀螺就是我 | 微信视频号 | qr-videocall.jpg |
 | 抖音 | @抽筋小陀螺 | 抖音主页 | qr-douyin.jpg |
 | 微博 | @齐天大陀螺 | weibo.com | qr-weibo.png |
-| Email | easonlv95@gmail.com | mailto | - |
+| Email | your-email@example.com | mailto | - |
 
 ### 交互
 - 桌面端: hover 显示二维码（绝对定位在右侧弹出）
@@ -223,7 +223,7 @@
 ## 十、部署信息
 
 ### 服务器
-- **地址**: 119.29.178.222
+- **地址**: <YOUR_SERVER_IP>
 - **域名**: tuteng3.site
 - **SSL**: Let's Encrypt (HTTPS)
 - **Web服务器**: Nginx

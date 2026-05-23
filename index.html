@@ -6,7 +6,7 @@
 <title>陀螺(Eason)的创想世界</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=DotGothic16&family=Share+Tech+Mono&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=ZCOOL+QingKe+HuangYou&family=Silkscreen&family=DotGothic16&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    CSS Custom Properties
@@ -29,9 +29,9 @@
   --pixel-blue:    #3B82F6;
   --hot-red:       #DC2626;
 
-  --font-pixel:    'Silkscreen', 'DotGothic16', 'ZCOOL QingKe HuangYou', cursive;
-  --font-pixel2:   'DotGothic16', 'ZCOOL QingKe HuangYou', cursive;
-  --font-terminal: 'Share Tech Mono', 'ZCOOL QingKe HuangYou', monospace;
+  --font-pixel:    'Press Start 2P', 'Silkscreen', 'ZCOOL QingKe HuangYou', cursive;
+  --font-pixel2:   'Silkscreen', 'DotGothic16', 'ZCOOL QingKe HuangYou', cursive;
+  --font-terminal: 'VT323', 'ZCOOL QingKe HuangYou', monospace;
 
   --sidebar-w:     310px;
   --transition:    120ms steps(2);
@@ -444,7 +444,7 @@ a { color: var(--accent); text-decoration: none; }
   scroll-snap-align: start;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  padding: 48px 40px; gap: 24px;
+  padding: 48px 40px; gap: 32px;
   text-align: center;
   background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
   position: relative;
@@ -457,38 +457,39 @@ a { color: var(--accent); text-decoration: none; }
 
 /* ---- Contact Row ---- */
 .contact-row {
-  display: flex; align-items: flex-start; gap: 36px;
-  max-width: 600px; width: 100%;
+  display: flex; align-items: flex-start; gap: 40px;
+  max-width: 680px; width: 100%;
 }
 .contact-row-img {
-  width: 100px; flex-shrink: 0;
+  width: 130px; flex-shrink: 0; padding-top: 4px;
 }
 .contact-row-img img {
-  display: block; width: 100px; height: 100px;
+  display: block; width: 130px; height: 130px;
   border: 4px solid var(--pixel-black);
-  box-shadow: 4px 4px 0 0 var(--pixel-shadow);
+  box-shadow: 6px 6px 0 0 var(--pixel-shadow);
   image-rendering: pixelated;
   object-fit: cover;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .contact-row-links {
-  display: flex; flex-direction: column; gap: 10px;
+  display: flex; flex-direction: column; gap: 14px;
   align-items: flex-start; text-align: left; flex: 1;
+  min-width: 0;
 }
 .contact-row-intro {
-  font-family: var(--font-terminal); font-size: 18px;
-  color: var(--text-secondary);
-  margin-bottom: 4px; line-height: 1.5;
+  font-family: var(--font-pixel2); font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 2px; line-height: 1.5; letter-spacing: 0.05em;
 }
 
 /* ---- Contact Item (with hover QR tooltip) ---- */
 .contact-item {
   position: relative;
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--font-terminal); font-size: 16px;
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--font-terminal); font-size: 17px;
   color: var(--text);
-  padding: 8px 14px;
+  padding: 10px 16px;
   border: 2px solid transparent;
   transition: all var(--transition);
   cursor: pointer; text-decoration: none;
@@ -500,14 +501,15 @@ a { color: var(--accent); text-decoration: none; }
   color: var(--accent-hover);
 }
 .contact-item .ci-icon {
-  width: 24px; height: 24px; flex-shrink: 0;
+  width: 28px; height: 28px; flex-shrink: 0;
 }
 .contact-item .ci-platform {
-  font-family: var(--font-pixel2); font-size: 10px;
-  color: var(--text-secondary); min-width: 48px;
+  font-family: var(--font-pixel2); font-size: 11px;
+  color: var(--text-secondary); width: 64px; flex-shrink: 0;
+  text-align: left;
 }
 .contact-item .ci-handle {
-  font-size: 15px; color: var(--text);
+  font-size: 16px; color: var(--text);
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-color: var(--accent);
@@ -587,13 +589,7 @@ a { color: var(--accent); text-decoration: none; }
   .app-layout { display: block; height: 100vh; height: 100dvh; overflow: hidden; }
   .sidebar { display: none; }
   .scroll-nav { display: none; }
-  .scroll-hint {
-    display: block;
-    position: absolute; bottom: 28px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 8px; cursor: pointer;
-  }
-  .scroll-down-indicator { cursor: pointer; }
+  .scroll-hint { display: block; }
   .mobile-only { display: block; }
 
   .main-scroll {
@@ -606,12 +602,13 @@ a { color: var(--accent); text-decoration: none; }
     min-height: 100vh; min-height: 100dvh;
     scroll-snap-align: start; scroll-snap-stop: always;
     padding: 36px 18px; justify-content: center;
+    position: relative;
   }
 
   .contact-page {
     min-height: 100vh; min-height: 100dvh;
     scroll-snap-align: start; scroll-snap-stop: always;
-    padding: 40px 20px; gap: 18px;
+    padding: 40px 20px; gap: 24px;
   }
 
   /* Mobile Cover */
@@ -633,7 +630,7 @@ a { color: var(--accent); text-decoration: none; }
     font-family: var(--font-terminal); font-size: 14px;
     color: var(--text-muted);
     animation: float-vertical 2s steps(4) infinite;
-    margin-top: 8px; text-align: center; width: 100%;
+    margin-top: 8px; text-align: center; width: 100%; cursor: pointer;
   }
 
   .section-header { margin-bottom: 24px; }
@@ -668,10 +665,14 @@ a { color: var(--accent); text-decoration: none; }
 
   /* Contact page mobile */
   .contact-row {
-    flex-direction: column; gap: 16px;
+    flex-direction: row; gap: 20px; align-items: flex-start;
   }
-  .contact-row-links { align-items: flex-start; text-align: left; padding-left: 16px; }
-  .contact-item { font-size: 14px; }
+  .contact-row-img { width: 80px; }
+  .contact-row-img img { width: 80px; height: 80px; }
+  .contact-row-links { align-items: flex-start; text-align: left; gap: 10px; }
+  .contact-item { font-size: 14px; padding: 6px 10px; gap: 10px; }
+  .contact-item .ci-icon { width: 22px; height: 22px; }
+  .contact-item .ci-platform { font-size: 9px; width: 52px; }
   .contact-item .ci-handle { font-size: 13px; }
   .contact-qr { display: none; }
 }
@@ -1131,7 +1132,7 @@ a { color: var(--accent); text-decoration: none; }
           <img src="qr-github.jpg" alt="GitHub QR" loading="lazy">
         </div>
         <div class="contact-row-links">
-          <div class="contact-row-intro">If you're a developer, find me here</div>
+          <div class="contact-row-intro">Programmer, find me here!</div>
           <!-- GitHub -->
           <a class="contact-item" href="https://github.com/eason6789" target="_blank" rel="noopener">
             <svg class="ci-icon" viewBox="0 0 24 24">
@@ -1144,13 +1145,13 @@ a { color: var(--accent); text-decoration: none; }
             <span class="ci-handle">@eason6789</span>
           </a>
           <!-- Email -->
-          <a class="contact-item" href="mailto:easonlv95@gmail.com">
+          <a class="contact-item" href="mailto:your-email@example.com">
             <svg class="ci-icon" viewBox="0 0 24 24">
               <rect x="2.5" y="4.5" width="19" height="15" rx="2" stroke="#78350F" stroke-width="2.2" fill="none"/>
               <polyline points="2.5,4.5 12,12 21.5,4.5" stroke="#78350F" stroke-width="2.2" fill="none"/>
             </svg>
             <span class="ci-platform">Email</span>
-            <span class="ci-handle">easonlv95@gmail.com</span>
+            <span class="ci-handle">your-email@example.com</span>
           </a>
         </div>
       </div>
@@ -1269,14 +1270,8 @@ a { color: var(--accent); text-decoration: none; }
   scrollHints.forEach(function(hint) {
     hint.addEventListener('click', function() {
       // Find which section this hint belongs to
-      var parent = hint.closest('.section, .contact-page, .mobile-cover');
+      var parent = hint.closest('.section, .contact-page');
       if (!parent) return;
-      // mobile-cover: advance to first section
-      if (parent.classList.contains('mobile-cover')) {
-        var firstSection = document.querySelector('.section');
-        if (firstSection) firstSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
       var currentIdx = targetIds.indexOf(parent.id);
       var nextId = targetIds[currentIdx + 1];
       if (nextId) scrollToSection(nextId);
