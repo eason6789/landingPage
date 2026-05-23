@@ -6,7 +6,7 @@
 <title>陀螺(Eason)的创想世界</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=ZCOOL+QingKe+HuangYou&family=Silkscreen&family=DotGothic16&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=DotGothic16&family=Share+Tech+Mono&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    CSS Custom Properties
@@ -29,9 +29,9 @@
   --pixel-blue:    #3B82F6;
   --hot-red:       #DC2626;
 
-  --font-pixel:    'Press Start 2P', 'Silkscreen', 'ZCOOL QingKe HuangYou', cursive;
-  --font-pixel2:   'Silkscreen', 'DotGothic16', 'ZCOOL QingKe HuangYou', cursive;
-  --font-terminal: 'VT323', 'ZCOOL QingKe HuangYou', monospace;
+  --font-pixel:    'Silkscreen', 'DotGothic16', 'ZCOOL QingKe HuangYou', cursive;
+  --font-pixel2:   'DotGothic16', 'ZCOOL QingKe HuangYou', cursive;
+  --font-terminal: 'Share Tech Mono', 'ZCOOL QingKe HuangYou', monospace;
 
   --sidebar-w:     310px;
   --transition:    120ms steps(2);
@@ -572,6 +572,10 @@ a { color: var(--accent); text-decoration: none; }
   0%,100%{transform:translate(-50%,0);opacity:.5}
   50%{transform:translate(-50%,-8px);opacity:1}
 }
+@keyframes float-vertical {
+  0%,100%{transform:translateY(0);opacity:.5}
+  50%{transform:translateY(-8px);opacity:1}
+}
 
 .mobile-only { display: none; }
 
@@ -583,7 +587,13 @@ a { color: var(--accent); text-decoration: none; }
   .app-layout { display: block; height: 100vh; height: 100dvh; overflow: hidden; }
   .sidebar { display: none; }
   .scroll-nav { display: none; }
-  .scroll-hint { display: none; }
+  .scroll-hint {
+    display: block;
+    position: absolute; bottom: 28px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px; cursor: pointer;
+  }
+  .scroll-down-indicator { cursor: pointer; }
   .mobile-only { display: block; }
 
   .main-scroll {
@@ -622,8 +632,8 @@ a { color: var(--accent); text-decoration: none; }
   .scroll-down-indicator {
     font-family: var(--font-terminal); font-size: 14px;
     color: var(--text-muted);
-    animation: float-hint 2s steps(4) infinite;
-    margin-top: 8px;
+    animation: float-vertical 2s steps(4) infinite;
+    margin-top: 8px; text-align: center; width: 100%;
   }
 
   .section-header { margin-bottom: 24px; }
@@ -660,7 +670,7 @@ a { color: var(--accent); text-decoration: none; }
   .contact-row {
     flex-direction: column; gap: 16px;
   }
-  .contact-row-links { align-items: center; text-align: center; }
+  .contact-row-links { align-items: flex-start; text-align: left; padding-left: 16px; }
   .contact-item { font-size: 14px; }
   .contact-item .ci-handle { font-size: 13px; }
   .contact-qr { display: none; }
@@ -687,7 +697,7 @@ a { color: var(--accent); text-decoration: none; }
 
     <div class="avatar-wrap">
       <div class="avatar-glitch"></div>
-      <img class="avatar" src="pixel-avatar-v3.png" alt="Eason LV" loading="eager">
+      <img class="avatar" src="pixel-avatar-v4.png" alt="Eason LV" loading="eager">
     </div>
 
     <div class="sidebar-name">
@@ -736,7 +746,7 @@ a { color: var(--accent); text-decoration: none; }
       <div class="sidebar-header-deco">★ PLAYER BOSS ★</div>
       <div class="avatar-wrap">
         <div class="avatar-glitch"></div>
-        <img class="avatar" src="pixel-avatar-v3.png" alt="Eason LV" loading="eager">
+        <img class="avatar" src="pixel-avatar-v4.png" alt="Eason LV" loading="eager">
       </div>
       <div class="sidebar-name">
         <span class="en">陀螺(Eason)</span>
@@ -1254,13 +1264,19 @@ a { color: var(--accent); text-decoration: none; }
   }
 
   /* ---- Scroll hint clicks: advance to next section ---- */
-  var scrollHints = document.querySelectorAll('.scroll-hint');
+  var scrollHints = document.querySelectorAll('.scroll-hint, .scroll-down-indicator');
   var targetIds = Array.from(allTargets).map(function(el) { return el.id; });
   scrollHints.forEach(function(hint) {
     hint.addEventListener('click', function() {
       // Find which section this hint belongs to
-      var parent = hint.closest('.section, .contact-page');
+      var parent = hint.closest('.section, .contact-page, .mobile-cover');
       if (!parent) return;
+      // mobile-cover: advance to first section
+      if (parent.classList.contains('mobile-cover')) {
+        var firstSection = document.querySelector('.section');
+        if (firstSection) firstSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
       var currentIdx = targetIds.indexOf(parent.id);
       var nextId = targetIds[currentIdx + 1];
       if (nextId) scrollToSection(nextId);
