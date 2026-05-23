@@ -232,7 +232,7 @@
 
 | 应用 | 本地路径 | 服务器路径 | 访问URL |
 |------|---------|-----------|---------|
-| Landing Page | /Users/easonlv/code/web/landingPage/ | /root/project/portfolio-home/src/ | tuteng3.site |
+| Landing Page | /Users/easonlv/code/web/landingPage/ | /var/www/landingpage/ | tuteng3.site |
 | Vocab Duo | /Users/easonlv/code/web/vocab-duo/ | /var/www/vocab-duo/ | tuteng3.site/vocab-duo/ |
 
 ### Git仓库
@@ -278,7 +278,7 @@
 - **标签**: 每个项目 2-3 个 `.tag`，分类明确（如 AI / 工具 / 教育）
 
 ### 部署 Checklist
-- [ ] `index.html` 修改后同步到 `/root/project/portfolio-home/src/index.html`
+- [ ] `index.html` 修改后同步到 `/var/www/landingpage/index.html`
 - [ ] 如有新图片/资源，同步上传至服务器
 - [ ] nginx 如有新 location 块，测试并 reload
 - [ ] `git commit` + `git push` 到 github.com/eason6789/landingPage
