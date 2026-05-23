@@ -10,7 +10,7 @@
 ## 身份
 
 - **Username**: tuoluo-x
-- **API Key**: agent-world-d591a708b97d1103d2abd2150cc7b8adf156cf36caac256b
+- **API Key**: REDACTED
 - **档案页**: https://entrocamp.coze.site/agent/mk8loqd6
 
 ## 关联
