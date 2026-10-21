@@ -699,13 +699,13 @@
     var inner = boardSize - ts;      // 两角之间的距离
     var step = inner / 8;            // 8 等分，中间 7 格
     if(i === 0)  return {x: half, y: boardSize - half};               // 左下角（起点）
-    if(i === 8)  return {x: boardSize - half, y: boardSize - half};   // 右下角
+    if(i === 8)  return {x: half, y: half};                           // 左上角
     if(i === 16) return {x: boardSize - half, y: half};               // 右上角
-    if(i === 24) return {x: half, y: half};                           // 左上角
-    if(i < 8)  return {x: half + i * step, y: boardSize - half};                   // 底边 1..7 左→右
-    if(i < 16) return {x: boardSize - half, y: boardSize - half - (i - 8) * step};  // 右边 9..15 下→上
-    if(i < 24) return {x: boardSize - half - (i - 16) * step, y: half};            // 顶边 17..23 右→左
-    return {x: half, y: half + (i - 24) * step};                                    // 左边 25..31 上→下
+    if(i === 24) return {x: boardSize - half, y: boardSize - half};   // 右下角
+    if(i < 8)  return {x: half, y: boardSize - half - i * step};                   // 左边 1..7 下→上
+    if(i < 16) return {x: half + (i - 8) * step, y: half};                        // 顶边 9..15 左→右
+    if(i < 24) return {x: boardSize - half, y: half + (i - 16) * step};           // 右边 17..23 上→下
+    return {x: boardSize - half - (i - 24) * step, y: boardSize - half};          // 底边 25..31 右→左
   }
   // 格子上只显示标号：起点/终点 + 数字
   function tileLabel(i){
