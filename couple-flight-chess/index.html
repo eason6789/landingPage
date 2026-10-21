@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>情侣飞行棋 · 创想世界</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=ZCOOL+QingKe+HuangYou&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF6EF;
+    --paper-deep:#F3E7D3;
+    --card:#FFFDF7;
+    --ink:#2E1E16;
+    --ink-soft:#6B5648;
+    --terra:#E8593D;
+    --amber:#D97706;
+    --brown:#78350F;
+    --pink:#E0487B;
+    --rose:#B91C5C;
+    --green:#3F9142;
+    --gold:#C89B3C;
+    --blue:#3B6FB6;
+    --shadow:0 8px 0 rgba(46,30,22,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    font-family:'DotGothic16','ZCOOL QingKe HuangYou',sans-serif;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(232,89,61,.08), transparent 45%),
+      radial-gradient(circle at 80% 90%, rgba(217,119,6,.10), transparent 45%),
+      var(--paper);
+    color:var(--ink);
+    min-height:100dvh;
+    overflow-x:hidden;
+    position:relative;
+  }
+  /* 背景像素网格 */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;z-index:0;
+    background-image:
+      linear-gradient(rgba(120,53,15,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,53,15,.045) 1px, transparent 1px);
+    background-size:26px 26px;
+  }
+  .screen{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:20px 16px 44px;}
+
+  /* ---------- 顶部条 ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+  .back-btn{
+    display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--ink-soft);
+    font-size:14px;padding:8px 12px;background:var(--card);border:2px solid var(--ink);
+    box-shadow:4px 4px 0 var(--ink);border-radius:8px;cursor:pointer;transition:.15s;
+  }
+  .back-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink);}
+  .brand{font-family:'Silkscreen',monospace;font-size:12px;color:var(--ink-soft);letter-spacing:.12em;}
+
+  /* ---------- 标题 ---------- */
+  .hero{text-align:center;margin:8px 0 28px;}
+  .hero .kicker{font-family:'Silkscreen',monospace;font-size:11px;color:var(--terra);letter-spacing:.2em;margin-bottom:10px;}
+  .hero h1{
+    font-family:'ZCOOL QingKe HuangYou',sans-serif;font-weight:400;
+    font-size:clamp(2.2rem,7vw,3.6rem);letter-spacing:.02em;line-height:1.05;
+  }
+  .hero h1 .heart{color:var(--terra);display:inline-block;animation:beat 1.4s ease-in-out infinite;}
+  @keyframes beat{0%,100%{transform:scale(1)}25%{transform:scale(1.18)}40%{transform:scale(1)}60%{transform:scale(1.12)}}
+  .hero p{color:var(--ink-soft);font-size:15px;margin-top:12px;line-height:1.7;}
+
+  /* ---------- 模式菜单 ---------- */
+  .mode-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;}
+  .mode-card{
+    position:relative;text-align:left;cursor:pointer;border:2px solid var(--ink);
+    border-radius:14px;padding:18px 16px 16px;background:var(--card);
+    box-shadow:6px 6px 0 var(--ink);transition:transform .15s, box-shadow .15s;
+    display:flex;flex-direction:column;gap:10px;font-family:inherit;
+  }
+  .mode-card:hover{transform:translate(-2px,-2px);box-shadow:9px 9px 0 var(--ink);}
+  .mode-card:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink);}
+  .mode-ico{
+    width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+    font-size:24px;border:2px solid var(--ink);box-shadow:3px 3px 0 rgba(46,30,22,.28);
+  }
+  .mode-ico.c-basic{background:#DCEAD9;color:#2F6B31;}
+  .mode-ico.c-love{background:#FBE0EA;color:#C2255C;}
+  .mode-ico.c-couple{background:#FDE2DC;color:#D9482B;}
+  .mode-ico.c-advanced{background:#FDEBD0;color:#C96A0A;}
+  .mode-ico.c-private{background:#F1E0F4;color:#7E3A8C;}
+  .mode-ico.c-combo{background:#FBF0D2;color:#9A7A1F;}
+  .mode-ico.c-custom{background:#DCE7F5;color:#2F5FA6;}
+  .mode-name{font-family:'ZCOOL QingKe HuangYou',sans-serif;font-size:1.35rem;line-height:1.1;}
+  .mode-desc{color:var(--ink-soft);font-size:12px;line-height:1.55;min-height:36px;}
+  .mode-foot{display:flex;align-items:center;gap:6px;}
+  .pill{font-size:10px;padding:2px 8px;border-radius:99px;border:1.5px solid var(--ink);font-weight:700;letter-spacing:.04em;}
+  .pill.hot{background:var(--terra);color:#fff;border-color:var(--brown);}
+  .pill.free{background:#fff;color:var(--ink);}
+  .pill.new{background:var(--gold);color:#fff;border-color:var(--brown);}
+  .mode-card .corner{
+    position:absolute;top:10px;right:10px;font-family:'Silkscreen',monospace;
+    font-size:9px;color:var(--green);letter-spacing:.06em;
+  }
+
+  /* ---------- 游戏屏 ---------- */
+  .game-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;}
+  .mode-badge{
+    display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:var(--card);
+    border:2px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink);
+    font-family:'ZCOOL QingKe HuangYou',sans-serif;font-size:1.05rem;
+  }
+  .turn-ind{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-soft);}
+  .turn-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--ink);}
+  .turn-dot.p1{background:var(--terra);}
+  .turn-dot.p2{background:var(--blue);}
+
+  .board-wrap{display:flex;justify-content:center;margin:6px 0 14px;}
+  #board{position:relative;width:min(92vw,460px);aspect-ratio:1;margin:0 auto;}
+  #board .tile{
+    position:absolute;transform:translate(-50%,-50%);border-radius:10px;
+    border:2px solid var(--ink);display:grid;place-items:center;
+    font-size:13px;font-weight:700;transition:transform .12s;box-shadow:2px 2px 0 rgba(46,30,22,.3);
+  }
+  #board .tile.t-start{background:var(--green);color:#fff;}
+  #board .tile.t-finish{background:var(--gold);color:#fff;}
+  #board .tile.t-truth{background:#FBE0EA;color:#C2255C;}
+  #board .tile.t-dare{background:#FDE2DC;color:#D9482B;}
+  #board .tile.t-intimate{background:#F1E0F4;color:#7E3A8C;}
+  #board .tile.t-advance{background:#DCEAD9;color:#2F6B31;}
+  #board .tile.t-retreat{background:#EFE9E2;color:#8A7A6A;}
+  #board .tile.t-normal{background:var(--paper-deep);color:#A49384;}
+  #board .tile.cur{animation:tilepulse .8s ease-in-out infinite;}
+  @keyframes tilepulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.12)}}
+  #board .piece{
+    position:absolute;transform:translate(-50%,-50%);border-radius:50%;
+    border:2px solid var(--ink);display:grid;place-items:center;
+    font-size:13px;font-weight:700;z-index:5;transition:left .28s cubic-bezier(.3,.7,.4,1),top .28s cubic-bezier(.3,.7,.4,1);
+    box-shadow:0 3px 0 rgba(46,30,22,.35);
+  }
+  .piece.p1{background:var(--terra);color:#fff;}
+  .piece.p2{background:var(--blue);color:#fff;}
+
+  /* ---------- 控制区 ---------- */
+  .control-panel{
+    max-width:460px;margin:0 auto;background:var(--card);border:2px solid var(--ink);
+    border-radius:16px;box-shadow:6px 6px 0 var(--ink);padding:16px 18px;
+    display:flex;align-items:center;gap:16px;
+  }
+  #dice{
+    width:64px;height:64px;flex:0 0 auto;border-radius:14px;border:2px solid var(--ink);
+    background:#fff;display:grid;place-items:center;font-family:'Silkscreen',monospace;
+    font-size:28px;color:var(--brown);box-shadow:3px 3px 0 rgba(46,30,22,.3);
+  }
+  #dice.rolling{animation:diceroll .5s linear infinite;}
+  @keyframes diceroll{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+  .roll-btn{
+    flex:1;padding:16px 18px;font-family:'ZCOOL QingKe HuangYou',sans-serif;font-size:1.2rem;
+    background:var(--terra);color:#fff;border:2px solid var(--brown);border-radius:12px;
+    box-shadow:4px 4px 0 var(--brown);cursor:pointer;transition:.12s;letter-spacing:.04em;
+  }
+  .roll-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--brown);}
+  .roll-btn:disabled{background:#CBB8A6;border-color:#9A8572;box-shadow:4px 4px 0 #9A8572;cursor:not-allowed;}
+  .status-line{max-width:460px;margin:14px auto 0;text-align:center;color:var(--ink-soft);font-size:14px;min-height:20px;line-height:1.6;}
+
+  /* ---------- 弹窗 ---------- */
+  .modal{position:fixed;inset:0;z-index:50;background:rgba(46,30,22,.55);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);}
+  .modal.hidden{display:none;}
+  .modal-card{
+    background:var(--card);border:2px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--ink);
+    width:min(92vw,400px);padding:24px 22px;text-align:center;animation:pop .25s cubic-bezier(.3,1.4,.5,1);
+  }
+  @keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+  .task-type{
+    display:inline-block;padding:4px 12px;border-radius:99px;border:2px solid var(--ink);
+    font-size:12px;font-weight:700;letter-spacing:.06em;margin-bottom:14px;
+  }
+  .task-type.tt-truth{background:#FBE0EA;color:#C2255C;}
+  .task-type.tt-dare{background:#FDE2DC;color:#D9482B;}
+  .task-type.tt-intimate{background:#F1E0F4;color:#7E3A8C;}
+  .task-type.tt-bonus{background:#DCEAD9;color:#2F6B31;}
+  .task-type.tt-penalty{background:#EFE9E2;color:#8A7A6A;}
+  .task-text{font-family:'ZCOOL QingKe HuangYou',sans-serif;font-size:1.45rem;line-height:1.6;margin-bottom:20px;color:var(--ink);}
+  .modal-btn{
+    width:100%;padding:14px;font-family:'ZCOOL QingKe HuangYou',sans-serif;font-size:1.15rem;
+    background:var(--terra);color:#fff;border:2px solid var(--brown);border-radius:12px;
+    box-shadow:4px 4px 0 var(--brown);cursor:pointer;transition:.12s;letter-spacing:.06em;
+  }
+  .modal-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--brown);}
+  .modal-btn.alt{background:var(--card);color:var(--ink);border-color:var(--ink);box-shadow:4px 4px 0 var(--ink);margin-top:10px;}
+  .win-big{font-size:44px;margin-bottom:6px;}
+  .win-title{font-family:'ZCOOL QingKe HuangYou',sans-serif;font-size:1.9rem;margin-bottom:8px;}
+  .win-sub{color:var(--ink-soft);font-size:14px;line-height:1.6;margin-bottom:18px;}
+
+  /* ---------- 自定义弹窗 ---------- */
+  .custom-box{text-align:left;}
+  .custom-box label{font-size:13px;color:var(--ink-soft);display:block;margin:12px 0 6px;}
+  .custom-box textarea{
+    width:100%;min-height:110px;resize:vertical;border:2px solid var(--ink);border-radius:10px;
+    padding:10px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink);line-height:1.6;
+  }
+  .hint{font-size:12px;color:var(--ink-soft);margin-top:6px;}
+
+  .hidden{display:none!important;}
+  @media(max-width:480px){
+    .mode-grid{grid-template-columns:1fr 1fr;gap:12px;}
+    .mode-desc{min-height:auto;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ 菜单屏 ============ -->
+  <div class="screen" id="menuScreen">
+    <div class="topbar">
+      <a class="back-btn" href="../games.html">← 游戏</a>
+      <span class="brand">CREATE WORLD</span>
+    </div>
+    <div class="hero">
+      <div class="kicker">★ COUPLE FLIGHT CHESS ★</div>
+      <h1>情侣飞行棋 <span class="heart">♥</span></h1>
+      <p>掷骰子走格子，落地触发真心话 / 大冒险 / 亲密互动<br>全部模式免费开放，无需激活码</p>
+    </div>
+    <div class="mode-grid" id="modeGrid"></div>
+    <div style="text-align:center;margin-top:28px;color:var(--ink-soft);font-size:12px;">© 2026 创想世界 · 情侣飞行棋 v1.0</div>
+  </div>
+
+  <!-- ============ 游戏屏 ============ -->
+  <div class="screen hidden" id="gameScreen">
+    <div class="topbar">
+      <button class="back-btn" id="backToMenu">← 菜单</button>
+      <span class="brand">CREATE WORLD</span>
+    </div>
+    <div class="game-top">
+      <div class="mode-badge"><span id="modeIco"></span><span id="modeLabel"></span></div>
+      <div class="turn-ind"><span class="turn-dot p1" id="turnDot"></span><span id="turnText">红方回合</span></div>
+    </div>
+    <div class="board-wrap"><div id="board"></div></div>
+    <div class="control-panel">
+      <div id="dice">⚀</div>
+      <button class="roll-btn" id="rollBtn">掷骰子</button>
+    </div>
+    <div class="status-line" id="statusLine">红方先走，点击「掷骰子」开始</div>
+  </div>
+
+  <!-- ============ 任务弹窗 ============ -->
+  <div class="modal hidden" id="taskModal">
+    <div class="modal-card">
+      <div class="task-type" id="taskType">真心话</div>
+      <p class="task-text" id="taskText"></p>
+      <button class="modal-btn" id="taskDone">完成 ✓ 交给对方</button>
+    </div>
+  </div>
+
+  <!-- ============ 胜利弹窗 ============ -->
+  <div class="modal hidden" id="winModal">
+    <div class="modal-card">
+      <div class="win-big">🏆</div>
+      <div class="win-title" id="winTitle">红方获胜！</div>
+      <div class="win-sub" id="winSub"></div>
+      <button class="modal-btn" id="winAgain">再来一局</button>
+      <button class="modal-btn alt" id="winMenu">返回菜单</button>
+    </div>
+  </div>
+
+  <!-- ============ 自定义弹窗 ============ -->
+  <div class="modal hidden" id="customModal">
+    <div class="modal-card custom-box">
+      <div class="win-title" style="font-size:1.5rem;margin-bottom:6px;">✏️ 自定义任务</div>
+      <p class="win-sub" style="margin-bottom:4px;">每行一条，写入你的真心话 / 大冒险（可混写），存到本机浏览器</p>
+      <textarea id="customInput" placeholder="例：&#10;你最喜欢的电影是什么？&#10;给对方一个拥抱"></textarea>
+      <p class="hint">已存 <span id="customCount">0</span> 条 · 玩「自定义」模式时会从这些里随机抽取</p>
+      <button class="modal-btn" id="customSave">保存并开始</button>
+      <button class="modal-btn alt" id="customCancel">取消</button>
+    </div>
+  </div>
+
+<script>
+(function(){
+  /* =========================================================
+     数据：7 个模式的任务池
+     ========================================================= */
+  var MODES = {
+    basic: {
+      name:'基础模式', ico:'🎲', cls:'c-basic', tag:'free', tagText:'经典',
+      desc:'轻松破冰，适合任何场合的热身小游戏',
+      truth:[
+        '你最近做过最沙雕的一件事是什么？',
+        '说出对方身上你最欣赏的三个优点',
+        '你小时候最想成为什么样的人？',
+        '你手机里最舍不得删的一张照片是什么？',
+        '如果只能留三个 APP，你会留哪三个？',
+        '你做过最尴尬的一个梦是什么？',
+        '你最怕的一样东西是什么？',
+        '说一个你一直想学但没学成的技能',
+        '你觉得自己最像哪种动物？',
+        '你上次哈哈大笑是因为什么？',
+        '如果用三个词形容对方，你会说什么？',
+        '你最想去但还没去的城市是哪里？'
+      ],
+      dare:[
+        '模仿一种动物的叫声，让全场猜',
+        '做 15 个深蹲',
+        '用最浮夸的语气读一段新闻',
+        '给对方讲一个冷笑话，把对方逗笑为止',
+        '保持单脚站立 30 秒',
+        '用嘴叼着筷子保持笑容 10 秒',
+        '模仿对方最经典的一个表情',
+        '用方言说一句「我爱你」',
+        '原地转 5 圈然后走直线',
+        '做一个最丑的鬼脸并拍下来',
+        '用屁股写出自己的名字',
+        '模仿一个明星的招牌动作'
+      ],
+      intimate:[
+        '和对方对视 20 秒不许笑',
+        '给对方一个 10 秒的拥抱',
+        '十指紧扣 30 秒',
+        '给对方按揉肩膀 1 分钟',
+        '额头贴额头 15 秒',
+        '用一句歌词向对方表白',
+        '帮对方整理一下头发',
+        '说一句此刻最想对对方说的话'
+      ]
+    },
+    love: {
+      name:'恋爱版', ico:'💗', cls:'c-love', tag:'free', tagText:'甜蜜',
+      desc:'恋爱话题 + 甜蜜互动，让感情持续升温',
+      truth:[
+        '你对我第一印象是什么？',
+        '你最想和我一起完成的一件事？',
+        '你觉得我们最甜蜜的瞬间是什么？',
+        '你最喜欢我叫你什么？',
+        '如果一起去旅行，你最想去哪里？',
+        '你最想和我拍一张什么样的合照？',
+        '你理想中的约会是什么样？',
+        '我们在一起后你最开心的改变是什么？',
+        '你最想听到我夸你什么？',
+        '你希望我们每年都做的一件事？',
+        '你心里我的一个专属昵称是什么？',
+        '我们之间你最想重温的一个瞬间？'
+      ],
+      dare:[
+        '深情地看着对方说「我爱你」',
+        '为对方唱一首情歌（至少 4 句）',
+        '用三种语言对对方说「我爱你」',
+        '为对方跳一段 20 秒的舞',
+        '给对方的手机发一条甜到爆的消息',
+        '模仿第一次约会时的自己',
+        '用对方的星座夸对方三句',
+        '为对方画一幅「抽象派」肖像',
+        '给彼此取一对情侣昵称并当场叫',
+        '录一段 15 秒的告白语音发给对方',
+        '给对方一个「偶像剧式」的壁咚',
+        '闭眼描述对方今天穿了什么'
+      ],
+      intimate:[
+        '和对方额头碰额头，闭眼 30 秒',
+        '给对方一个超过 15 秒的拥抱',
+        '在对方耳边说一句悄悄话',
+        '十指紧扣并一起唱一句歌',
+        '亲吻对方的手背',
+        '用目光慢慢「画」一遍对方的五官',
+        '从背后轻轻抱住对方 20 秒',
+        '说出对方最打动你的一个细节'
+      ]
+    },
+    couple: {
+      name:'情侣版', ico:'👫', cls:'c-couple', tag:'hot', tagText:'HOT',
+      desc:'情侣专属默契与互动，更懂彼此',
+      truth:[
+        '我们之间你最想改掉的相处习惯？',
+        '你希望我更懂你哪一点？',
+        '你最想一起养一只什么宠物？',
+        '如果吵架了，你希望我怎么哄你？',
+        '你最喜欢我为你做过的一件事？',
+        '你觉得我们未来的家是什么样？',
+        '你最想和我一起打卡的一件小事？',
+        '你希望我们的纪念日怎么过？',
+        '我做过最让你心动的一件事？',
+        '你最想让我陪你去的地方？',
+        '我们之间最让你有安全感的是什么？',
+        '你最想对我说但一直没说的话？'
+      ],
+      dare:[
+        '模仿对方最常说的口头禅',
+        '用对方的手机发一条朋友圈（内容你定）',
+        '学对方走路的样子走 5 步',
+        '把手机壁纸换成你们的合照',
+        '给对方剥一个水果喂到嘴边',
+        '用撒娇的语气说一句话',
+        '拍一张最搞怪的情侣自拍',
+        '背起对方转一圈（量力而行）',
+        '给对方做一次专属按摩 1 分钟',
+        '把今天的游戏发到朋友圈',
+        '用对方的语气给对方发一条消息',
+        '模仿对方生气时的样子'
+      ],
+      intimate:[
+        '公主抱对方 20 秒',
+        '和对方约定一个只有你们懂的暗号',
+        '在对方额头上亲一下',
+        '一起比一个大大的爱心合影',
+        '帮对方涂一次润唇膏',
+        '把对方的头靠在你肩膀上 30 秒',
+        '用口红或笔在对方手背画一颗心',
+        '闭眼，让对方牵着走 5 步'
+      ]
+    },
+    advanced: {
+      name:'高级版', ico:'🔥', cls:'c-advanced', tag:'hot', tagText:'HOT',
+      desc:'更大胆的真心话与挑战，玩点刺激的',
+      truth:[
+        '你瞒过我的一个小秘密是什么？',
+        '你第一次心动是什么时候？',
+        '你最想体验但我不知道的一件事？',
+        '你心里最「危险」的一个念头？',
+        '你觉得对方最性感的一个瞬间？',
+        '你最想解锁的一种新约会方式？',
+        '你对我撒过的最大的谎？',
+        '你手机里有没有不能给我看的内容？',
+        '你最想尝试的一件「疯狂」小事？',
+        '你理想中的浪漫夜晚是什么样？',
+        '你最想让我为你改掉的一个小毛病？',
+        '如果只能和对方做一件事，你会选什么？'
+      ],
+      dare:[
+        '用最撩人的语气叫对方一声',
+        '给对方喂一口吃的（或喂一口水）',
+        '把对方的名字写在手心',
+        '对对方说一句最撩的情话',
+        '让对方在你身上写一个字',
+        '用眼神「撩」对方 15 秒不许躲',
+        '给对方系一次鞋带（或整理衣领）',
+        '模仿一个偶像剧经典桥段',
+        '把今天的合照设为聊天背景',
+        '给对方一个深情凝视 10 秒',
+        '在对方耳边吹一口气再说话',
+        '把对方壁咚到墙边并说一句话'
+      ],
+      intimate:[
+        '亲吻对方的脸颊 5 秒',
+        '在对方手背上轻轻亲一下',
+        '给对方一个 30 秒的贴身拥抱',
+        '喂对方喝一口水',
+        '让对方闭眼，你亲一下 TA 的额头',
+        '十指紧扣，感受彼此的掌心温度',
+        '从背后环抱住对方，说一句情话',
+        '一起做 10 秒的「心跳同步」拥抱'
+      ]
+    },
+    private: {
+      name:'私密版', ico:'🌙', cls:'c-private', tag:'hot', tagText:'私密',
+      desc:'只属于两个人的亲密时刻，适可而止',
+      truth:[
+        '你最喜欢我身体的哪个部位？',
+        '你最想让我亲你哪里？',
+        '你幻想过最浪漫的一个画面？',
+        '你最喜欢我哪个小动作？',
+        '你在什么时刻最想亲近我？',
+        '你最想和我尝试的一种亲密？',
+        '你对我最「失控」的一次心动？',
+        '你希望我睡前对你说什么？'
+      ],
+      dare:[
+        '亲吻对方 10 秒',
+        '在对方耳边说一句最私密的话',
+        '把对方的手放到你心口，感受心跳',
+        '用嘴唇轻轻碰一下对方的肩膀',
+        '给对方一个「慢动作」的拥抱',
+        '亲一下对方的鼻尖',
+        '让对方向你撒娇，你要回应',
+        '抱着对方，听彼此呼吸 30 秒'
+      ],
+      intimate:[
+        '深吻对方 10 秒（程度自定）',
+        '抱紧对方，直到两人心跳同步',
+        '亲吻对方的手背或锁骨（视场合）',
+        '让对方躺在你腿上 1 分钟',
+        '用最温柔的方式抚摸对方的脸',
+        '一起闭眼感受彼此的吻',
+        '从额头一路亲到嘴角',
+        '说一句此刻最想对 TA 说的情话'
+      ]
+    },
+    combo: {
+      name:'组合模式', ico:'🎁', cls:'c-combo', tag:'hot', tagText:'HOT',
+      desc:'把前面所有模式打乱混合，惊喜不断',
+      truth:[], dare:[], intimate:[]
+    },
+    custom: {
+      name:'自定义', ico:'✏️', cls:'c-custom', tag:'new', tagText:'自定义',
+      desc:'自己写任务，想玩什么玩什么',
+      truth:[], dare:[], intimate:[]
+    }
+  };
+
+  // 组合模式 = 合并 basic/love/couple/advanced/private
+  ['truth','dare','intimate'].forEach(function(k){
+    ['basic','love','couple','advanced','private'].forEach(function(m){
+      MODES.combo[k] = MODES.combo[k].concat(MODES[m][k]);
+    });
+  });
+
+  /* =========================================================
+     常量与状态
+     ========================================================= */
+  var TILE_COUNT = 32;
+  var START = 0, FINISH = 31;
+  // 格子 1..30 的类型
+  var TILE_TYPES = [
+    'truth','dare','normal','advance','intimate','truth','retreat','dare','normal','truth',
+    'intimate','dare','advance','truth','normal','dare','retreat','truth','intimate','dare',
+    'normal','truth','advance','dare','intimate','truth','normal','dare','retreat','intimate'
+  ];
+  var TYPE_LABEL = {start:'起',finish:'终',truth:'真',dare:'险',intimate:'密',advance:'进',retreat:'退',normal:'·'};
+  var TYPE_CN = {truth:'真心话',dare:'大冒险',intimate:'亲密互动',advance:'前进',retreat:'后退',normal:'普通'};
+
+  var state = null;
+
+  function tileType(i){
+    if(i === START) return 'start';
+    if(i === FINISH) return 'finish';
+    return TILE_TYPES[i-1];
+  }
+
+  function shuffle(a){
+    a = a.slice();
+    for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+    return a;
+  }
+
+  /* =========================================================
+     DOM 引用
+     ========================================================= */
+  function $(id){return document.getElementById(id);}
+  var menuScreen = $('menuScreen'), gameScreen = $('gameScreen');
+  var boardEl = $('board'), diceEl = $('dice'), rollBtn = $('rollBtn');
+  var statusEl = $('statusLine'), turnDot = $('turnDot'), turnText = $('turnText');
+  var modeIco = $('modeIco'), modeLabel = $('modeLabel');
+  var taskModal = $('taskModal'), taskType = $('taskType'), taskText = $('taskText');
+  var winModal = $('winModal'), winTitle = $('winTitle'), winSub = $('winSub');
+  var customModal = $('customModal'), customInput = $('customInput'), customCount = $('customCount');
+
+  /* =========================================================
+     渲染菜单
+     ========================================================= */
+  function renderMenu(){
+    var grid = $('modeGrid');
+    var html = '';
+    Object.keys(MODES).forEach(function(key){
+      var m = MODES[key];
+      var tag = m.tag === 'hot' ? '<span class="pill hot">'+m.tagText+'</span>'
+              : m.tag === 'new' ? '<span class="pill new">'+m.tagText+'</span>'
+              : '<span class="pill free">'+m.tagText+'</span>';
+      html +=
+        '<button class="mode-card" data-mode="'+key+'">'+
+          '<span class="corner">FREE</span>'+
+          '<span class="mode-ico '+m.cls+'">'+m.ico+'</span>'+
+          '<span class="mode-name">'+m.name+'</span>'+
+          '<span class="mode-desc">'+m.desc+'</span>'+
+          '<span class="mode-foot">'+tag+'<span class="pill free">免激活</span></span>'+
+        '</button>';
+    });
+    grid.innerHTML = html;
+    grid.addEventListener('click', function(e){
+      var card = e.target.closest('.mode-card');
+      if(!card) return;
+      onModePick(card.getAttribute('data-mode'));
+    });
+  }
+
+  /* =========================================================
+     模式选择
+     ========================================================= */
+  function onModePick(key){
+    if(key === 'custom'){
+      openCustom();
+      return;
+    }
+    startGame(key);
+  }
+
+  function getCustomTasks(){
+    try{ return JSON.parse(localStorage.getItem('cfc_custom') || '[]'); }
+    catch(e){ return []; }
+  }
+  function openCustom(){
+    customInput.value = getCustomTasks().join('\n');
+    customCount.textContent = getCustomTasks().length;
+    customModal.classList.remove('hidden');
+  }
+  $('customSave').addEventListener('click', function(){
+    var lines = customInput.value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+    localStorage.setItem('cfc_custom', JSON.stringify(lines));
+    startGame('custom');
+  });
+  $('customCancel').addEventListener('click', function(){
+    customModal.classList.add('hidden');
+  });
+
+  /* =========================================================
+     开始游戏
+     ========================================================= */
+  function startGame(key){
+    customModal.classList.add('hidden');
+    winModal.classList.add('hidden');
+    state = {
+      mode: key,
+      players: [
+        {name:'红方', pos:START, cls:'p1', icon:'♥'},
+        {name:'蓝方', pos:START, cls:'p2', icon:'♥'}
+      ],
+      current: 0,
+      rolling: false,
+      finished: false
+    };
+    if(key === 'custom'){
+      var ct = getCustomTasks();
+      MODES.custom.truth = ct; MODES.custom.dare = ct; MODES.custom.intimate = ct;
+    }
+    var m = MODES[key];
+    modeIco.textContent = m.ico;
+    modeLabel.textContent = m.name;
+    menuScreen.classList.add('hidden');
+    gameScreen.classList.remove('hidden');
+    renderBoard();
+    updateTurn();
+    setStatus(state.players[0].name + '先走，点击「掷骰子」');
+    rollBtn.disabled = false;
+    rollBtn.textContent = '掷骰子';
+  }
+
+  /* =========================================================
+     渲染棋盘
+     ========================================================= */
+  var boardSize = 0, tilePx = 0;
+  function renderBoard(){
+    boardEl.innerHTML = '';
+    var w = boardEl.clientWidth || Math.min(window.innerWidth*0.92, 460);
+    boardSize = w;
+    var r = w/2 - 22;
+    var cx = w/2, cy = w/2;
+    tilePx = Math.max(26, Math.round((2*Math.PI*r / TILE_COUNT) * 0.52));
+    for(var i=0;i<TILE_COUNT;i++){
+      var ang = -Math.PI/2 + (i/TILE_COUNT)*2*Math.PI;
+      var x = cx + Math.cos(ang)*r;
+      var y = cy + Math.sin(ang)*r;
+      var t = tileType(i);
+      var d = document.createElement('div');
+      d.className = 'tile t-'+t;
+      d.style.width = tilePx+'px';
+      d.style.height = tilePx+'px';
+      d.style.left = x+'px';
+      d.style.top = y+'px';
+      d.textContent = TYPE_LABEL[t] || '';
+      d.setAttribute('data-tile', i);
+      boardEl.appendChild(d);
+    }
+    // 中央骰子装饰区
+    var center = document.createElement('div');
+    center.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;';
+    center.innerHTML = '<div style="font-family:Silkscreen,monospace;font-size:11px;letter-spacing:.15em;color:#6B5648;">COUPLE</div>'+
+                       '<div style="font-size:30px;color:#E8593D;">♥</div>';
+    boardEl.appendChild(center);
+    // 棋子
+    state.players.forEach(function(p, idx){
+      var el = document.createElement('div');
+      el.className = 'piece '+p.cls;
+      el.id = 'piece'+idx;
+      el.textContent = p.icon;
+      el.style.width = (tilePx*0.8)+'px';
+      el.style.height = (tilePx*0.8)+'px';
+      el.style.fontSize = (tilePx*0.42)+'px';
+      boardEl.appendChild(el);
+    });
+    positionPieces();
+  }
+
+  function tileXY(i){
+    var w = boardSize;
+    var r = w/2 - 22;
+    var cx = w/2, cy = w/2;
+    var ang = -Math.PI/2 + (i/TILE_COUNT)*2*Math.PI;
+    return {x: cx + Math.cos(ang)*r, y: cy + Math.sin(ang)*r};
+  }
+  function positionPieces(){
+    state.players.forEach(function(p, idx){
+      var el = $('piece'+idx);
+      var xy = tileXY(p.pos);
+      var off = idx === 0 ? -tilePx*0.18 : tilePx*0.18;
+      el.style.left = xy.x+'px';
+      el.style.top = (xy.y + off)+'px';
+    });
+  }
+  function markCurrentTile(){
+    var tiles = boardEl.querySelectorAll('.tile');
+    for(var i=0;i<tiles.length;i++){ tiles[i].classList.remove('cur'); }
+    var p = state.players[state.current];
+    var t = boardEl.querySelector('.tile[data-tile="'+p.pos+'"]');
+    if(t) t.classList.add('cur');
+  }
+
+  /* =========================================================
+     回合指示
+     ========================================================= */
+  function updateTurn(){
+    var p = state.players[state.current];
+    turnDot.className = 'turn-dot '+p.cls;
+    turnText.textContent = p.name + '回合';
+    markCurrentTile();
+  }
+  function setStatus(s){ statusEl.textContent = s; }
+
+  /* =========================================================
+     掷骰子 + 移动
+     ========================================================= */
+  rollBtn.addEventListener('click', function(){
+    if(state.rolling || state.finished) return;
+    state.rolling = true;
+    rollBtn.disabled = true;
+    diceEl.classList.add('rolling');
+    var p = state.players[state.current];
+    var roll = Math.floor(Math.random()*6)+1;
+    var finalPos = Math.min(p.pos + roll, FINISH);
+    setTimeout(function(){
+      diceEl.classList.remove('rolling');
+      diceEl.textContent = '⚀⚁⚂⚃⚄⚅'[roll-1] || roll;
+      moveStep(p, p.pos, finalPos, roll);
+    }, 520);
+  });
+
+  function moveStep(p, from, to, roll){
+    var step = from < to ? 1 : -1;
+    var i = from;
+    (function next(){
+      if(step > 0 ? i >= to : i <= to){
+        p.pos = to;
+        positionPieces();
+        if(to >= FINISH){
+          state.finished = true;
+          setStatus(p.name + ' 到达终点！');
+          setTimeout(showWin, 400);
+          return;
+        }
+        setTimeout(function(){ onLand(p, roll); }, 350);
+        return;
+      }
+      i += step;
+      p.pos = i;
+      positionPieces();
+      setTimeout(next, 240);
+    })();
+  }
+
+  /* =========================================================
+     落地事件
+     ========================================================= */
+  function onLand(p, roll){
+    var t = tileType(p.pos);
+    var m = MODES[state.mode];
+    if(t === 'truth'){ showTask('truth', '真心话', pick(m.truth)); }
+    else if(t === 'dare'){ showTask('dare', '大冒险', pick(m.dare)); }
+    else if(t === 'intimate'){ showTask('intimate', '亲密互动', pick(m.intimate)); }
+    else if(t === 'advance'){
+      var extra = 2;
+      var np = Math.min(p.pos + extra, FINISH);
+      showBonus('前进', '前进 ' + extra + ' 格！', function(){
+        moveStep(p, p.pos, np, roll);
+      });
+    }
+    else if(t === 'retreat'){
+      var back = 2;
+      var np = Math.max(p.pos - back, 0);
+      showBonus('后退', '后退 ' + back + ' 格…', function(){
+        moveStep(p, p.pos, np, roll);
+      });
+    }
+    else {
+      setStatus(p.name + ' 落在普通格');
+      setTimeout(nextTurn, 500);
+    }
+  }
+
+  function pick(arr){
+    if(!arr || arr.length === 0){
+      return state.mode === 'custom'
+        ? '还没有自定义任务，回菜单点「自定义」添加一些吧'
+        : '（这一栏还没有内容，换一栏试试吧）';
+    }
+    // 避免与上一条重复
+    if(state._last === undefined){ state._last = {}; }
+    var pool = arr.filter(function(x){ return x !== state._last[state.mode]; });
+    if(pool.length === 0) pool = arr.slice();
+    var chosen = pool[Math.floor(Math.random()*pool.length)];
+    state._last[state.mode] = chosen;
+    return chosen;
+  }
+
+  /* =========================================================
+     弹窗
+     ========================================================= */
+  var pendingCb = null;
+  function showTask(type, label, text){
+    taskType.className = 'task-type tt-'+type;
+    taskType.textContent = label;
+    taskText.textContent = text;
+    taskModal.classList.remove('hidden');
+  }
+  function showBonus(label, text, cb){
+    taskType.className = 'task-type tt-' + (label === '前进' ? 'bonus' : 'penalty');
+    taskType.textContent = label;
+    taskText.textContent = text;
+    pendingCb = cb;
+    taskModal.classList.remove('hidden');
+  }
+  $('taskDone').addEventListener('click', function(){
+    taskModal.classList.add('hidden');
+    if(pendingCb){
+      var cb = pendingCb; pendingCb = null;
+      cb();
+    } else {
+      nextTurn();
+    }
+  });
+  function nextTurn(){
+    if(state.finished) return;
+    state.current = (state.current + 1) % 2;
+    updateTurn();
+    setStatus(state.players[state.current].name + ' 的回合');
+    rollBtn.disabled = false;
+    rollBtn.textContent = '掷骰子';
+    state.rolling = false;
+  }
+  function showWin(){
+    var p = state.players[state.current];
+    winTitle.textContent = p.name + '获胜！';
+    winSub.textContent = '情到深处，棋到终点 ♥ 恭喜 ' + p.name + ' 率先抵达终点';
+    winModal.classList.remove('hidden');
+  }
+  $('winAgain').addEventListener('click', function(){ startGame(state.mode); });
+  $('winMenu').addEventListener('click', function(){
+    winModal.classList.add('hidden');
+    gameScreen.classList.add('hidden');
+    menuScreen.classList.remove('hidden');
+  });
+  $('backToMenu').addEventListener('click', function(){
+    gameScreen.classList.add('hidden');
+    menuScreen.classList.remove('hidden');
+  });
+
+  /* =========================================================
+     响应式重绘
+     ========================================================= */
+  var resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      if(!gameScreen.classList.contains('hidden') && state){ renderBoard(); }
+    }, 200);
+  });
+
+  renderMenu();
+})();
+</script>
+</body>
+</html>
