@@ -119,6 +119,7 @@
     position:absolute;transform:translate(-50%,-50%);border-radius:10px;
     border:2px solid var(--ink);display:grid;place-items:center;
     font-size:13px;font-weight:700;transition:transform .12s;box-shadow:2px 2px 0 rgba(46,30,22,.3);
+    cursor:pointer;
   }
   #board .tile.t-start{background:var(--green);color:#fff;}
   #board .tile.t-finish{background:var(--gold);color:#fff;}
@@ -178,6 +179,7 @@
   .task-type.tt-intimate{background:#F1E0F4;color:#7E3A8C;}
   .task-type.tt-bonus{background:#DCEAD9;color:#2F6B31;}
   .task-type.tt-penalty{background:#EFE9E2;color:#8A7A6A;}
+  .task-type.tt-info{background:#F3E7D3;color:#6B5648;}
   .task-text{font-family:'ZCOOL QingKe HuangYou',sans-serif;font-size:1.45rem;line-height:1.6;margin-bottom:20px;color:var(--ink);}
   .modal-btn{
     width:100%;padding:14px;font-family:'ZCOOL QingKe HuangYou',sans-serif;font-size:1.15rem;
@@ -247,6 +249,15 @@
       <div class="task-type" id="taskType">真心话</div>
       <p class="task-text" id="taskText"></p>
       <button class="modal-btn" id="taskDone">完成 ✓ 交给对方</button>
+    </div>
+  </div>
+
+  <!-- ============ 格子信息弹窗 ============ -->
+  <div class="modal hidden" id="infoModal">
+    <div class="modal-card">
+      <div class="task-type tt-info" id="infoType">格子</div>
+      <p class="task-text" id="infoText" style="font-size:1.2rem;"></p>
+      <button class="modal-btn" id="infoClose">知道了</button>
     </div>
   </div>
 
@@ -364,7 +375,7 @@
       ]
     },
     couple: {
-      name:'情侣版', ico:'👫', cls:'c-couple', tag:'hot', tagText:'HOT',
+      name:'情侣版', ico:'👬', cls:'c-couple', tag:'hot', tagText:'HOT',
       desc:'情侣专属默契与互动，更懂彼此',
       truth:[
         '我们之间你最想改掉的相处习惯？',
@@ -395,7 +406,7 @@
         '模仿对方生气时的样子'
       ],
       intimate:[
-        '公主抱对方 20 秒',
+        '横抱对方 20 秒（量力而行）',
         '和对方约定一个只有你们懂的暗号',
         '在对方额头上亲一下',
         '一起比一个大大的爱心合影',
@@ -539,6 +550,7 @@
   var taskModal = $('taskModal'), taskType = $('taskType'), taskText = $('taskText');
   var winModal = $('winModal'), winTitle = $('winTitle'), winSub = $('winSub');
   var customModal = $('customModal'), customInput = $('customInput'), customCount = $('customCount');
+  var infoModal = $('infoModal'), infoType = $('infoType'), infoText = $('infoText');
 
   /* =========================================================
      渲染菜单
@@ -596,6 +608,9 @@
   $('customCancel').addEventListener('click', function(){
     customModal.classList.add('hidden');
   });
+  $('infoClose').addEventListener('click', function(){
+    infoModal.classList.add('hidden');
+  });
 
   /* =========================================================
      开始游戏
@@ -637,29 +652,31 @@
     boardEl.innerHTML = '';
     var w = boardEl.clientWidth || Math.min(window.innerWidth*0.92, 460);
     boardSize = w;
-    var r = w/2 - 22;
-    var cx = w/2, cy = w/2;
-    tilePx = Math.max(26, Math.round((2*Math.PI*r / TILE_COUNT) * 0.52));
+    var ts = w / 9;
+    tilePx = Math.round(ts * 0.76);
     for(var i=0;i<TILE_COUNT;i++){
-      var ang = -Math.PI/2 + (i/TILE_COUNT)*2*Math.PI;
-      var x = cx + Math.cos(ang)*r;
-      var y = cy + Math.sin(ang)*r;
+      var xy = tileXY(i);
       var t = tileType(i);
       var d = document.createElement('div');
       d.className = 'tile t-'+t;
       d.style.width = tilePx+'px';
       d.style.height = tilePx+'px';
-      d.style.left = x+'px';
-      d.style.top = y+'px';
-      d.textContent = TYPE_LABEL[t] || '';
+      d.style.left = xy.x+'px';
+      d.style.top = xy.y+'px';
+      d.style.fontSize = Math.max(12, Math.round(tilePx*0.42))+'px';
+      d.textContent = tileLabel(i);
       d.setAttribute('data-tile', i);
+      d.addEventListener('click', function(){
+        showTileInfo(parseInt(this.getAttribute('data-tile'), 10));
+      });
       boardEl.appendChild(d);
     }
-    // 中央骰子装饰区
+    // 中央提示区
     var center = document.createElement('div');
-    center.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;';
-    center.innerHTML = '<div style="font-family:Silkscreen,monospace;font-size:11px;letter-spacing:.15em;color:#6B5648;">COUPLE</div>'+
-                       '<div style="font-size:30px;color:#E8593D;">♥</div>';
+    center.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;width:58%;';
+    center.innerHTML = '<div style="font-size:34px;color:#E8593D;">♥</div>'+
+                       '<div style="font-family:Silkscreen,monospace;font-size:10px;letter-spacing:.12em;color:#6B5648;margin-top:2px;">COUPLE FLIGHT</div>'+
+                       '<div style="font-size:12px;color:#6B5648;margin-top:6px;">点击格子查看内容</div>';
     boardEl.appendChild(center);
     // 棋子
     state.players.forEach(function(p, idx){
@@ -675,19 +692,33 @@
     positionPieces();
   }
 
+  // 方形棋盘：4 个角 + 每边 7 格，共 32 格，沿四周顺时针绕一圈
   function tileXY(i){
-    var w = boardSize;
-    var r = w/2 - 22;
-    var cx = w/2, cy = w/2;
-    var ang = -Math.PI/2 + (i/TILE_COUNT)*2*Math.PI;
-    return {x: cx + Math.cos(ang)*r, y: cy + Math.sin(ang)*r};
+    var ts = boardSize / 9;          // 每边 7 格 + 2 角 = 9 个点位
+    var half = ts / 2;
+    var inner = boardSize - ts;      // 两角之间的距离
+    var step = inner / 8;            // 8 等分，中间 7 格
+    if(i === 0)  return {x: half, y: boardSize - half};               // 左下角（起点）
+    if(i === 8)  return {x: boardSize - half, y: boardSize - half};   // 右下角
+    if(i === 16) return {x: boardSize - half, y: half};               // 右上角
+    if(i === 24) return {x: half, y: half};                           // 左上角
+    if(i < 8)  return {x: half + i * step, y: boardSize - half};                   // 底边 1..7 左→右
+    if(i < 16) return {x: boardSize - half, y: boardSize - half - (i - 8) * step};  // 右边 9..15 下→上
+    if(i < 24) return {x: boardSize - half - (i - 16) * step, y: half};            // 顶边 17..23 右→左
+    return {x: half, y: half + (i - 24) * step};                                    // 左边 25..31 上→下
+  }
+  // 格子上只显示标号：起点/终点 + 数字
+  function tileLabel(i){
+    if(i === START) return '起';
+    if(i === FINISH) return '终';
+    return String(i);
   }
   function positionPieces(){
     state.players.forEach(function(p, idx){
       var el = $('piece'+idx);
       var xy = tileXY(p.pos);
-      var off = idx === 0 ? -tilePx*0.18 : tilePx*0.18;
-      el.style.left = xy.x+'px';
+      var off = idx === 0 ? -tilePx*0.16 : tilePx*0.16;
+      el.style.left = (xy.x + off)+'px';
       el.style.top = (xy.y + off)+'px';
     });
   }
@@ -756,10 +787,9 @@
      ========================================================= */
   function onLand(p, roll){
     var t = tileType(p.pos);
-    var m = MODES[state.mode];
-    if(t === 'truth'){ showTask('truth', '真心话', pick(m.truth)); }
-    else if(t === 'dare'){ showTask('dare', '大冒险', pick(m.dare)); }
-    else if(t === 'intimate'){ showTask('intimate', '亲密互动', pick(m.intimate)); }
+    if(t === 'truth'){ showTask('truth', '真心话', tileTask(p.pos, 'truth')); }
+    else if(t === 'dare'){ showTask('dare', '大冒险', tileTask(p.pos, 'dare')); }
+    else if(t === 'intimate'){ showTask('intimate', '亲密互动', tileTask(p.pos, 'intimate')); }
     else if(t === 'advance'){
       var extra = 2;
       var np = Math.min(p.pos + extra, FINISH);
@@ -780,19 +810,31 @@
     }
   }
 
-  function pick(arr){
+  // 同一格永远对应同一条任务，两位玩家落到同一格会看到一样的题目
+  function tileTask(i, t){
+    var arr = MODES[state.mode][t];
     if(!arr || arr.length === 0){
       return state.mode === 'custom'
         ? '还没有自定义任务，回菜单点「自定义」添加一些吧'
         : '（这一栏还没有内容，换一栏试试吧）';
     }
-    // 避免与上一条重复
-    if(state._last === undefined){ state._last = {}; }
-    var pool = arr.filter(function(x){ return x !== state._last[state.mode]; });
-    if(pool.length === 0) pool = arr.slice();
-    var chosen = pool[Math.floor(Math.random()*pool.length)];
-    state._last[state.mode] = chosen;
-    return chosen;
+    return arr[(i * 37) % arr.length];
+  }
+  // 点击格子查看该格内容
+  function showTileInfo(i){
+    var t = tileType(i);
+    var label, text;
+    if(i === START){ label = '起点'; text = '两位玩家从这里出发'; }
+    else if(i === FINISH){ label = '终点'; text = '率先抵达这里的玩家获胜'; }
+    else if(t === 'truth'){ label = '真心话 · 第 '+i+' 格'; text = tileTask(i, 'truth'); }
+    else if(t === 'dare'){ label = '大冒险 · 第 '+i+' 格'; text = tileTask(i, 'dare'); }
+    else if(t === 'intimate'){ label = '亲密互动 · 第 '+i+' 格'; text = tileTask(i, 'intimate'); }
+    else if(t === 'advance'){ label = '前进 · 第 '+i+' 格'; text = '落到这里前进 2 格'; }
+    else if(t === 'retreat'){ label = '后退 · 第 '+i+' 格'; text = '落到这里后退 2 格'; }
+    else { label = '普通 · 第 '+i+' 格'; text = '无事件，安全通过'; }
+    infoType.textContent = label;
+    infoText.textContent = text;
+    infoModal.classList.remove('hidden');
   }
 
   /* =========================================================
