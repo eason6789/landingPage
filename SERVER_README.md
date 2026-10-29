@@ -2,7 +2,7 @@
 
 > 本文档是「个人主页」及其所有子项目在后端服务器上的**唯一权威映射**。
 > 服务器上有什么进程、跑在哪个端口、Nginx 怎么路由、哪些 API 是通的，全部以这里为准。
-> **最后核对日期：2026-10-19**
+> **最后核对日期：2026-10-21**
 
 ---
 
@@ -33,6 +33,7 @@
 | photo-service（id-photo / claw） | 8080 | systemd `photo-service`（Go） | ✅ 在线 |
 | codenames-backend | 8082 | systemd `codenames-backend`（Go） | ✅ 在线 |
 | pawnear（邻爪） | 8083 | systemd `pawnear.service`（Go） | ✅ 在线 |
+| truth-or-dare（真心话） | 8084 | systemd `truth-or-dare.service`（Go） | ✅ 在线 |
 | hivision（证件照抠图） | 8090 | systemd `hivision`（Python） | ✅ 在线（供 photo-service 内部调用） |
 | php-fpm | — | systemd `php-fpm.service` | ✅ 在线（video-feed + hand-gesture 代理） |
 | OpenClaw 网关 | 18789 / 18791 | 手动（无 systemd/PM2） | 运行中（agent 管理基础设施） |
@@ -76,6 +77,8 @@ nginx -t && nginx -s reload           # 校验并重载 Nginx
 | `/xinghe-tumai/api/` | 代理 | `http://127.0.0.1:3001/api/`（**本次新增**） |
 | `/xinghe-tumai/` | 静态(SPA) | `/var/www/landingpage/xinghe-tumai/`（**本次新增**） |
 | `/vibe-motion/` | 静态 | `/var/www/vibe-motion/` |
+| `/truth-or-dare/` | 静态 | `/var/www/truth-or-dare/`（index=entry.html，多页 entry.html/home.html/admin.html） |
+| `/truth-or-dare/api/` | 代理 | `http://127.0.0.1:8084/api/` |
 
 > 优先级提示：`location =`（精确）> `location ^~`（前缀，命中后不再走正则）> 正则 > 普通前缀。
 > `/api/generate-words` 用精确匹配，避免被 `/api/`（→8080）吞掉。
@@ -114,7 +117,7 @@ nginx -t && nginx -s reload           # 校验并重载 Nginx
 
 ### 4.6 xinghe-tumai（星河图脉 算命）· Node 3001 · PM2
 - `POST /xinghe-tumai/api/interpret` ✅（本次修复：补 Nginx 路由 + buildPrompt 容错）
-- 调 MiniMax `MiniMax-M2.7`；密钥在 PM2 环境变量 `MINIMAX_API_KEY`
+- 调 DeepSeek `deepseek-chat`；密钥在 PM2 环境变量 `DEEPSEEK_API_KEY`
 
 ### 4.7 video-feed（视频流）· PHP-FPM
 - `GET /video-feed/api.php?action=get_likes` / `get_counts`、`POST ...?action=like` ✅（本次修复：补 DB 环境变量）
@@ -122,7 +125,7 @@ nginx -t && nginx -s reload           # 校验并重载 Nginx
 - 数据库：`video_feed_db`（表 `video_likes`）
 
 ### 4.8 hand-gesture（手势塔罗占卜）· 静态 + PHP 代理
-- `POST /hand-gesture/proxy.php` → MiniMax 解读 ✅（本次修复：补 php-fpm 路由）
+- `POST /hand-gesture/proxy.php` → DeepSeek 解读 ✅（本次修复：补 php-fpm 路由）
 - 手部识别在浏览器端用 MediaPipe 完成，无需后端
 
 ### 4.9 codenames（谁是卧底/猜词游戏）· Go 8082 · systemd codenames-backend
@@ -131,6 +134,12 @@ nginx -t && nginx -s reload           # 校验并重载 Nginx
 
 ### 4.10 纯静态项目（无后端）
 - `landingPage`（主页）、`finlearn`、`claw-mgmt`、`vibe-motion`（WebGPU 动捕，浏览器本地跑）
+
+### 4.11 truth-or-dare（真心话）· Go 8084 · systemd truth-or-dare.service
+- 题库存 MySQL `truth_or_dare.sticks` 表，游戏端运行时 `GET /truth-or-dare/api/sticks?edition=couple`
+- `GET /truth-or-dare/api/health` → `{"success":true,"service":"truth-or-dare","env":"prod"}` ✅
+- `POST/PUT/DELETE /truth-or-dare/api/sticks` 增删改；管理页 `https://tuteng3.site/truth-or-dare/admin.html`（开放，无鉴权）
+- 前端入口在主页 `games.html` 游戏栏；首次启动自动灌入 seed.json 的 40 张签
 
 ---
 
@@ -142,6 +151,7 @@ nginx -t && nginx -s reload           # 校验并重载 Nginx
 | `wish_plan` | 计划事务清单 |
 | `video_feed_db` | video-feed 点赞 |
 | `pawnear` | 邻爪 |
+| `truth_or_dare` | 真心话抽签 |
 | `testdb` / `sys` 等 | 杂项/系统 |
 
 > ⚠️ `wish_plan.video_likes` 是一张**遗留旧表**（旧结构，无 `video_key` 列），视频点赞实际用的是 `video_feed_db.video_likes`，别搞混。
