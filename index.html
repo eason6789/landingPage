@@ -296,6 +296,7 @@ a { color: var(--accent); text-decoration: none; }
   image-rendering: pixelated;
 }
 .card-icon svg { width: 34px; height: 34px; }
+.card-icon img { width: 100%; height: 100%; object-fit: cover; display: block; image-rendering: auto; }
 
 .card-info { flex: 1; min-width: 0; }
 .card-name {
@@ -821,7 +822,7 @@ a { color: var(--accent); text-decoration: none; }
             </div>
             <ul class="card-detail">
               <li>AI 驱动的在线音乐创作工具</li>
-              <li>文本转音乐 · 翻唱 · MiniMax 2.6</li>
+              <li>文本转音乐 · 翻唱 · AI 生成</li>
               <li>API 到期 · 暂停服务</li>
             </ul>
             <span class="tag">AI</span><span class="tag">音乐</span>
@@ -921,7 +922,7 @@ a { color: var(--accent); text-decoration: none; }
             <ul class="card-detail">
               <li>AI 驱动的命理解读占卜应用</li>
               <li>河图星脉世界观 · 符文排列 · 命轨解读</li>
-              <li>MiniMax M2.7 深度命理分析</li>
+              <li>AI 智能分析 · 深度命理解读</li>
             </ul>
             <span class="tag">占卜</span><span class="tag">AI</span><span class="tag">命理</span>
           </div>
@@ -959,17 +960,7 @@ a { color: var(--accent); text-decoration: none; }
         <!-- 行动代号 -->
         <a class="project-card" href="https://tuteng3.site/game.html" target="_blank" rel="noopener">
           <div class="card-icon">
-            <svg viewBox="0 0 34 34">
-              <rect x="3" y="3" width="8" height="8" fill="#78350F"/>
-              <rect x="13" y="3" width="8" height="8" fill="#D97706"/>
-              <rect x="23" y="3" width="8" height="8" fill="#78350F"/>
-              <rect x="3" y="13" width="8" height="8" fill="#78350F"/>
-              <rect x="13" y="13" width="8" height="8" fill="#22C55E"/>
-              <rect x="23" y="13" width="8" height="8" fill="#78350F"/>
-              <rect x="3" y="23" width="8" height="8" fill="#D97706"/>
-              <rect x="13" y="23" width="8" height="8" fill="#78350F"/>
-              <rect x="23" y="23" width="8" height="8" fill="#D97706"/>
-            </svg>
+            <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=200&q=80" alt="行动代号">
           </div>
           <div class="card-info">
             <div class="card-name">
@@ -978,10 +969,51 @@ a { color: var(--accent); text-decoration: none; }
             </div>
             <ul class="card-detail">
               <li>红蓝双人对战猜词派对游戏</li>
-              <li>AI 智能词库生成 (MiniMax M2.7)</li>
+              <li>AI 智能词库生成</li>
               <li>15+ 预设主题 · 5 种配色方案</li>
             </ul>
             <span class="tag">HTML5</span><span class="tag">AI</span><span class="tag">派对</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
+
+        <!-- 真心话 -->
+        <a class="project-card" href="https://tuteng3.site/truth-or-dare/" target="_blank" rel="noopener">
+          <span class="hot-badge new">NEW</span>
+          <div class="card-icon">
+            <img src="truth-or-dare/preview.png" alt="真心话">
+          </div>
+          <div class="card-info">
+            <div class="card-name">
+              <span class="cn-name">真心话</span>
+              <span class="en-name">Truth or Dare</span>
+            </div>
+            <ul class="card-detail">
+              <li>抽签式真心话问答卡牌游戏</li>
+              <li>40 张情侣真心话题库 · 后台可增删改</li>
+              <li>3D 翻面卡牌 · 米白/朱红双面</li>
+            </ul>
+            <span class="tag">情侣</span><span class="tag">聚会</span><span class="tag">抽签</span>
+          </div>
+          <span class="card-arrow">GO ▶</span>
+        </a>
+
+        <!-- 情侣飞行棋 -->
+        <a class="project-card" href="https://tuteng3.site/couple-flight-chess/" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <img src="couple-flight-chess/preview.svg" alt="情侣飞行棋">
+          </div>
+          <div class="card-info">
+            <div class="card-name">
+              <span class="cn-name">情侣飞行棋</span>
+              <span class="en-name">Couple Flight Chess</span>
+            </div>
+            <ul class="card-detail">
+              <li>掷骰子走格子，真心话大冒险</li>
+              <li>落地触发真心话 / 大冒险 / 亲密互动</li>
+              <li>双人对战 · 全部模式免费开放</li>
+            </ul>
+            <span class="tag">情侣</span><span class="tag">飞行棋</span><span class="tag">桌游</span>
           </div>
           <span class="card-arrow">GO ▶</span>
         </a>
